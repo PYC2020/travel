@@ -1,4 +1,4 @@
-package zuul.filters;
+package com.yc.zuul.filters;
 
 
 import com.netflix.zuul.ZuulFilter;

@@ -16,6 +16,9 @@
         <module>travel-config3</module>
         <module>travel-Eureka-Config</module>
         <module>travel-zuul</module>
+        <module>travel-security</module>
+        <module>travel-domain</module>
+        <module>travel-api</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

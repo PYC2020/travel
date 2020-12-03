@@ -1,4 +1,4 @@
-package zuul.fallback;
+package com.yc.zuul.fallback;
 
 import com.google.gson.Gson;
 import org.springframework.cloud.netflix.zuul.filters.route.FallbackProvider;
