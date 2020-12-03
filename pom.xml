@@ -13,6 +13,7 @@
         <module>travel-config2</module>
         <module>travel-config3</module>
         <module>travel-Eureka-Config</module>
+        <module>travel-zuul</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

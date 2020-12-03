@@ -10,6 +10,7 @@
         <module name="travel-config2" />
         <module name="travel-config3" />
         <module name="travel-Eureka-Config" />
+        <module name="travel-zuul" />
       </profile>
     </annotationProcessing>
   </component>
