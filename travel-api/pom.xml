@@ -51,11 +51,7 @@
             <artifactId>logstash-logback-encoder</artifactId>
             <version>4.10</version>
         </dependency>
-        <dependency>
-            <groupId>com.yc.picLib</groupId>
-            <artifactId>piclib-domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
