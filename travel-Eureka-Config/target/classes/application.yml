@@ -17,4 +17,4 @@ spring:
       name: admin
       password: a
 application:
-  name: mBBS-Eureka-Config
+  name: travel-Eureka-Config

@@ -19,7 +19,7 @@ spring:
     username: root
     password: a
     #表名未改
-    url: jdbc:mysql://39.101.129.133:3306/testmis81?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Hongkong
+    url: jdbc:mysql://39.101.129.133:3306/db_travel?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Hongkong
   application:
     name: provider-travel   #应用服务名
 mybatis:
