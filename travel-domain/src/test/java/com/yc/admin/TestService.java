@@ -21,7 +21,10 @@ public class TestService {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private PicsService picsService;
 
+    
     @Test
     public void testList() {
         logger.info("调用adminService.list");

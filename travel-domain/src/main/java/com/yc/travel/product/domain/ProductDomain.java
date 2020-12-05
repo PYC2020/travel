@@ -1,6 +1,6 @@
 package com.yc.travel.product.domain;
 
-import com.yc.travel.pics.domain.PageDomain;
+
 import lombok.Data;
 
 @Data
