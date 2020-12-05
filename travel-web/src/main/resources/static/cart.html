@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>旅游网-商品详情</title>
+		<link rel="stylesheet" type="text/css" href="css/ui.css" />
+		<link rel="stylesheet" href="css/cart.css">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+
+	<body>
+		<div id="cart_div">
+			<div id="top_menu">
+				<span id="welcome">Welcome！</span>
+				<a href="cart.html" id="cart">我的购物车</a>
+				<a href="order.html" id="order">我的订单</a>
+				<a href="user.html" id="user">用户中心</a>
+				<a href="index.html" id="index">首页</a>
+			</div>
+			<div class="search_div">
+				<input type="text" placeholder="搜素商品" class="input_text" id="search_input" v-model="keyword">
+				<input type="button" value="搜索" class="input_btn" id="search_btn" @click="find()">
+			</div>
+			
+			
+			<!-- 购物车 -->
+			<div class="cart_con" id="yc_carts">
+				<h4 class="total_count">全部商品<em>{{orders.length}}</em>件</h4>
+				
+				<div class="cart_list_th clearfix">
+					<ul>
+						<li class="col01">商品信息</li>
+						<li class="col02">商品单价</li>
+						<li class="col03">出行信息</li>
+						<li class="col04">金额</li>
+						<li class="col05">操作</li>
+					</ul>
+				</div>
+				
+				<div class="cart_list_td clearfix" v-for="(o,index) in orders" :id="'g_'+index">
+				<div class="company_div" >{{o.company}}</div>
+					<ul>
+						<li class="col01"><input type="checkbox" checked name="option" :index="index" :id="o.oid"></li>
+						<li class="col02"><img :src="o.pic"></li>
+						<li class="col03"><span style="font-size:20px;">{{o.pname}}</span><p>{{o.intro}}</p></li>
+					    <li class="col04"><span>￥{{o.price}}/人</span></li>
+					    <li class="col05">
+					    	<div class="num_add">
+								<label>人数&nbsp;&nbsp;&nbsp;</label>
+								<input type="text"  readonly="readonly" class="num_show" v-model="nums[index]">
+							</div><br />
+							<label>出行时间&nbsp;&nbsp;&nbsp;</label><input id="sdate" readonly="readonly" type="date" v-model="o.sdate"/><br>
+							<label>回程时间&nbsp;&nbsp;&nbsp;</label><input id="edate" readonly="readonly" type="date" v-model="o.edate"/>
+					    </li>
+					    <li class="col06"><span>￥{{o.price*o.num}}</span></li>
+					    <li class="col07"><a href="javascript:void(0);" @click="del(index,o.oid)">删除</a></li>
+					</ul>
+				</div>
+				<div class="setelements">
+					<ul>
+						<li class="col01"><input type="checkbox" checked id="all" name="all"></li>
+						<li class="col02"><label for="all">全选</label></li>
+						<li class="col03">合计:<em id="totalPrices">&yen;{{totalPrice}}</em><br>共计<b id="totalNumbers"></b>{{totalCount}}人出行</li>
+						<li class="col04">
+							<a href="javascript:;" @click="pay()">去结算</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/axios.js"></script>
+		<script type="text/javascript" src="js/qs.js"></script>
+		<script type="text/javascript" src="js/detail.js"></script>
+		<script type="text/javascript">
+			var app=new Vue({
+				el:'#cart_div',
+				data:{
+					onlogin:false,
+					orders:{},
+					totalCount:0,//商品总数
+	    			totalPrice:0,//总价格
+	    			nums:[],//每件商品对应数量  存储在数组
+	    			prices:[],//每个商品价格
+	    			status:[],//是否被选择,
+	    			oids:[],//存储结算的订单号
+	    			keyword:''
+				},
+				mounted:function(){
+					axios.get('user.action?op=check').then(result=>{
+						if(result.data.user){
+							this.onlogin=true;
+						}else{
+							alert('请先登录!');
+							location.href="login.html";
+						}
+					});
+					axios.get("orders.action?op=findOrders",{params:{}}).then(result=>{
+	    				this.orders=result.data;
+	    				//购物车中每行数据进行循环
+	    				result.data.forEach((item,index)=>{
+	    					this.nums.push(item.num);//push  数组添加元素
+	    					this.prices.push(item.price);
+	    					this.status.push(1);//加载进来默认所有的商品复选框都是被选中的  状态值设置为1
+	    					this.totalPrice+=item.num*item.price;
+	    					this.totalCount+=item.num;
+	    				})
+	    				//在下次DOM更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM
+	    				this.$nextTick(function(){
+	    					bindInfo();//此处填第一次渲染完成后执行的代码
+	    				});
+	    			})
+	    			//对象中定义函数给updateCheck   调用updateCheck即可
+	    			window.updateCheck=this.checkInfo;
+				},
+				methods:{
+					del:function(index,oid){
+						if(confirm("您确定要删除吗?")){
+							axios.get("orders.action?op=delete&oid="+oid).then(result=>{
+								if(result.data>0){
+									this.$set(this.nums,index,0);
+	    							this.getTotal();
+	    							$("#g_"+index).remove();
+									alert('删除成功!');
+								}
+							});
+						}
+					},
+					getTotal:function(){//计算总价格
+	    				this.totalPrice=0;
+	    				this.totalCount=0;
+	    				this.nums.forEach((num,index)=>{
+	    					if(this.status[index]==1){//选中的商品累加
+	    						this.totalPrice+=num*this.prices[index];
+	    						this.totalCount+=num;
+	    					}
+	    				})
+	    			},
+	    			
+	    			checkInfo:function(index,st){
+	    				//修改status数组中索引号为index位置的值
+	    				this.$set(this.status,index,st);
+	    				//重新计算总价格
+	    				this.getTotal();
+	    			},
+	    			
+	    			pay:function(){
+	    				var that=this;
+	    				$.each($('input[name="option"]'),function(){
+	    					if(this.checked){
+	    						that.oids.push(this.id);
+	    					}
+	    				});
+	    				$.get('orders.action?op=updatePay',{oids:this.oids},function(data){
+	    					alert('支付成功');
+	    					location.href='user.html';
+	    				},'json');
+	    				//location.href='index.jsp?'+this.totalPrice+'&'+this.oids;
+	    			},
+	    			find:function(){
+						if(this.keyword!=null){
+							axios({
+		    					url:'product.action?op=findVague',
+		    					method:'get',
+		    					params:{keyword:this.keyword}
+		    				}).then(result=>{
+		    					if(result.data=='暂无此商品!'){
+		    						alert('暂无此商品!');
+		    						return;
+		    					}else{
+		    						location.href='search.html#keyword='+this.keyword;
+		    					}
+		    				});
+						}
+					}
+				}
+			});
+			
+			//检查是否登录
+	    	function checkLogin(){
+	    		return axios.get('user.action?op=check');
+	    	}
+			
+			//查询未完成订单
+			function orders(){
+				return axios.get("orders.action?op=findOrders");
+			}
+			//函数  复选框操作
+	    	function bindInfo(){
+	    		//全选和全不选
+	    		$("#all").click(function(){
+	    			//获取全选是否被选中
+	    			//prop  获取标签的固有属性  attr  自定义的属性
+	    			var flag=$(this).prop("checked");
+	    			//判断
+	    			$(".cart_list_td clearfix .col01 input").prop("checked",flag);
+	    		});
+	    		
+	    		//获取表格中所有的复选框
+	    		var checkboxs=$("#cart_div input[type='checkbox']");
+	    		var len=checkboxs.length;
+	    		for(var i=0;i<len;i++){
+	    			//给每个复选框绑定一个点击事件
+	    			checkboxs[i].onclick=function(){
+	    				if(this.checked==true){//选中时
+	    					//修改该行的状态值status数组中index位置为值为1
+	    					updateCheck($(this).attr("index"),1);
+	    				}else{
+	    					updateCheck($(this).attr("index"),0);
+	    				}
+	    				for(var j=0;j<len;j++){
+	    					if(!checkboxs[j].checked){
+	    						$("#all").prop("checked",false);
+	    						return;
+	    					}
+	    				}
+	    				$("#all").prop("checked",true);
+	    			}
+	    		}
+	    	}
+		</script>
+	</body>
+
+</html>

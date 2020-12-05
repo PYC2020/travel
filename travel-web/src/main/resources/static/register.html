@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>旅游网-注册</title>
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/register.css">
+		<script src="./js/jquery-2.0.0.min.js"></script>
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<style>
+			body {
+				background-image: url(images/billboard.jpg);
+				background-repeat: no-repeat;
+				background-size:100% 100%; 
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="img-wrap">
+			<div id="register">
+				<div class="reg_title" style="border-bottom: 2px solid dodgerblue; margin-bottom: 40px;">
+					<span>用户注册</span>
+					<span id="login"><a href="login.html" style="color: navajowhite;">立即登录<img src="images/reg_login.png"></a></span>
+				</div>
+				<!--表单输入-->
+				<div class="reg_form">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-offset-1 col-sm-2 control-label">用户名：</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control " v-model="uname" placeholder="请输入用户名...">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-offset-1 col-sm-2 control-label">密码：</label>
+							<div class="col-sm-7">
+								<input type="password" class="form-control" v-model="pwd" placeholder="请输入密码...">
+							</div>
+
+						</div>
+						<div class="form-group">
+							<label class="col-sm-offset-1 col-sm-2 control-label">确认密码：</label>
+							<div class="col-sm-7">
+								<input type="password" class="form-control" v-model="rpwd" placeholder="请再次确认密码...">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-offset-1 col-sm-2 control-label">电话：</label>
+							<div class="col-sm-7">
+								<input type="tel" class="form-control" v-model="tel" placeholder="请输入电话号码...">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-1 col-sm-8">
+								<div class="checkbox">
+									<label><input type="checkbox" v-model="check1"> 同意<a href="#" >"旅游网用户协议"</a></label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-1 col-sm-9">
+								<button type="button" class="btn btn-primary btn-lg btn-block" id="reg" @click="reg">注册</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/axios.js"></script>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:"#register",
+			data:{
+				uname:'',
+				pwd:'',
+				rpwd:'',
+				tel:'',
+				check1:false
+			},
+			methods:{
+				reg:function(){
+					if(this.uname=='' && this.pwd==''){
+						alert('用户名或密码不能为空');
+						return;
+					}
+					if(this.pwd!=this.rpwd){
+						alert('两次密码不一致');
+						return;
+					}
+					if(this.check1==false){
+						alert('请阅读并勾选用户协议！');			
+						return;
+					}
+					axios({
+						url:'user.action',
+						method:'post',
+						params:{op:'register',uname:this.uname,pwd:this.pwd,tel:this.tel}
+					}).then(result=>{
+						if(result.data>0){
+							alert('注册成功');
+							location.href="login.html";
+						}else if(result.data==0){
+							alert('用户名已被注册');
+							location.href="register.html";
+						}else{
+							alert('注册失败');
+						}
+					});
+				}
+			}
+		});	
+	</script>
+</html>

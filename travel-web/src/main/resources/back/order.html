@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="css/layui.css"  media="all">
+</head>
+<body>
+ 
+<table class="layui-hide" id="orders"></table>
+              
+          
+<script src="layui.js" charset="utf-8"></script>
+ 
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+  
+  table.render({
+    elem: '#orders'
+    ,url:'../orders.action?op=findVO'
+    ,parseData:function(res){
+       	return{
+       		"code":0,
+       		"msg":"",
+       		"count":1000,
+       		"data":res
+       	}
+    }
+    ,cols: [[
+      {field:'oid', title: '编号', sort: true}
+      ,{field:'uid', title: '用户id', sort: true}
+      ,{field:'pname', title: '产品名', sort: true}
+      ,{field:'odate', title: '下单日期', sort: true}
+      ,{field:'status', title: '订单状态', sort: true,templet:function(res){
+    	  if(res.status==0){
+    		  return '未支付';
+    	  }else if(res.status==1){
+    		  return '已支付';
+    	  }else if(res.status==2){
+    		  return '已评论';
+    	  }
+      }}
+      ,{field:'sdate', title: '开始日期', sort: true}
+      ,{field:'edate', title: '回程日期', sort: true}
+      ,{field:'num', title: '人数', sort: true}
+      ,{field:'company', title: '公司', sort: true}
+      ,{field:'total', title: '总价', sort: true,templet: function(res){
+    	  return res.price*res.num;
+      }}
+    ]]
+    ,page: true
+  });
+});
+</script>
+
+</body>
+</html>

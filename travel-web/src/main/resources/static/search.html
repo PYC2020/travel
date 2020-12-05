@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/list.css" />
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	</head>
+
+	<body>
+		<div id="search">
+			<div id="head">
+				<div id="top_menu">
+					<span id="welcome">Welcome！</span>
+					<input type="text" placeholder="搜素商品" class="input_text" id="search_input" v-model="kd">
+					<input type="button" value="搜索" class="input_btn" id="search_btn" @click="find()">
+					<a href="cart.html" id="cart">我的订单</a>
+					<a href="user.html" id="user">用户中心</a>
+					<a href="index.html" id="index">首页</a>
+				</div>
+			</div>
+	
+			<div id="tab_div">
+	
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#home" aria-controls="home" role="tab" data-toggle="tab">默认</a>
+					</li>
+					<!--  <li role="presentation">
+						<a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">满意度</a>
+					</li>
+					<li role="presentation">
+						<a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">价格</a>
+					</li>-->
+					<!-- <a href="" id="alltype">全部分类></a><a href="" id="goodsType">{{kd}}</a> -->
+				</ul>
+	
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="home">
+						<div class="lists">
+							<div class="body_main" v-for="p in products">
+							<div class="body_main_img"><img :src="p.pic" /></div>
+							<div class="body_main_lugar">
+								<a :href="'detail.html#'+p.pid">
+									<label class="label_01"><{{p.pname}}></label>
+									<label class="label_02">介绍:{{p.intro}}</label><br />
+									<label class="label_03">{{p.company}}</label>
+								</a>
+							</div>
+							<div class="body_main_precio">
+								<div class="body_main_label">
+									<label style="color: #FF6600; font-size: 20px;">￥</label>
+									<label class="label_07">{{p.price}}</label>
+									<label style="color: white;">/人起</label>
+								</div>
+							</div>
+						</div>
+						</div>
+						<div id="page" style="padding-left:700px; margin-top:50px;">
+							<button id="prev" @click="prevPage()" v-if="flag">上一页</button>
+							<button id="next" @click="nextPage()" v-if="flag">下一页</button>
+						</div>
+						<!--
+	        	                     脚部
+	                     -->
+						<div id="feet">
+							<div id="footer_text">
+								<p>&copy;Copyringht&copy;2019-2020</p>
+								<p>组长：王骏杰，组员：罗勤辉、戈布凡、邓雨寒</p>
+							</div>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="profile">
+						2
+					</div>
+					<div role="tabpanel" class="tab-pane" id="messages">
+						3
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/axios.js"></script>
+	<script type="text/javascript" src="js/qs.js"></script>
+	<script type="text/javascript">
+		var hash=window.location.hash;
+		if(hash==''){
+			location.href='index.html';
+		}
+		hash=hash.replace('#','');
+		var keyword='';
+		var tno='';
+		if(hash=='1' || hash=='2' || hash=='3' || hash=='4' || hash=='5'){
+			tno=hash;
+		}else{
+			hash=hash.split('=');
+			keyword=hash[1];
+		}
+		var app=new Vue({
+			el:'#search',
+			data:{
+				products:{},
+				kd:'',
+				limit:7,
+				page:1,
+				flag:true
+			},
+			mounted:function(){
+				this.kd==keyword;
+				if(tno==''){
+					axios({
+						url:'product.action?op=findVague',
+    					method:'post',
+    					params:{keyword:keyword,page:this.page,limit:this.limit}
+					}).then(result=>{
+						this.products=result.data;
+					});
+				}else{
+					axios({
+						url:'product.action?op=findById',
+						method:'post',
+						params:{tno:tno}
+					}).then(result=>{
+						this.products=result.data;
+						this.flag=false;
+					})
+				}
+			},
+			methods:{
+				find:function(){
+					if(this.kd!=null){
+						axios({
+	    					url:'product.action?op=findVague',
+	    					method:'post',
+	    					params:{keyword:this.kd}
+	    				}).then(result=>{
+	    					if(result.data=='暂无此商品!'){
+	    						alert('暂无此商品!');
+	    						return;
+	    					}else{
+	    						window.open('search.html#keyword='+this.kd);
+	    						window.close();
+	    					}
+	    				});
+					}
+				},
+				prevPage:function(){
+					if(this.page==1){
+						alert('您已在首页!');
+						return;
+					}
+					this.page--;
+					if(keyword!=''){
+						axios({
+	    					url:'product.action?op=findVague',
+	    					method:'post',
+	    					params:{keyword:keyword,page:this.page,limit:this.limit}
+	    				}).then(result=>{
+	    					if(result.data=='暂无此商品!'){
+	    						this.page++;
+	    						return;
+	    					}else{
+	    						this.products=result.data;
+	    					}
+	    				});
+					}else{
+						axios({
+							url:'product.action?op=findPage',
+							method:'post',
+							params:{page:this.page,limit:this.limit}
+						}).then(result=>{
+							this.products=result.data;
+						});
+					}
+				},
+				nextPage:function(){
+					this.page++;
+					if(keyword!=''){
+						axios({
+	    					url:'product.action?op=findVague',
+	    					method:'post',
+	    					params:{keyword:keyword,page:this.page,limit:this.limit}
+	    				}).then(result=>{
+	    					if(result.data=='暂无此商品!'){
+	    						alert("您已在尾页!");
+								this.page--;
+								return;
+	    					}else{
+	    						this.products=result.data;	    					
+	    					}
+	    				});
+					}else{
+						axios({
+							url:'product.action?op=findPage',
+							method:'post',
+							params:{page:this.page,limit:this.limit}
+						}).then(result=>{
+							if(result.data.length!=0){
+								this.products=result.data;
+							}else{
+								alert("您已在尾页!");
+								this.page--;
+								return;
+							}
+						});
+					}
+				}
+			}
+		});
+	</script>
+</html>
