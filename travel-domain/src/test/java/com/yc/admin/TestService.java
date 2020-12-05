@@ -2,7 +2,11 @@ package com.yc.admin;
 
 
 import com.yc.travel.admin.domain.AdminDomain;
+import com.yc.travel.admin.domain.ProductDomain;
+import com.yc.travel.admin.domain.PicsDomain;
 import com.yc.travel.admin.service.AdminService;
+import com.yc.travel.admin.service.PicsService;
+import com.yc.travel.admin.service.ProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +27,32 @@ public class TestService {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private PicsService picsService;
+
     @Test
     public void testList() {
         logger.info("调用adminService.list");
         List<AdminDomain> list = adminService.list();
+        System.out.println(list);
+    }
+
+
+    @Test
+    public void testList1() {
+        logger.info("调用productService.list");
+        List<ProductDomain> list = productService.list();
+        System.out.println(list);
+    }
+
+
+    @Test
+    public void testList2() {
+        logger.info("调用picsService.list");
+        List<PicsDomain> list = picsService.list();
         System.out.println(list);
     }
 
