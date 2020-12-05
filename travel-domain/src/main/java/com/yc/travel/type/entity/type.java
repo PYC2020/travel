@@ -1,4 +1,4 @@
-package com.yc.travel.admin.entity;
+package com.yc.travel.type.entity;
 
 
 import lombok.Data;

@@ -1,11 +1,10 @@
 package com.yc.travel.admin.domain;
 
+import com.yc.travel.pics.domain.PageDomain;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class AdminDomain extends PageDomain{
+public class AdminDomain extends PageDomain {
     private Integer aid;
     private String aname;
     private String pwd;

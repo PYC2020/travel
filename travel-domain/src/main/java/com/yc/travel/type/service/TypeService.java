@@ -1,6 +1,6 @@
-package com.yc.travel.admin.service;
+package com.yc.travel.type.service;
 
-import com.yc.travel.admin.domain.TypeDomain;
+import com.yc.travel.type.domain.TypeDomain;
 
 import java.util.List;
 

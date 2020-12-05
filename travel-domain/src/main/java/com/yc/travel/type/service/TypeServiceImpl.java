@@ -1,8 +1,8 @@
-package com.yc.travel.admin.service;
+package com.yc.travel.type.service;
 
-import com.yc.travel.admin.dao.Impl.typeMapper;
-import com.yc.travel.admin.domain.TypeDomain;
-import com.yc.travel.admin.entity.type;
+import com.yc.travel.type.dao.Impl.typeMapper;
+import com.yc.travel.type.domain.TypeDomain;
+import com.yc.travel.type.entity.type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

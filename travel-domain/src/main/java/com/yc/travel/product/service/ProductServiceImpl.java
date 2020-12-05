@@ -1,8 +1,8 @@
-package com.yc.travel.admin.service;
+package com.yc.travel.product.service;
 
-import com.yc.travel.admin.dao.Impl.productMapper;
-import com.yc.travel.admin.domain.ProductDomain;
-import com.yc.travel.admin.entity.product;
+import com.yc.travel.product.dao.Impl.productMapper;
+import com.yc.travel.product.domain.ProductDomain;
+import com.yc.travel.product.entity.product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.yc.travel.admin.domain;
+package com.yc.travel.pics.domain;
 
 import lombok.Data;
 

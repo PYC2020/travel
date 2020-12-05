@@ -1,8 +1,8 @@
-package com.yc.travel.admin.service;
+package com.yc.travel.pics.service;
 
-import com.yc.travel.admin.dao.Impl.picsMapper;
-import com.yc.travel.admin.domain.PicsDomain;
-import com.yc.travel.admin.entity.pics;
+import com.yc.travel.pics.domain.PicsDomain;
+import com.yc.travel.pics.dao.Impl.picsMapper;
+import com.yc.travel.pics.entity.pics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

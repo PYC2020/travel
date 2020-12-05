@@ -1,9 +1,10 @@
-package com.yc.travel.admin.domain;
+package com.yc.travel.product.domain;
 
+import com.yc.travel.pics.domain.PageDomain;
 import lombok.Data;
 
 @Data
-public class ProductDomain extends PageDomain{
+public class ProductDomain extends PageDomain {
     private Integer pid;
     private String pname;
     private Integer tno;

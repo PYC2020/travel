@@ -1,6 +1,6 @@
-package com.yc.travel.admin.service;
+package com.yc.travel.pics.service;
 
-import com.yc.travel.admin.domain.PicsDomain;
+import com.yc.travel.pics.domain.PicsDomain;
 
 import java.util.List;
 
