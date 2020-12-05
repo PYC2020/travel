@@ -8,13 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="travel-domain" />
-        <module name="travel-security" />
-        <module name="travel-api" />
-        <module name="travel-zuul" />
-        <module name="travel-config1" />
-        <module name="travel-config2" />
-        <module name="travel-config3" />
         <module name="travel-Eureka-Config" />
+        <module name="travel-security" />
+        <module name="travel-zuul" />
+        <module name="travel-api" />
+        <module name="travel-config3" />
+        <module name="travel-config2" />
+        <module name="travel-config1" />
       </profile>
     </annotationProcessing>
   </component>
