@@ -11,4 +11,7 @@ public interface PicsService {
      * @return
      */
     public List<PicsDomain> list();
+
+
+    public PicsDomain findOne(Integer id);
 }

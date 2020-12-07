@@ -27,4 +27,13 @@ public class ProductServiceImpl implements ProductService {
         }
         return r;
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ProductDomain findOne(Integer id) {
+        product p = this.pm.selectByPrimaryKey(id);
+        ProductDomain productDomain = new ProductDomain(p.getPid(),p.getPname(),p.getTno(),p.getPrice(),
+            p.getIntro(),p.getBalance(),p.getCompany(),p.getPic());
+        return productDomain;
+    }
 }

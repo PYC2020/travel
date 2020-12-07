@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ProductService {
     public List<ProductDomain> list();
+
+    public ProductDomain findOne(Integer id);
 }

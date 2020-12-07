@@ -4,6 +4,8 @@ package com.yc.pics.service;
 import com.yc.pics.dao.Impl.picsMapper;
 import com.yc.pics.domain.PicsDomain;
 import com.yc.pics.entity.pics;
+import com.yc.product.domain.ProductDomain;
+import com.yc.product.entity.product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,5 +28,14 @@ public class PicsServiceImpl implements PicsService {
             r.add(pd);
         }
         return r;
+    }
+
+
+    @Transactional(readOnly = true)
+    @Override
+    public PicsDomain findOne(Integer id) {
+        pics p = this.pm.selectByPrimaryKey(id);
+        PicsDomain picsDomain = new PicsDomain(p.getPid(),p.getPicid(),p.getPicpath());
+        return picsDomain;
     }
 }

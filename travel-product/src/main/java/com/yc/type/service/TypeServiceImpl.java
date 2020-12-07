@@ -1,5 +1,7 @@
 package com.yc.type.service;
 
+import com.yc.product.domain.ProductDomain;
+import com.yc.product.entity.product;
 import com.yc.type.dao.Impl.typeMapper;
 import com.yc.type.domain.TypeDomain;
 import com.yc.type.entity.type;
@@ -25,5 +27,14 @@ public class TypeServiceImpl implements TypeService {
             r.add(td);
         }
         return r;
+    }
+
+
+    @Transactional(readOnly = true)
+    @Override
+    public TypeDomain findOne(Integer id) {
+        type t = this.tm.selectByPrimaryKey(id);
+        TypeDomain typeDomain = new TypeDomain(t.getTno(),t.getTname(),t.getTpic(),t.getStatus());
+        return typeDomain;
     }
 }

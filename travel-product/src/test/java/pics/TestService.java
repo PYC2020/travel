@@ -20,9 +20,6 @@ public class TestService {
     @Autowired
     private PicsService picService;
 
-
-
-
     @Test
     public void testList() {
         logger.info("调用adminService.list");
