@@ -7,21 +7,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="travel-Eureka-Config" />
-        <module name="travel-security" />
-        <module name="travel-users" />
+        <module name="base-Eureka-Config" />
         <module name="travel-comment" />
-        <module name="travel-zuul" />
-        <module name="travel-order" />
-        <module name="travel-product" />
-        <module name="travel-api" />
-        <module name="travel-config3" />
-        <module name="travel-config2" />
-        <module name="base-config1" />
+        <module name="travel-users" />
+        <module name="base-security" />
         <module name="travel-web" />
+        <module name="travel-order" />
+        <module name="base-zuul" />
+        <module name="travel-api" />
+        <module name="base-config2" />
+        <module name="base-config1" />
+        <module name="travel-product" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="travel-config3" target="1.8" />
       <module name="travel-domain" target="1.8" />
     </bytecodeTargetLevel>
   </component>

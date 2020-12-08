@@ -12,11 +12,10 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>base-config1</module>
-        <module>travel-config2</module>
-        <module>travel-config3</module>
-        <module>travel-Eureka-Config</module>
-        <module>travel-zuul</module>
-        <module>travel-security</module>
+        <module>base-config2</module>
+        <module>base-Eureka-Config</module>
+        <module>base-zuul</module>
+        <module>base-security</module>
         <module>travel-api</module>
         <module>travel-product</module>
         <module>travel-comment</module>
@@ -88,7 +87,7 @@
 
             <dependency>
                 <groupId>com.yc</groupId>
-                <artifactId>travel-security</artifactId>
+                <artifactId>base-security</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 

@@ -9,6 +9,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/travel-config3/pom.xml" />
         <option value="$PROJECT_DIR$/travel-domain/pom.xml" />
       </set>
     </option>
