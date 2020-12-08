@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>travel-zuul</artifactId>
+    <artifactId>base-zuul</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
