@@ -15,7 +15,7 @@
         <!--调用基于zuul的客户端 -->
         <dependency>
             <groupId>com.yc</groupId>
-            <artifactId>travel-zuul</artifactId>
+            <artifactId>base-zuul</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

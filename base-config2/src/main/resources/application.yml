@@ -36,7 +36,7 @@ spring:
     config:
       server:
         git:     #git服务器配置
-          uri: https://github.com/zhangyingchengqi/picLib-config.git
+          uri: https://github.com/PYC2020/yc81.git
           label: main
     bus:     # 开启bus消息总线
       trace:
