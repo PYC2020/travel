@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/travel/product")
 public class ProductController {
 
     private static Logger logger = LoggerFactory.getLogger(ProductController.class);

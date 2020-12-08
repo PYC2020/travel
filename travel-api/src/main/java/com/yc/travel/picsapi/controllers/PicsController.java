@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/pics")
+@RequestMapping("/travel/pics")
 public class PicsController {
 
     private static Logger logger = LoggerFactory.getLogger(PicsController.class);

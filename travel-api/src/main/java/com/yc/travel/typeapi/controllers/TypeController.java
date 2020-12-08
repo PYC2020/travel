@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/type")
+@RequestMapping("/travel/type")
 public class TypeController {
 
     private static Logger logger = LoggerFactory.getLogger(TypeController.class);
