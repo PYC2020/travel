@@ -17,10 +17,8 @@ spring:
 
 eureka:
   client:
-    register-with-eureka: true    #是否要注册到eureka, 解决eureka启动时报错
     service-url:
       defaultZone: http://admin:a@localhost:7301/eureka
   instance:
     prefer-ip-address: true
     instance-id: travel-config1
-

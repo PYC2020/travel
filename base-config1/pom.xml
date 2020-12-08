@@ -17,8 +17,9 @@
         </dependency>
         <!--加入安全认证 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>com.yc</groupId>
+            <artifactId>base-security</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
