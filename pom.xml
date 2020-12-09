@@ -22,6 +22,7 @@
         <module>travel-users</module>
         <module>travel-order</module>
         <module>travel-web</module>
+        <module>travel-client-zuul</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

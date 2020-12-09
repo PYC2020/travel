@@ -11,14 +11,15 @@
         <module name="travel-comment" />
         <module name="travel-users" />
         <module name="base-security" />
-        <module name="travel-web" />
-        <module name="travel-order" />
-        <module name="base-config1" />
-        <module name="base-zuul" />
-        <module name="base-config2" />
-        <module name="travel-zuul" />
         <module name="travel-api" />
+        <module name="base-config2" />
+        <module name="travel-order" />
+        <module name="base-zuul" />
         <module name="travel-product" />
+        <module name="travel-client-zuul" />
+        <module name="travel-zuul" />
+        <module name="base-config1" />
+        <module name="travel-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

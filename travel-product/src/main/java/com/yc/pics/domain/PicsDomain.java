@@ -14,4 +14,8 @@ public class PicsDomain extends PageDomain{
         this.picpath=picpath;
     }
 
+    public PicsDomain(){
+
+    }
+
 }

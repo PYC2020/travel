@@ -25,6 +25,14 @@
 #    lease-expiration-duration-in-seconds: 90  #如果现在超过了5s的时间间隔( default: 90 s )
 #    lease-renewal-interval-in-seconds: 30   #设置心跳的时间间隔( default:30s )
 
+
+
+
+
+
+# 在/opt kafka....中输入
+# 启动zookeeper  bin/zookeeper-server-start.sh config/zookeeper.properties
+# 启动Kafka  bin/kafka-server-start.sh config/server.properties  &
 server:
   port: 7101
 spring:
@@ -36,7 +44,7 @@ spring:
     config:
       server:
         git:     #git服务器配置
-          uri: https://github.com/zhangyingchengqi/picLib-config.git
+          uri: https://github.com/PYC2020/yc81.git
           label: main
     bus:     # 开启bus消息总线
       trace:
