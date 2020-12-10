@@ -18,11 +18,11 @@ import java.util.Properties;
 
 //专用的测试配置类
 @Configuration
-@ComponentScan("com.yc")
+@ComponentScan("com")
 @EnableTransactionManagement   //开启事务管理
 public class DaoConfiguration {
 
-    @Bean   //事件源
+    @Bean   //事件源yc.admin
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");

@@ -23,6 +23,9 @@
         <module>travel-order</module>
         <module>travel-web</module>
         <module>travel-client-zuul</module>
+        <module>base-turbine</module>
+        <module>untitled</module>
+        <module>base-dashboard</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
