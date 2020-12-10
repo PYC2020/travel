@@ -1,6 +1,6 @@
 spring:
   application:
-    name: microservice-provider-travel   #应用服务名
+    name: provider-travel   #应用服务名
   cloud:
     config:
       name: travel-restapi-config      # 定义要读取的资源文件的名称即:    microservice-config-client.yml
@@ -21,6 +21,6 @@ eureka:
       defaultZone: http://admin:a@eureka1:7301/eureka
   instance:
     preferIpAddress: true
-    instance-id: microservice-provider-travel_1   #实例名
+    instance-id: provider-travel_1   #实例名
     lease-expiration-duration-in-seconds: 90  #如果现在超过了5s的时间间隔( default: 90 s )
     lease-renewal-interval-in-seconds: 30   #设置心跳的时间间隔( default:30s )
