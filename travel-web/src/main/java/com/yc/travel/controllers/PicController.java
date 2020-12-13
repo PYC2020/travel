@@ -4,7 +4,7 @@ package com.yc.travel.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yc.pics.domain.PicsDomain;
 import com.yc.travel.pics.future.TravelPicsFuture;
-//import com.yc.travel.services.AsyncThreadPool;
+import com.yc.travel.services.AsyncThreadPool;
 import com.yc.travel.services.FastefsClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

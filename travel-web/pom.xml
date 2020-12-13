@@ -64,6 +64,12 @@
         </dependency>
         <dependency>
             <groupId>com.yc</groupId>
+            <artifactId>product-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.yc</groupId>
             <artifactId>travel-client-zuul</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
