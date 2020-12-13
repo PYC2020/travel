@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>旅游网-商品详情</title>
+		<link rel="stylesheet" href="css/comment.css">
+	</head>
+
+	<body>
+		<div id="comment_html">
+			<div id="top_menu">
+				<span id="welcome">Welcome！</span>
+				<a href="cart.html" id="cart">我的订单</a>
+				<a href="user.html" id="user">用户中心</a>
+				<a href="index.html" id="index">首页</a>
+			</div>
+			<div id="comment_div">
+				<div id="top">
+					<span style="fon-size:40px;">Welcome!{{uname}}~Please share with us</span>
+				</div>
+				<div id="center">
+					<div id="left">
+						<div id="goodInfo">
+							<span>商品:&nbsp;{{product.pname}}</span><img :src="product.pic">
+						</div>
+						<div id="feel_div">
+							<span>满意度:</span><br />
+							<input type="radio" name="like" id="like" value="满意" v-model="likes"/>&nbsp;满意<img src="images/满意.jpg"/><br />
+							<input type="radio" name="like" id="nolike" value="不满意" v-model="likes"/>&nbsp;不满意<img src="images/不满意.jpg"/>
+						</div>
+					</div>
+					<div id="right">
+						<textarea id="content" v-model="content"></textarea>
+						<div id="footer">
+							<a href="javascript:;" id="content_a" @click="add()">发布评论</a>&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="user.html" id="back">返回</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/axios.js"></script>
+		<script type="text/javascript" src="js/qs.js"></script>
+		<script type="text/javascript">
+			var hash=window.location.hash;
+			hash=hash.replace('#','');
+			hash=hash.split('&');
+			if(hash.length!=4){
+				window.location.href='login.html';
+			}
+			var oid=hash[0];
+			var uid=hash[1];
+			var pid=hash[2];
+			var cuname=hash[3];
+			var app=new Vue({
+				el:"#comment_html",
+				data:{
+					content:'',
+					likes:'',
+					product:{},
+					uname:''
+				},
+				methods:{
+					add:function(){
+						if(this.comment==''){
+							alert('评论不能为空!');
+							return;
+						}
+						axios({
+							url:"comment.action?op=add",
+							method:'post',
+							params:{oid:oid,uid:uid,pid:pid,content:this.content,likes:this.likes}
+						}).then(result=>{
+							if(result.data>0){
+								alert('评论成功!');
+								location.href='user.html';
+							}
+						});
+					}
+				},
+				mounted:function(){
+					this.uname=cuname;
+					axios.all([checkLogin(),findProduct()]).then(axios.spread((fn1,fn2)=>{
+						if(!fn1.data.user){
+							location.href='login.html';
+						}else{
+							this.product=fn2.data[0];
+						}
+					}))
+					
+				}
+			});
+			
+			//检查登录
+			function checkLogin(){
+	    		return axios.get('user.action?op=check');
+	    	}
+			
+			//查看商品
+			function findProduct(){
+				return axios.get("product.action?op=findById&pid="+pid);
+			}
+		</script>
+	</body>
+</html>

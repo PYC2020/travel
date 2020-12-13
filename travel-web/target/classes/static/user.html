@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>旅游网-商品详情</title>
+		<link rel="stylesheet" type="text/css" href="css/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="css/icon.css" />
+		<link rel="stylesheet" type="text/css" href="css/ui.css" />
+		<link rel="stylesheet" href="css/user.css">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+		<!--语言支持简体中文-->
+		<script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+
+	<body>
+		<div id="user_div">
+			<div id="top_menu">
+				<span id="welcome">Welcome！</span>
+				<a href="cart.html" id="cart">我的订单</a>
+				<a href="user.html" id="user">用户中心</a>
+				<a href="index.html" id="index">首页</a>
+			</div>
+			<div id="top_bg">
+				<span>Infomation & User</span>
+			</div>
+			<div id="tab_div">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#home" aria-controls="home" role="tab" data-toggle="tab">个人信息</a>
+					</li>
+					<li role="presentation">
+						<a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">查看订单</a>
+					</li>
+
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="home">
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span> 用户名:
+						<span>{{user.uname}}</span><br /><br />
+						<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> 密码:
+						<span>********</span><br /><br />
+						<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 电话号码:
+						<span>{{user.tel}}</span><br /><br />
+						<a id="update_a">修改</a>
+						<div id="update_div">
+							<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> 密码&nbsp;
+							<input type="password" v-model="pwd"/><br /><br />
+							<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 电话号码
+							<input type="text" v-model="tel"/><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a id="update_btn" href="javascript:;" @click="updateUser()">确定</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a id="close_btn">关闭</a>
+						</div>
+
+					</div>
+					<div role="tabpanel" class="tab-pane" id="profile">
+						<!-- 订单 -->
+						<div class="order_con">
+							<div class="cart_list_th clearfix">
+								<ul>
+									<li class="col01">订单编号</li>
+									<li class="col02">商品图片</li>
+									<li class="col03">商品名称</li>
+									<li class="col04">下单时间</li>
+									<li class="col05">金额</li>
+									<li class="col06">操作</li>
+								</ul>
+							</div>
+							<div class="cart_list_td clearfix" v-for="o in orders">
+								<ul>
+									<li class="col01">{{o.oid}}</li>
+									<li class="col02"><img :src="o.pic"></li>
+									<li class="col03"><span>{{o.pname}}</span></li>
+									<li class="col04"><span>{{o.odate}}</span></li>
+									<li class="col05"><span>￥{{o.num*o.price}}</span></li>
+									<li class="col06">
+										<a href="cart.html" v-if="o.status==0">未支付</a>
+										<a :href="'comment.html#'+o.oid+'&'+o.uid+'&'+o.pid+'&'+user.uname" v-if="o.status==1">评价</a>
+										<a href="javascript:;" v-if="o.status==2">已评价</a>
+										<a href="javascript:;" v-if="o.status==0" @click="del(o.oid)">删除</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/axios.js"></script>
+		<script type="text/javascript" src="js/qs.js"></script>
+		<script type="text/javascript" src="js/user.js"></script>
+		<script type="text/javascript">
+			var app=new Vue({
+				el:'#user_div',
+				data:{
+					orders:{},
+					user:{},
+					pwd:'',
+					tel:''
+				},
+				methods:{
+					updateUser:function(){
+						if(this.pwd=='' && this.tel==''){
+							alert('不能全为空!');
+							return;
+						}
+						axios({
+							url:"user.action?op=update",
+							method:'post',
+							params:{pwd:this.pwd,tel:this.tel}
+						}).then(result=>{
+							if(result.data>0){
+								alert('修改成功！');
+								location.href='user.html';
+							}
+						})
+					},
+					del:function(oid){
+						if(confirm("您确定要删除吗?")){
+							axios({
+								url:'orders.action?op=delete',
+								method:'post',
+								params:{oid:oid}
+							}).then(result=>{
+								if(result.data>0){
+									alert('删除成功!');
+									location.href='user.html';
+								}
+							})
+						}else{
+							alert("删除失败!");
+						}
+					}
+				},
+				mounted:function(){
+					axios.all([checkLogin(),findByUid()]).then(axios.spread((fn1,fn2)=>{
+						if(!fn1.data.user){
+							location.href='login.html';
+						}else{
+							this.user=fn1.data.user;
+							this.orders=fn2.data;
+						}
+					}));
+				}
+			});
+			
+			//检查登录
+			function checkLogin(){
+	    		return axios.get('user.action?op=check');
+	    	}
+			
+			function findByUid(){
+				return axios.get("orders.action?op=findUid");
+			}
+		</script>
+	</body>
+
+</html>

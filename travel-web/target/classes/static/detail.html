@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" charset="UTF-8" content="width=device-width,initial-scale=1">
+		<title>旅游网-商品详情</title>
+		<link rel="stylesheet" type="text/css" href="css/ui.css" />
+		<link rel="stylesheet" type="text/css" href="css/detail.css">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<!--语言支持简体中文-->
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+
+	<body>
+		<div id="detail">
+			<div id="top_menu">
+				<span id="welcome">Welcome！</span>
+				<a href="cart.html" id="cart">我的订单</a>
+				<a href="user.html" id="user">用户中心</a>
+				<a href="index.html" id="index">首页</a>
+			</div>
+			<div class="search_div">
+				<input type="text" placeholder="搜素商品" class="input_text" id="search_input" v-model="keyword">
+				<input type="button" value="搜索" class="input_btn" id="search_btn" @click="find()">
+			</div>
+			<div id="show_good">
+				<!--轮播图-->
+				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+						<div class="item active">
+							<img :src="pic" alt="...">
+							<div class="carousel-caption">
+							</div>
+						</div>
+						<div class="item" v-for="p in pics">
+							<img :src="p.picpath" alt="...">
+							<div class="carousel-caption">
+							</div>
+						</div>
+					</div>
+
+					<!-- Controls -->
+					<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div>
+				<div id="descr">
+					<div id="goodsType" style="font-size: 33px;">
+						【{{product.pname}}】
+					</div>
+					<div id="intro">
+						<span style="font-size: 20px;">{{product.intro}} </span>
+					</div>
+					<div id="sale">
+						<div id="up">
+							<span style="color: red; font-size: 30px; font-weight: 3px;" id="price">￥{{product.price}}</span>
+							<span style="color: red; ">起/人</span>&nbsp;&nbsp;&nbsp;
+							<span style="color: darkgray;" id="qjsm">起价说明</span>
+							<div class="editable1">起价说明：往返机票，旅游期间车费，餐费，导游服务费，旅行社责任险。不含：景点门票。客服热线：4008-112-111</div>
+
+						</div>
+						<div id="down">
+							<span style="color: darkgray;">活动信息</span>
+							<span class="youhui" style="color: red;" id="djq">代金券</span>
+							<div class="editable2">使用代金券，可享受立减优惠<span style="color: lightgray;">(不可与本地其他优惠同时使用，保险订单金额不参与优惠活动)</span></div>
+							<span class="youhui" style="color: red;" id="zxhb">专享红包</span>
+							<div class="editable3">使用专享红包，可享受立减优惠<span style="color: lightgray;">(不可与本地其他优惠同时使用，保险订单金额不参与优惠活动)</span></div>
+							<span class="youhui" style="color: red;" id="xjhb">现金红包</span>
+							<div class="editable4">使用现金红包，可享受立减优惠<span style="color: lightgray;">(不可与本地其他优惠同时使用，保险订单金额不参与优惠活动)</span></div>
+						</div>
+					</div>
+					<div id="history">
+						<span id="finish" name="finish_order">历史出行人数&nbsp;{{tripnum}}</span>|
+						<span id="comment_descr" style="color: red;width: 100px;">满意度&nbsp;{{satisfy}}%</span>&nbsp;&nbsp;&nbsp;
+						<span style="color:black;text-align: left;width: 100px;">{{comtotal}}&nbsp;条评论</span>|
+						<span style="text-align: center;width: 100px;">库存&nbsp;{{product.balance}}</span>
+					</div>
+					<div id="add_order">
+						<div id="input_order">
+							<label>出游日期&nbsp;&nbsp;&nbsp;</label><input id="sdate" type="date" v-model="sdate"/><br /><br />
+							<label>回程日期&nbsp;&nbsp;&nbsp;</label><input id="edate" type="date" v-model="edate"/><br /><br />
+							<div class="num_add">
+								<label>出行人数&nbsp;&nbsp;&nbsp;</label>
+								<a href="javascript:void(0)"  class="sub" @click="sub()">-</a>
+								<input type="text" readonly="readonly" class="num_show" v-model="num">
+								<a href="javascript:void(0)"  class="add" @click="add()">+</a>
+							</div>
+						</div>
+						<div id="total">
+							<div id="heji" style="height: 50%; width: 100%; float: right;">
+								需付款：<span id="totalPrice" style="color: red; font-size: 40px;">￥{{num*product.price}}</span>
+							</div>
+							<a href="javascript:;" id="topay" @click="addcart()">立即预订</a>
+							<a href="javascript:;" id="add_cart" @click="addcart()">加入购物车</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="big_comment">
+				<div id="comment_good">
+					<div>
+
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active">
+								<a href="#home" aria-controls="home" role="tab" data-toggle="tab">重要提示</a>
+							</li>
+							<li role="presentation">
+								<a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">退款说明</a>
+							</li>
+							<li role="presentation">
+								<a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">我要点评</a>
+							</li>
+						</ul>
+
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="home">
+								<p>一：出于安全考虑，本产品不接受孕妇、有心脏病、冠心病、高血压、呼吸系统疾病，精神类疾病以及做过重大手术的游客的的游客预订，敬请谅解。</p>
+								<p>二：请您在预订时务必提供准确、完整的信息（姓名、性别、证件号码、联系方式），以免产生预订错误，影响出行。如因客人提供错误个人信息而造成损失，我社不承担任何责任。</p>
+								<p>三：特别提醒，在自由活动期间，注意人身财产安全。行程中请牢记：1、导游手机号。2、旅游车牌号。3、街道、地名、标志性景点建筑。</p>
+								<p>四：此报价为全程制卡优惠政策，如游客在行程进行中因自身原因自愿取消行程或中途离团，未产生的旅游项目，一律视为自动放弃，未产生的费用一概不退。</p>
+								<p>五：此销售价格为房、餐、车、门票、机票组合批发套票，比任何证件的折扣都低，故持有老年证、军官证、学生证等证件均不再产生二次优惠，且不退还所产生的折扣费用。</p>
+								<p>六：为了确保您能按时参加跟团旅游，平时请至少提前1天以上预约，旅游旺季请您至少提前3天预约，出团时间占到寒暑假、旅游黄金周等节假日，团期价格与车位请咨询旅行社后再拍单(以实时价格和当天车位为准)。 </p>
+								<p>七：关于发票，我社可提供机打发票，如需发票的请提前联系客服.行程结束后索要发票旅行社概不提供，敬请谅解。</p>
+								<p>八：如果您在行程当中出现任何问题请第一时间联系客服予以解决，行程结束后的投诉恕旅行社无法处理。</p>
+								<p>九：行程有售卖当地特色产品的购物店，请配合团进团出，不强制消费，请您谨慎消费，保留好票据。 </p>
+								<p>十：此价格为限时秒杀特价，活动人群28-60岁游客可直接下单，可以享受活动特价，其他年龄段价格现询客服，如有误拍请在线咨询客服或者致电（4001-000-000）处理，给您带来的不便请进行谅解。</p>
+								<span style="color: darkgray;font-size: 10px;">为普及旅游安全知识及旅游文明公约，使您的旅程顺利圆满完成，特制定《Travel网旅游安全手册》，请您认真阅读并切实遵守。</span>
+
+							</div>
+							<div role="tabpanel" class="tab-pane" id="profile">
+								<p>【旅游者违约】</p>
+								<p>在行程前解除合同的，必要的费用扣除标准为：</p>
+								<p>行程开始前4-7日，按旅游费用总额收取20%损失费</p>
+								<p>行程开始前1-3日，按旅游费用总额收取40%损失费</p>
+								<p>行程开始当日：按旅游费用总额收取60%损失费</p>
+								<p>如按上述约定比例扣除的必要费用低于实际损失费用，旅游者应按照实际发生的费用支付。</p>
+								<p>【供应商违约】</p>
+								<p>在规定时间内违约，除退还全额旅游费用外，另支付违约金比例如下：</p>
+								<p>行程开始前4-7日，退还全额旅游费用，支付旅游费用总额10%的违约金。</p>
+								<p>行程开始前1-3日，退还全额旅游费用，支付旅游费用总额15%的违约金。</p>
+								<p>行程开始当日，退还全额旅游费用，支付旅游费用总额20%的违约金。</p>
+								<p>如按上述比例支付的违约金不足以赔偿旅游者的实际损失，旅行社应当按实际损失对旅游者予以赔偿。</p>
+							</div>
+							<div role="tabpanel" class="tab-pane" id="messages">
+								<div id="feel_div">
+									<div id="satis_div">
+										<span id="satis" style="color: orangered;font-size: 50px;">{{satisfy}}%</span>满意度
+										<br />
+										<span id="comment_count">{{comtotal}}</span>&nbsp;条真实出行点评
+									</div>
+								</div>
+								<!-- 评论区 -->
+								<div id="show_comment">
+									<!-- 以往的评论 -->
+									<div class="item_comment" v-for="c in comments">
+										<div class="comment_show">
+											<div class="title1">【满意情况】</div><span>{{c.likes}}</span><img :src=`images/${c.likes}.jpg` />
+											<div class="title2">
+												<span>【总体感受】</span>
+												<div>
+													<p id="comment">{{c.content}}
+													</p>
+												</div>
+											</div>
+											<div class="title3">
+												【发布信息】<span id="systime">{{c.cdate}}</span>来自旅游网官方网站
+											</div>
+
+										</div>
+										<div class="user_show">
+											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;
+											<span id="uname">{{c.uid}}</span>
+											<div><span id="sysdate">{{c.sdate}}</span>&nbsp;&nbsp;出行</div>
+											<span>来自旅游网官方网站</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 公司详情div -->
+				<div id="company_static">
+					<span style="font-size: 25px;font-weight: 5px;">携亚国旅专营店</span><br />
+					<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"><span style="color: darkgray;">旅游网认证商家</span>
+					<div id="phone">
+						<span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+						<span style="font-size: 18px;font-weight: 2px;">24小时咨询热线</span><br /><br />
+						&nbsp;&nbsp;<span>4008-197-690</span><br /><br />
+						&nbsp;&nbsp;<span>周一-周日 : 00:00-24:00</span>
+					</div></span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/axios.js"></script>
+	<script type="text/javascript" src="js/qs.js"></script>
+	<script type="text/javascript" src="js/detail.js"></script>
+	<script type="text/javascript">
+		var hash=window.location.hash;
+		var pid=hash.replace('#','');
+		var app=new Vue({
+			el:'#detail',
+			data:{
+				onlogin:false,
+				pic:'',
+				pics:{},
+				product:{},
+				comments:{},
+				comtotal:'',
+				satisfy:'',
+				tripnum:'',
+				sdate:'',
+				edate:'',
+				num:'1',
+				keyword:''
+			},
+			methods:{
+				addcart:function(){
+					if(this.onlogin==false){
+						alert('请先登录!');
+						location.href="login.html";
+						return;
+					}
+					if(this.sdate=='' || this.edate==''){
+						alert('请填写出行时期和回程日期!');
+						return;
+					}
+					if(this.sdate>this.edate || this.sdate==this.edate){
+						alert('回程日期须在出行日期后!');
+						return;
+					}
+					axios({
+						url:'orders.action',
+						method:'post',
+						params:{op:'add',pid:pid,sdate:this.sdate,edate:this.edate,num:this.num}
+					}).then(result=>{
+						if(result.data>0){
+							alert('添加成功!');
+							location.href="cart.html";
+						}else{
+							alert('添加 失败!');
+						}
+					});
+				},
+				add:function(){
+					if(this.num<this.product.balance){
+						this.num++;
+					}else{
+						alert('库存不足!');
+					}
+				},
+				sub:function(){
+					if(this.num>1){
+						this.num--;
+					}
+				},
+				find:function(){
+					if(this.keyword!=null){
+						axios({
+	    					url:'product.action?op=findVague',
+	    					method:'get',
+	    					params:{keyword:this.keyword}
+	    				}).then(result=>{
+	    					if(result.data=='暂无此商品!'){
+	    						alert('暂无此商品!');
+	    						return;
+	    					}else{
+	    						location.href='search.html#keyword='+this.keyword;
+	    					}
+	    				});
+					}
+				}
+			},
+			mounted:function(){
+				axios.all([findPics(),findProduct(),findComment(),comTotal(),comSatisfy(),tripNum(),checkLogin()]).then(axios.spread((fn1,fn2,fn3,fn4,fn5,fn6,fn7)=>{
+					this.pic=fn1.data[0].pic;
+					this.pics=fn1.data;
+					this.product=fn2.data[0];
+					this.comments=fn3.data;
+					this.comtotal=fn4.data;
+					this.satisfy=fn5.data;
+					this.tripnum=fn6.data;
+					if(fn7.data.user){
+						this.onlogin=true;
+					}
+				}));
+			}
+		});
+		
+		//检查是否登录
+    	function checkLogin(){
+    		return axios.get('user.action?op=check');
+    	}
+		
+		//查询图片
+		function findPics(){
+			return axios.get("pics.action?op=findByPid&pid="+pid);
+		}
+		
+		//查询产品信息
+		function findProduct(){
+			return axios.get("product.action?op=findById&pid="+pid);
+		}
+		
+		//查询评论
+		function findComment(){
+			return axios.get("comment.action?op=find&pid="+pid);
+		}
+		
+		//查询评论数
+		function comTotal(){
+			return axios.get("comment.action?op=total&pid="+pid);
+		}
+		
+		//查询满意度
+		function comSatisfy(){
+			return axios.get("comment.action?op=satisfy&pid="+pid);
+		}
+		
+		//历史出行人数
+		function tripNum(){
+			return axios.get("orders.action?op=tripNum&pid="+pid);
+		}
+		</script>
+</html>
