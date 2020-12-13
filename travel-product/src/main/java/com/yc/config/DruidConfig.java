@@ -1,15 +1,15 @@
-package com.yc.pics.config;
+package com.yc.config;
 
 
-/*import com.alibaba.druid.support.http.StatViewServlet;
+import com.alibaba.druid.support.http.StatViewServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;*/
+import org.springframework.context.annotation.Configuration;
 
 //以下配置可以通过 http://localhost:9095/druid  打开druid监控界面
-//@Configuration
+@Configuration
 public class DruidConfig {
-    /*@Bean
+    @Bean
     public ServletRegistrationBean statViewServle() {
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
         //IP白名单
@@ -22,7 +22,7 @@ public class DruidConfig {
         //是否能够重置数据
         servletRegistrationBean.addInitParameter("resetEnable", "false");
         return servletRegistrationBean;
-    }*/
+    }
 
     //    @Bean
 //    public FilterRegistrationBean statFilter() {
