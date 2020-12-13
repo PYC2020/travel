@@ -16,8 +16,8 @@
         <module name="travel-web" />
         <module name="travel-order" />
         <module name="base-zuul" />
-        <module name="base-security" />
         <module name="travel-api" />
+        <module name="base-security" />
         <module name="base-config2" />
         <module name="base-turbine" />
         <module name="base-Eureka-Config" />
@@ -27,6 +27,7 @@
     <bytecodeTargetLevel>
       <module name="travel-config3" target="1.8" />
       <module name="travel-domain" target="1.8" />
+      <module name="travel-zuul" target="1.8" />
       <module name="untitled" target="8" />
     </bytecodeTargetLevel>
   </component>

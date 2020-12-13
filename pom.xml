@@ -11,11 +11,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>base-config1</module>
-        <module>base-config2</module>
-        <module>base-Eureka-Config</module>
-        <module>base-zuul</module>
-        <module>base-security</module>
+
         <module>travel-api</module>
         <module>travel-product</module>
         <module>travel-comment</module>
@@ -23,9 +19,8 @@
         <module>travel-order</module>
         <module>travel-web</module>
         <module>travel-client-zuul</module>
-        <module>base-turbine</module>
-        <module>untitled</module>
-        <module>base-dashboard</module>
+
+        <module>base-microservice</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
