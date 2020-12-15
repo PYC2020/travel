@@ -8,9 +8,7 @@ import com.yc.product.domain.ProductDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +32,17 @@ public class PicsController {
             Map<String, Object> map = new HashMap<>();
             map.put("code", 1);
             map.put("data", pic);
+            return new Gson().toJson(map);
+        });
+    }
+    @RequestMapping(method = RequestMethod.GET)
+    public CompletableFuture<String> save(@RequestBody PicsDomain picDomain) throws Exception {
+        return CompletableFuture.supplyAsync(() -> {
+            picsService.save(picDomain);
+            logger.info("新增->ID=" + picDomain.getPid());
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            map.put("data", picDomain);
             return new Gson().toJson(map);
         });
     }

@@ -1,5 +1,7 @@
 package com.yc.travel;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
+import com.yc.travel.pics.client.TravelPicsClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -10,11 +12,13 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class})//DruidDataSourceAutoConfigure.class,
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class, DruidDataSourceAutoConfigure.class})//
 @EnableDiscoveryClient
 @EnableZuulProxy
 @EnableHystrix
-@EnableFeignClients(basePackages = "com.yc.travel")
+@EnableFeignClients(basePackages = "com.yc.travel")//TravelPicsClient
+//@EnableFeignClients(clients= TravelPicsClient.class)
+
 @EnableCircuitBreaker   //启用断路器
 @SpringCloudApplication
 public class PicWebApp {

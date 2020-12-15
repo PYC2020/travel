@@ -14,9 +14,9 @@ public interface PicsService {
     public List<PicsDomain> list();
 
 
-    public PageDomain<PicsDomain> listByPage(PicsDomain PicDomain);
+    public PageDomain<PicsDomain> listByPage(PicsDomain PicsDomain);
 
-    public void save(PicsDomain picDomain);
+    public void save(PicsDomain picsDomain);
 
 
     public void delete(Integer id);

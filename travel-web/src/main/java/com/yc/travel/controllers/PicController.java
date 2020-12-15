@@ -31,7 +31,7 @@ public class PicController {
     @Autowired
     private TravelPicsFuture travelPicsFuture;
 
-    @Value("${file.path.head:http://39.99.175.175/}")
+    @Value("${file.path.head:http://101.37.202.175/}")
     private String pathHead;
 
     @Autowired
@@ -80,6 +80,7 @@ public class PicController {
         BufferedImage image = ImageIO.read(multipartFile.getInputStream());
         PicsDomain picsDomain = new PicsDomain();
         picsDomain.setPid(pid);
+        picsDomain.setPicpath(filename);
         return travelPicsFuture.create(picsDomain).thenApply(info -> {
             return info;
         });
