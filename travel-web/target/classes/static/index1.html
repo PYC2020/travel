@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>首页</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="js/popper.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="css/index.css" />
+	</head>
+
+	<body>
+	<div id="index">
+		<!--
+        	头部
+        -->
+		<div id="head">
+			<div id="top_menu">
+				<span id="welcome">Welcome！</span>
+				<a href="cart.html" id="cart">我的订单</a>
+				<a href="user.html" id="user">用户中心</a>
+				<a href="index1.html" id="index">首页</a>
+			</div>
+		</div>
+		<!--
+        	身体
+        -->
+		<div id="body">
+			<div id="head_main">
+				<div id="head_main_search">
+					<input type="text" placeholder="搜索旅行地点" name="" id="" value="" v-model="keyword"/>
+					<button type="button" @click="find()"><i>搜索</i></button>
+				</div>
+			</div>
+			<div id="body_topcities">
+				<div :id="'topcities_'+t.tno" v-for="t in types" v-if="t.status==2">
+					<div class="topcities_countryname">
+						<div class="topcities_countryname_text"><a :href="'search.html#'+t.tno">{{t.tname}}</a></div>
+					</div>
+					<div class="topcities_navigation">
+						<a class="topcities_more" :href="'search.html#'+t.tno">查看更多></a>
+					</div>
+					<div class="topcities_city">
+						</a><div v-for="p in products" v-if="t.tno==p.tno"><a :href="'detail.html#'+p.pid"><img :src="p.pic"><p class="city_spend">￥{{p.price}}</p><p>{{p.pname}}</p></a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<!--
+        	脚部
+        -->
+		<div id="feet">
+			<div id="footer_text">
+				<p>&copy;Copyringht&copy;2019-2020</p>
+				<p>组长：王骏杰，组员：罗勤辉、戈布凡、邓雨寒</p>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/axios.js"></script>
+	<script type="text/javascript">
+		var app=new Vue({
+			el:"#index",
+			data:{
+				onlogin:false,
+				uname:'',
+				types:{},
+				products:{},
+				keyword:''
+			},
+			mounted:function(){
+				axios.all([checkLogin(),getProducts()]).then(axios.spread((fn1,fn2)=>{
+					if(fn1.data.user){
+						this.onlogin=true;
+						this.uname=fn1.data.user.uname;
+					}
+					this.types=fn2.data.types;
+					this.products=fn2.data.products;
+				}));
+			},
+			methods:{
+				find:function(){
+					if(this.keyword!=null){
+						axios({
+	    					url:'product.action?op=findVague',
+	    					method:'get',
+	    					params:{keyword:this.keyword}
+	    				}).then(result=>{
+	    					if(result.data=='暂无此商品!'){
+	    						alert('暂无此商品!');
+	    						return;
+	    					}else{
+	    						location.href='search.html#keyword='+this.keyword;
+	    					}
+	    				});
+					}
+				}
+			}
+		});
+		
+		//检查是否登录
+    	function checkLogin(){
+    		return axios.get('user.action?op=check');
+    	}
+		
+		function getProducts(){
+			return axios.get("product.action?op=finds");
+		}
+	</script>
+</html>
