@@ -11,4 +11,6 @@ public interface AdminService {
      * @return
      */
     public List<AdminDomain> list();
+
+    public AdminDomain findOne(Integer id);
 }

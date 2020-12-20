@@ -1,4 +1,4 @@
-package pics;
+package com.yc;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -18,7 +18,7 @@ import java.util.Properties;
 
 //专用的测试配置类
 @Configuration
-@ComponentScan("com")
+@ComponentScan("com.yc.admin")
 @EnableTransactionManagement   //开启事务管理
 public class DaoConfiguration {
 

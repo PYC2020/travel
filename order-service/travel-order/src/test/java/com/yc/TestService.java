@@ -1,7 +1,8 @@
-package pics;
+package com.yc;
 
-import com.yc.admin.domain.AdminDomain;
-import com.yc.admin.service.AdminService;
+
+import com.yc.order.domain.OrderDomain;
+import com.yc.order.service.OrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,15 @@ public class TestService {
     private static final Logger logger = Logger.getLogger(TestService.class.getName());
 
     @Autowired
-    private AdminService adminService;
+    private OrderService orderService;
 
 
 
 
     @Test
     public void testList() {
-        logger.info("调用adminService.list");
-        List<AdminDomain> list = adminService.list();
+        logger.info("调用orderService.list");
+        List<OrderDomain> list = orderService.list();
         System.out.println(list);
     }
 

@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
         Example.Criteria c = example.createCriteria();
         if (CommonUtils.isNotNull(productDomain.getPname())) {
             //条件创建    where 1=1 and description like '%xx%';
-            c.andLike("description", "%" + productDomain.getPname() + "%");
+            c.andLike("pname", "%" + productDomain.getPname() + "%");
         }
         // PageInfo: 分页的结果   总记录数，第几页，每页多少条条，上一页，下一页， 总共多少页.
         PageInfo<product> pageInfo = new PageInfo<product>(pm.selectByExample(example));

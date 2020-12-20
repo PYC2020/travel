@@ -1,17 +1,14 @@
-package com.yc.travel.productapi.controllers;
+package com.yc.travel.userapi.controllers;
 
 
 import com.google.gson.Gson;
-import com.yc.product.domain.ProductDomain;
-import com.yc.product.service.ProductService;
-import com.yc.product.domain.PageDomain;
-import com.yc.pics.util.CommonUtils;
+import com.yc.admin.domain.AdminDomain;
+import com.yc.admin.service.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -19,26 +16,24 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/travel/product")
-public class ProductController {
+@RequestMapping("/user")
+public class UserController {
 
-    private static Logger logger = LoggerFactory.getLogger(ProductController.class);
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private ProductService productService;
+    private AdminService adminService;
 
     @RequestMapping(value = "/{id}")
     public CompletableFuture<String> findById(@PathVariable Integer id) {
         //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
         return CompletableFuture.supplyAsync(() -> {
-            ProductDomain pic = productService.findOne(id);
+            AdminDomain admin = adminService.findOne(id);
             //协议
             Map<String, Object> map = new HashMap<>();
             map.put("code", 1);
-            map.put("data", pic);
+            map.put("data", admin);
             return new Gson().toJson(map);
         });
     }
-
-
 }

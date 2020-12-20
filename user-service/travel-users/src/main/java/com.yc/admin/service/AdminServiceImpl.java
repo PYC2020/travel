@@ -21,9 +21,17 @@ public class AdminServiceImpl implements AdminService {
         List<admin>list=am.selectAll();
         List<AdminDomain> r = new ArrayList<>();
         for (admin a : list) {   //  BeanUtils.copyBean(source, destination);
-            AdminDomain ad = new AdminDomain(a.getAid(), a.getAname(), a.getPwd());
+            AdminDomain ad = new AdminDomain(a.getUid(), a.getUname(), a.getPwd(),a.getTel());
             r.add(ad);
         }
         return r;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public AdminDomain findOne(Integer id) {
+        admin a = this.am.selectByPrimaryKey(id);
+        AdminDomain adminDomain= new AdminDomain(a.getUid(), a.getUname(), a.getPwd(),a.getTel());
+        return adminDomain;
     }
 }
