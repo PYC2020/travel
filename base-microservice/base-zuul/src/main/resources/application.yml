@@ -41,7 +41,11 @@ spring:
 
 zuul:
   routes:
-    piclib: #第一个路由服务
+    travel:
+
+
+
+    #piclib: #第一个路由服务
       path: /travel-proxy/**                   # 访问的路径
       serviceId: provider-travel
       sensitiveHeaders:            # zuul是基于过滤器机制，它会自动过滤掉敏感头, 这里设置要过滤的敏感头集合为空

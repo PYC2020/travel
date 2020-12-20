@@ -23,16 +23,18 @@ public class TravelPicsFuture {
 
 
     @Async
-    public CompletableFuture<String> findPage(Integer page, Integer pageSize,
-                                              String description) {
+    public CompletableFuture<String> findPage(Integer page, Integer pageSize
+                                              ) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelRestService.findAll(page, pageSize, description);
+            return travelRestService.findAll(page, pageSize);
         });
     }
 
     @Async
     public CompletableFuture<String> create(PicsDomain picsDomain) {
+
         return CompletableFuture.supplyAsync(() -> {
+            System.out.println("TravelPicsFuture   create到了");
             return travelRestService.create(picsDomain);
         });
     }

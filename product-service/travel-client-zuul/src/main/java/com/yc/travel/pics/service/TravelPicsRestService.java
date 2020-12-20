@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 //Hystrix服务层:  调用 PiclibClient,实现断路器功能
 @Service
@@ -30,9 +31,9 @@ public class TravelPicsRestService {
     }
 
     @HystrixCommand(fallbackMethod = "findAllFallback")
-    public String findAll(Integer page, Integer pageSize,
-                          String description) {
-        return travelClient.findAll(page, pageSize, description);
+    public String findAll(Integer page, Integer pageSize
+                         ) {
+        return travelClient.findAll(page, pageSize);
     }
 
     private String findAllFallback(Integer page, Integer pageSize,
@@ -45,10 +46,12 @@ public class TravelPicsRestService {
 
     @HystrixCommand(fallbackMethod = "createFallback")
     public String create(PicsDomain picDomain) {
+        System.out.println("TravelPicsRestService  create成功");
         return travelClient.create(picDomain);
     }
 
     private String createFallback(PicsDomain picDomain) {
+        System.out.println("TravelPicsRestService   create失败");
         Map map = new HashMap();
         map.put("code", "-1");
         map.put("msg", "服务异常，无法添加" + picDomain.getPicpath());

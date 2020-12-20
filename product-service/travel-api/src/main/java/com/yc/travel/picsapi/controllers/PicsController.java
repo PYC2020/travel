@@ -2,8 +2,10 @@ package com.yc.travel.picsapi.controllers;
 
 
 import com.google.gson.Gson;
+import com.yc.pics.domain.PageDomain;
 import com.yc.pics.domain.PicsDomain;
 import com.yc.pics.service.PicsService;
+import com.yc.pics.util.CommonUtils;
 import com.yc.product.domain.ProductDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,15 +37,42 @@ public class PicsController {
             return new Gson().toJson(map);
         });
     }
-    @RequestMapping(method = RequestMethod.GET)
+     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
+    public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                PicsDomain picDomain = new PicsDomain();
+
+                if (CommonUtils.isNotNull(page)) {
+                    picDomain.setPage(page);
+                }
+                if (CommonUtils.isNotNull(pageSize)) {
+                    picDomain.setPageSize(pageSize);
+                }
+                PageDomain<PicsDomain> pageDomain = picsService.listByPage(picDomain);
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("code", 1);
+                map.put("data", pageDomain);
+
+
+                return new Gson().toJson(map);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+    @RequestMapping(method = RequestMethod.POST)
     public CompletableFuture<String> save(@RequestBody PicsDomain picDomain) throws Exception {
         return CompletableFuture.supplyAsync(() -> {
             picsService.save(picDomain);
-            logger.info("新增->ID=" + picDomain.getPid());
+            logger.info("新增->ID=" + picDomain.getPicid());
             Map<String, Object> map = new HashMap<>();
             map.put("code", 1);
             map.put("data", picDomain);
             return new Gson().toJson(map);
+
         });
     }
 }

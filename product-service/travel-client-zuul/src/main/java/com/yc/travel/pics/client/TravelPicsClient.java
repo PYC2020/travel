@@ -22,10 +22,10 @@ public interface TravelPicsClient {
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/pics/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String findAll(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize,
-                   @RequestParam("description") String description);
+    String findAll(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize
+                   );
 
-    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-proxy/travel",
+    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-proxy/travel/pics",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String create(@RequestBody PicsDomain picsDomain);

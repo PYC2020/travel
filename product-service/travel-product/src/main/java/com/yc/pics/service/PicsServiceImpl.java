@@ -45,13 +45,13 @@ public class PicsServiceImpl implements PicsService {
         //分页条件设置
         PageHelper.startPage(picDomain.getPage(), picDomain.getPageSize());
         //排序条件
-        example.setOrderByClause("id desc");
+        example.setOrderByClause("picid desc");
         //  Criteria: 查询的规则
         Example.Criteria c = example.createCriteria();
-        if (CommonUtils.isNotNull(picDomain.getPicpath())) {
-            //条件创建    where 1=1 and description like '%xx%';
-            c.andLike("picpath", "%" + picDomain.getPicpath() + "%");
-        }
+//        if (CommonUtils.isNotNull(picDomain.getPicpath())) {
+//            //条件创建    where 1=1 and description like '%xx%';
+//            c.andLike("picpath", "%" + picDomain.getPicpath() + "%");
+//        }
         // PageInfo: 分页的结果   总记录数，第几页，每页多少条条，上一页，下一页， 总共多少页.
         PageInfo<pics> pageInfo = new PageInfo<pics>(pm.selectByExample(example));
 
@@ -78,12 +78,12 @@ public class PicsServiceImpl implements PicsService {
     public void save(PicsDomain picDomain) {
         pics p = new pics();
         p.setPicpath(picDomain.getPicpath());
-        p.setPicid(picDomain.getPicid());
+        p.setPid(picDomain.getPid());
         this.pm.insert(p);
         // 在这里  mybatis完成了两步操作: 1. insert   2. select 到最新的id后，存到pic中
         //pic中的id已经获取到
         //关键:
-        picDomain.setPid(p.getPid());
+        picDomain.setPicid(p.getPicid());
     }
 
 

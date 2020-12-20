@@ -82,6 +82,7 @@ public class PicController {
         picsDomain.setPid(pid);
         picsDomain.setPicpath(filename);
         return travelPicsFuture.create(picsDomain).thenApply(info -> {
+            System.out.println("picturecontroller   create到了");
             return info;
         });
     }
@@ -93,8 +94,8 @@ public class PicController {
     }
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
-    public CompletableFuture<String> findAll(Integer page, Integer pageSize, String description) {
-        return travelPicsFuture.findPage(page, pageSize, description);
+    public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
+        return travelPicsFuture.findPage(page, pageSize);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
