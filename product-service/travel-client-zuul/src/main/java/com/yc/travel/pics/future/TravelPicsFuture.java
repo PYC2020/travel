@@ -34,7 +34,6 @@ public class TravelPicsFuture {
     public CompletableFuture<String> create(PicsDomain picsDomain) {
 
         return CompletableFuture.supplyAsync(() -> {
-            System.out.println("TravelPicsFuture   create到了");
             return travelRestService.create(picsDomain);
         });
     }

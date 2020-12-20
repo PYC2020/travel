@@ -24,9 +24,9 @@ public class ProductDomain extends PageDomain {
         this.company=company;
         this.pic=pic;
 
-
-
-
     }
 
+    public ProductDomain() {
+
+    }
 }

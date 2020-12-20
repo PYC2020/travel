@@ -2,26 +2,30 @@ package com.yc.travel.userapi.controllers;
 
 
 import com.google.gson.Gson;
+
 import com.yc.admin.domain.AdminDomain;
+import com.yc.admin.domain.PageDomain;
 import com.yc.admin.service.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("travel/user")
 public class UserController {
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
+    @Resource
     private AdminService adminService;
 
     @RequestMapping(value = "/{id}")
@@ -33,7 +37,25 @@ public class UserController {
             Map<String, Object> map = new HashMap<>();
             map.put("code", 1);
             map.put("data", admin);
+            System.out.println("daol");
             return new Gson().toJson(map);
+        });
+    }
+    @RequestMapping(value = "/findAll", method = RequestMethod.GET)
+    public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
+        return CompletableFuture.supplyAsync(() -> {
+
+                AdminDomain  adminDomain = new AdminDomain();
+                List<AdminDomain> list= adminService.list();
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("code", 1);
+                map.put("data", list);
+
+
+                return new Gson().toJson(map);
+
+
         });
     }
 }

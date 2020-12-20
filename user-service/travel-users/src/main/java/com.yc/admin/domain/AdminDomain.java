@@ -16,4 +16,7 @@ public class AdminDomain extends PageDomain {
         this.tel=tel;
     }
 
+    public AdminDomain() {
+
+    }
 }

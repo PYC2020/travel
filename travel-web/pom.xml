@@ -88,12 +88,12 @@
                     <execution>
                         <goals>
                             <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <!--热部署配置-->
-                <configuration>
-                    <fork>true</fork>
+                </goals>
+            </execution>
+        </executions>
+        <!--热部署配置-->
+        <configuration>
+            <fork>true</fork>
                 </configuration>
             </plugin>
         </plugins>

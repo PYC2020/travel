@@ -21,6 +21,6 @@ eureka:
       defaultZone: http://admin:a@eureka1:7301/eureka
   instance:
     preferIpAddress: true
-    instance-id: provider-travel_1   #实例名
+    instance-id: travel-product   #实例名
     lease-expiration-duration-in-seconds: 90  #如果现在超过了5s的时间间隔( default: 90 s )
     lease-renewal-interval-in-seconds: 30   #设置心跳的时间间隔( default:30s )

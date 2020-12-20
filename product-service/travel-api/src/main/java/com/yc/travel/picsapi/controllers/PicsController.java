@@ -6,7 +6,6 @@ import com.yc.pics.domain.PageDomain;
 import com.yc.pics.domain.PicsDomain;
 import com.yc.pics.service.PicsService;
 import com.yc.pics.util.CommonUtils;
-import com.yc.product.domain.ProductDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

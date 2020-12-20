@@ -46,7 +46,7 @@ public class TravelPicsRestService {
 
     @HystrixCommand(fallbackMethod = "createFallback")
     public String create(PicsDomain picDomain) {
-        System.out.println("TravelPicsRestService  create成功");
+
         return travelClient.create(picDomain);
     }
 

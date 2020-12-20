@@ -45,13 +45,11 @@ public class ProductServiceImpl implements ProductService {
         //分页条件设置
         PageHelper.startPage(productDomain.getPage(), productDomain.getPageSize());
         //排序条件
-        example.setOrderByClause("id desc");
+
+
+        example.setOrderByClause("tno asc,pid desc");
         //  Criteria: 查询的规则
         Example.Criteria c = example.createCriteria();
-        if (CommonUtils.isNotNull(productDomain.getPname())) {
-            //条件创建    where 1=1 and description like '%xx%';
-            c.andLike("pname", "%" + productDomain.getPname() + "%");
-        }
         // PageInfo: 分页的结果   总记录数，第几页，每页多少条条，上一页，下一页， 总共多少页.
         PageInfo<product> pageInfo = new PageInfo<product>(pm.selectByExample(example));
 
