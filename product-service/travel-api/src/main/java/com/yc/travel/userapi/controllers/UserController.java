@@ -2,7 +2,6 @@ package com.yc.travel.userapi.controllers;
 
 
 import com.google.gson.Gson;
-
 import com.yc.admin.domain.AdminDomain;
 import com.yc.admin.service.AdminService;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +23,8 @@ public class UserController {
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Resource
+    //@Resource
+    @Autowired
     private AdminService adminService;
 
     @RequestMapping(value = "/{id}")
@@ -51,11 +50,7 @@ public class UserController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("code", 1);
                 map.put("data", list);
-
-
                 return new Gson().toJson(map);
-
-
         });
     }
 }

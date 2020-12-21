@@ -95,6 +95,9 @@ public class PicsServiceImpl implements PicsService {
         return picsDomain;
     }
 
+    /*pics p = new pics();
+        p.setPid(pid);
+        List<pics> select = this.pm.select(p);*/
 
     @Override
     public void delete(Integer id) {

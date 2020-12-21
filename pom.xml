@@ -13,11 +13,12 @@
     <modules>
         <module>travel-comment</module>
         <module>travel-web</module>
-
         <module>base-microservice</module>
         <module>product-service</module>
         <module>user-service</module>
         <module>order-service</module>
+        <module>user-api</module>
+        <module>user-api2</module>
 
     </modules>
     <properties>
