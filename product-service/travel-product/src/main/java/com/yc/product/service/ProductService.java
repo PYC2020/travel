@@ -16,5 +16,5 @@ public interface ProductService {
 
     public void delete(Integer id);
 
-    public ProductDomain findOne(Integer id);
+    public List findOne(ProductDomain productDomain);
 }

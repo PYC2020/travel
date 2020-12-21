@@ -91,15 +91,16 @@
 				find:function(){
 					if(this.keyword!=null){
 						axios({
-	    					url:'product.action?op=findVague',
+	    					url:'travel/product/'+this.keyword,
 	    					method:'get',
-	    					params:{keyword:this.keyword}
+	    					//params:{pname:}
 	    				}).then(result=>{
+	    					console.info(result.data)
 	    					if(result.data=='暂无此商品!'){
 	    						alert('暂无此商品!');
 	    						return;
 	    					}else{
-	    						location.href='search.html#keyword='+this.keyword;
+	    						///location.href='search.html#keyword='+this.keyword;
 	    					}
 	    				});
 					}

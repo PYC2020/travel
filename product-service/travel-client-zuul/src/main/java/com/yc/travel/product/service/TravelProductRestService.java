@@ -6,7 +6,8 @@ import com.yc.travel.product.client.TravelProductClient;
 import com.yc.product.domain.ProductDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,15 +15,16 @@ import java.util.Map;
 @Service
 public class TravelProductRestService {
     @Autowired
-    private TravelProductClient travelTypeClient;
+    private TravelProductClient travelproductClient;
 
-
-    @HystrixCommand(fallbackMethod = "findByIdFallback")
-    public String findById(Integer id) {
-        return travelTypeClient.findById(id);
+    //根据pname查询相关产品
+    //@HystrixCommand(fallbackMethod = "findByIdFallback")
+    public String findById(@PathVariable String pname) {
+        System.out.println("TravelProductRestService   pname"+pname);
+        return travelproductClient.findById(pname);
     }
 
-    private String findByIdFallback(Integer id) {
+    private String findByIdFallback(String pname) {
         Map map = new HashMap();
         map.put("code", "-1");
         map.put("msg", "服务异常");
@@ -31,7 +33,7 @@ public class TravelProductRestService {
 
     @HystrixCommand(fallbackMethod = "findAllFallback")
     public String findAll(Integer page, Integer pageSize  ) {
-        return travelTypeClient.findAll(page, pageSize);
+        return travelproductClient.findAll(page, pageSize);
     }
 
     private String findAllFallback(Integer page, Integer pageSize) {
@@ -43,7 +45,7 @@ public class TravelProductRestService {
 
     @HystrixCommand(fallbackMethod = "createFallback")
     public String create(ProductDomain productDomain) {
-        return travelTypeClient.create(productDomain);
+        return travelproductClient.create(productDomain);
     }
 
     private String createFallback(ProductDomain productDomain) {
@@ -55,7 +57,7 @@ public class TravelProductRestService {
 
     @HystrixCommand(fallbackMethod = "deleteFallback")
     public String delete(Integer id) {
-        return travelTypeClient.delete(id);
+        return travelproductClient.delete(id);
     }
 
     private String deleteFallback(Integer id) {

@@ -41,6 +41,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     @Override
     public PageDomain<ProductDomain> listByPage(ProductDomain productDomain) {
+        //mybatis的逆向工程中会生成实例及实例对应的example，example用于添加条件，相当where后面的部分
         Example example = new Example(product.class);   //条件
         //分页条件设置
         PageHelper.startPage(productDomain.getPage(), productDomain.getPageSize());
@@ -85,13 +86,20 @@ public class ProductServiceImpl implements ProductService {
         productDomain.setPid(p.getPid());
     }
 
+    /**
+     * 按地址模糊查询产品
+     * @param productDomain
+     * @return
+     */
     @Transactional(readOnly = true)
     @Override
-    public ProductDomain findOne(Integer id) {
-        product p = this.pm.selectByPrimaryKey(id);
-        ProductDomain productDomain = new ProductDomain(p.getPid(),p.getPname(),p.getTno(),p.getPrice(),
-            p.getIntro(),p.getBalance(),p.getCompany(),p.getPic());
-        return productDomain;
+    public List findOne(ProductDomain productDomain ) {
+        product p = new product();
+        //mybatis的逆向工程中会生成实例及实例对应的example，example用于添加条件，相当where后面的部分
+        Example example = new Example(product.class);
+        example.createCriteria().andLike("pname", "%"+productDomain.getPname()+"%");
+        List<product>list=  pm.selectByExample(example);
+        return list;
     }
 
 

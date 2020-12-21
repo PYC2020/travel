@@ -5,6 +5,8 @@ import com.yc.product.domain.ProductDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -13,11 +15,12 @@ import java.util.concurrent.CompletableFuture;
 public class TravelProductFuture {
     @Autowired
     private TravelProductRestService travelRestService;
-
+    //根据pname查询相关产品
     @Async
-    public CompletableFuture<String> findById(Integer id) {
+    public CompletableFuture<String> findById(@PathVariable String pname) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelRestService.findById(id);
+
+            return travelRestService.findById(pname);
         });
     }
 
