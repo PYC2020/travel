@@ -24,6 +24,8 @@ public class PicsController {
     @Autowired
     private PicsService picsService;
 
+
+
     @RequestMapping(value = "/{id}")
     public CompletableFuture<String> findById(@PathVariable Integer id) {
         //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
