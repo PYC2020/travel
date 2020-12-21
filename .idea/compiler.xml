@@ -7,9 +7,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="a" />
+        <module name="user-client-zuul" />
         <module name="travel-zuul" />
         <module name="travel-users" />
         <module name="travel-comment" />
+        <module name="user-service" />
         <module name="base-dashboard" />
         <module name="travel-product" />
         <module name="travel-client-zuul" />
@@ -18,9 +21,10 @@
         <module name="base-zuul" />
         <module name="base-security" />
         <module name="travel-api" />
+        <module name="order-restapi" />
         <module name="base-config2" />
+        <module name="order-client-zuul" />
         <module name="base-turbine" />
-        <module name="order-service" />
         <module name="user-restapi" />
         <module name="base-Eureka-Config" />
         <module name="base-config1" />

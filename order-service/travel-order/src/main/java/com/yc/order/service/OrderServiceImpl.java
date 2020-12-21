@@ -1,11 +1,16 @@
 package com.yc.order.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yc.order.dao.Impl.orderMapper;
 import com.yc.order.domain.OrderDomain;
+import com.yc.order.domain.PageDomain;
 import  com.yc.order.entity.orders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,59 @@ public class OrderServiceImpl implements OrderService{
             r.add(od);
         }
         return r;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public PageDomain<OrderDomain> listByPage(OrderDomain orderDomain) {
+        Example example = new Example(orders.class);   //条件
+        //分页条件设置
+        PageHelper.startPage(orderDomain.getPage(), orderDomain.getPageSize());
+        //排序条件
+        example.setOrderByClause("oid desc");
+        //  Criteria: 查询的规则
+        Example.Criteria c = example.createCriteria();
+//        if (CommonUtils.isNotNull(picDomain.getPicpath())) {
+//            //条件创建    where 1=1 and description like '%xx%';
+//            c.andLike("picpath", "%" + picDomain.getPicpath() + "%");
+//        }
+        // PageInfo: 分页的结果   总记录数，第几页，每页多少条条，上一页，下一页， 总共多少页.
+        PageInfo<orders> pageInfo = new PageInfo<orders>(om.selectByExample(example));
+
+
+        PageDomain<OrderDomain> pageDomain = new PageDomain<OrderDomain>();
+        pageDomain.setTotal(pageInfo.getTotal());
+        pageDomain.setPage(pageInfo.getPageNum());
+        pageDomain.setPageSize(orderDomain.getPageSize());
+        //List<Pic> list = picMapper.selectByExample(example);
+        List<OrderDomain> r = new ArrayList<OrderDomain>();
+        //从pageInfo中取记录数
+        if (pageInfo.getList() != null) {
+            for (orders o : pageInfo.getList()) {
+                OrderDomain od = new OrderDomain(o.getOid(),o.getUid(),o.getPid(),o.getOdate(),o.getStatus(),o.getSdate(),
+                        o.getEdate(),o.getNum());
+                r.add(od);
+            }
+        }
+        pageDomain.setData(r);
+        return pageDomain;
+    }
+
+    @Override
+    public void save(OrderDomain orderDomain) {
+        orders o = new orders();
+        o.setOid(orderDomain.getOid());
+        o.setOdate(orderDomain.getOdate());
+        this.om.insert(o);
+        // 在这里  mybatis完成了两步操作: 1. insert   2. select 到最新的id后，存到pic中
+        //pic中的id已经获取到
+        //关键:
+        orderDomain.setOid(o.getOid());
+    }
+
+    @Override
+    public void delete(Integer id) {
+        this.om.deleteByPrimaryKey(id);
     }
 
     @Transactional(readOnly = true)

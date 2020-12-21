@@ -3,14 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>product-service</artifactId>
+        <artifactId>order-service</artifactId>
         <groupId>com.yc</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>travel-api</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>order-restapi</artifactId>
     <dependencies>
         <!--druid配置版本中包含MySQL-connector默认为8.0，手动添加-->
         <dependency>
@@ -53,22 +52,9 @@
 
         <dependency>
             <groupId>com.yc</groupId>
-            <artifactId>travel-product</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.yc</groupId>
-            <artifactId>travel-users</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.yc</groupId>
             <artifactId>travel-order</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -78,5 +64,6 @@
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
     </dependencies>
+
 
 </project>

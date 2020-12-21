@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class OrderDomain {
+public class OrderDomain  extends PageDomain{
 
     private Integer oid;
     private Integer uid;
@@ -27,4 +27,6 @@ public class OrderDomain {
         this.sdate=sdate;
         this.num=num;
     }
+    
+    public OrderDomain(){}
 }

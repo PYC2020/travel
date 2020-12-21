@@ -25,7 +25,8 @@ public class UserController {
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Resource
+    //@Resource
+    @Autowired
     private AdminService adminService;
 
     @RequestMapping(value = "/{id}")
@@ -51,11 +52,7 @@ public class UserController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("code", 1);
                 map.put("data", list);
-
-
                 return new Gson().toJson(map);
-
-
         });
     }
 }

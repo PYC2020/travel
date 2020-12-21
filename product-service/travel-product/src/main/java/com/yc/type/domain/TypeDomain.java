@@ -16,4 +16,6 @@ public class TypeDomain extends PageDomain {
         this.status=status;
     }
 
+    public TypeDomain(){}
+
 }

@@ -13,7 +13,12 @@ public interface AdminService {
      */
     public List<AdminDomain> list();
 
+    public PageDomain<AdminDomain> listByPage(AdminDomain adminDomain);
+
+    public void save(AdminDomain adminDomain);
+
+    public void delete(Integer id);
+
     public AdminDomain findOne(Integer id);
 
-   // public PageDomain<AdminDomain> listByPage(AdminDomain adminDomain);
 }

@@ -1,11 +1,15 @@
 package com.yc.admin.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yc.admin.dao.Impl.adminMapper;
 import com.yc.admin.domain.AdminDomain;
+import com.yc.admin.domain.PageDomain;
 import com.yc.admin.entity.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,58 @@ public class AdminServiceImpl implements AdminService {
             r.add(ad);
         }
         return r;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public PageDomain<AdminDomain> listByPage(AdminDomain adminDomain) {
+        Example example = new Example(admin.class);   //条件
+        //分页条件设置
+        PageHelper.startPage(adminDomain.getPage(), adminDomain.getPageSize());
+        //排序条件
+        example.setOrderByClause("uid desc");
+        //  Criteria: 查询的规则
+        Example.Criteria c = example.createCriteria();
+//        if (CommonUtils.isNotNull(picDomain.getPicpath())) {
+//            //条件创建    where 1=1 and description like '%xx%';
+//            c.andLike("picpath", "%" + picDomain.getPicpath() + "%");
+//        }
+        // PageInfo: 分页的结果   总记录数，第几页，每页多少条条，上一页，下一页， 总共多少页.
+        PageInfo<admin> pageInfo = new PageInfo<admin>(am.selectByExample(example));
+
+
+        PageDomain<AdminDomain> pageDomain = new PageDomain<AdminDomain>();
+        pageDomain.setTotal(pageInfo.getTotal());
+        pageDomain.setPage(pageInfo.getPageNum());
+        pageDomain.setPageSize(adminDomain.getPageSize());
+        //List<Pic> list = picMapper.selectByExample(example);
+        List<AdminDomain> r = new ArrayList<AdminDomain>();
+        //从pageInfo中取记录数
+        if (pageInfo.getList() != null) {
+            for (admin a : pageInfo.getList()) {
+                AdminDomain ad = new AdminDomain(a.getUid(), a.getUname(), a.getPwd(),a.getTel());
+                r.add(ad);
+            }
+        }
+        pageDomain.setData(r);
+        return pageDomain;
+    }
+
+    @Override
+    public void save(AdminDomain adminDomain) {
+        admin a = new admin();
+        a.setUid(adminDomain.getUid());
+        a.setUname(adminDomain.getUname());
+        this.am.insert(a);
+        // 在这里  mybatis完成了两步操作: 1. insert   2. select 到最新的id后，存到pic中
+        //pic中的id已经获取到
+        //关键:
+        adminDomain.setUid(a.getUid());
+    }
+
+    @Override
+    public void delete(Integer id) {
+        this.am.deleteByPrimaryKey(id);
     }
 
     @Transactional(readOnly = true)
