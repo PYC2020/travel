@@ -22,8 +22,7 @@ public interface TravelTypeClient {
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/type/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String findAll(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize,
-                   @RequestParam("description") String description);
+    String findAll();
 
     @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-proxy/travel",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,

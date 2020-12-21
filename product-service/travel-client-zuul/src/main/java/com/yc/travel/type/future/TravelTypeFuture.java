@@ -23,10 +23,9 @@ public class TravelTypeFuture {
 
 
     @Async
-    public CompletableFuture<String> findPage(Integer page, Integer pageSize,
-                                              String description) {
+    public CompletableFuture<String> findAll() {
         return CompletableFuture.supplyAsync(() -> {
-            return travelRestService.findAll(page, pageSize, description);
+            return travelRestService.findAll();
         });
     }
 

@@ -18,7 +18,7 @@ public class TravelProductRestService {
     private TravelProductClient travelproductClient;
 
     //根据pname查询相关产品
-    //@HystrixCommand(fallbackMethod = "findByIdFallback")
+    @HystrixCommand(fallbackMethod = "findByIdFallback")
     public String findById(@PathVariable String pname) {
         System.out.println("TravelProductRestService   pname"+pname);
         return travelproductClient.findById(pname);
