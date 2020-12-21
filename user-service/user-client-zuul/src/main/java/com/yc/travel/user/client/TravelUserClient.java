@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface TravelUserClient {
 
     //访问的路径value要修改成zuul指定的服务路由路径
-    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/user/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/{id}")
     String findById(@RequestParam("id") Integer id);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/user/findAll",
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String findAll(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize);
 
-   @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-proxy/travel",
+   @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-user-proxy/travel",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String create(@RequestBody AdminDomain adminDomain);
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/travel-api/travel-proxy/travel/user/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/travel-api/travel-user-proxy/travel/user/{id}")
     String delete(@RequestParam("id") Integer id);
 }

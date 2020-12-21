@@ -31,6 +31,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="a" target="1.8" />
       <module name="travel-config3" target="1.8" />
       <module name="travel-domain" target="1.8" />
       <module name="travel-zuul" target="1.8" />
