@@ -1,8 +1,8 @@
-package com.yc.travel.user.service;
+package com.yc.travel.order.service;
 
 import com.google.gson.Gson;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.yc.admin.domain.AdminDomain;
+import com.yc.order.domain.OrderDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class TravelUserRestService {
+public class TravelOrderRestService {
     @Autowired
-    private TravelUserRestService travelUserRestService;
+    private TravelOrderRestService travelOrderRestService;
 
     @HystrixCommand(fallbackMethod = "findByIdFallback")
     public String findById(Integer id) {
-        return travelUserRestService.findById(id);
+        return travelOrderRestService.findById(id);
     }
 
     private String findByIdFallback(Integer id) {
@@ -29,7 +29,7 @@ public class TravelUserRestService {
     @HystrixCommand(fallbackMethod = "findAllFallback")
     public String findAll(Integer page, Integer pageSize
     ) {
-        return travelUserRestService.findAll(page, pageSize);
+        return travelOrderRestService.findAll(page, pageSize);
     }
 
     private String findAllFallback(Integer page, Integer pageSize) {
@@ -40,22 +40,22 @@ public class TravelUserRestService {
     }
 
     @HystrixCommand(fallbackMethod = "createFallback")
-    public String create(AdminDomain adminDomain) {
+    public String create(OrderDomain orderDomain) {
 
-        return travelUserRestService.create(adminDomain);
+        return travelOrderRestService.create(orderDomain);
     }
 
-    private String createFallback(AdminDomain adminDomain) {
-        System.out.println("travelUserRestService   create失败");
+    private String createFallback(OrderDomain orderDomain) {
+        System.out.println("travelOrderRestService   create失败");
         Map map = new HashMap();
         map.put("code", "-1");
-        map.put("msg", "服务异常，无法添加" + adminDomain.getUname());
+        map.put("msg", "服务异常，无法添加" + orderDomain.getOid());
         return new Gson().toJson(map);
     }
 
     @HystrixCommand(fallbackMethod = "deleteFallback")
     public String delete(Integer id) {
-        return travelUserRestService.delete(id);
+        return travelOrderRestService.delete(id);
     }
 
     private String deleteFallback(Integer id) {

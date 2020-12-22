@@ -1,6 +1,6 @@
 spring:
   application:
-    name: travel-provider   #应用服务名
+    name: travel-product   #应用服务名
   cloud:
     config:
       name: travel-restapi-config      # 定义要读取的资源文件的名称即:    microservice-config-client.yml

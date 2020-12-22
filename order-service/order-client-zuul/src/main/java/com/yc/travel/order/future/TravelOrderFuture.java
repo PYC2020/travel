@@ -1,8 +1,7 @@
-package com.yc.travel.user.future;
+package com.yc.travel.order.future;
 
-
-import com.yc.admin.domain.AdminDomain;
-import com.yc.travel.user.service.TravelUserRestService;
+import com.yc.order.domain.OrderDomain;
+import com.yc.travel.order.service.TravelOrderRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -10,15 +9,15 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.CompletableFuture;
 
 @Component
-public class TravelUserFuture {
+public class TravelOrderFuture {
 
     @Autowired
-    private TravelUserRestService travelUserRestService;
+    private TravelOrderRestService travelOrderRestService;
 
     @Async
     public CompletableFuture<String> findById(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelUserRestService.findById(id);
+            return travelOrderRestService.findById(id);
         });
     }
 
@@ -27,15 +26,15 @@ public class TravelUserFuture {
     public CompletableFuture<String> findPage(Integer page, Integer pageSize
     ) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelUserRestService.findAll(page, pageSize);
+            return travelOrderRestService.findAll(page, pageSize);
         });
     }
 
     @Async
-    public CompletableFuture<String> create(AdminDomain adminDomain) {
+    public CompletableFuture<String> create(OrderDomain orderDomain) {
 
         return CompletableFuture.supplyAsync(() -> {
-            return travelUserRestService.create(adminDomain);
+            return travelOrderRestService.create(orderDomain);
         });
     }
 
@@ -43,7 +42,7 @@ public class TravelUserFuture {
     @Async
     public CompletableFuture<String> delete(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelUserRestService.delete(id);
+            return travelOrderRestService.delete(id);
         });
     }
 }

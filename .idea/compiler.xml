@@ -12,7 +12,6 @@
         <module name="travel-zuul" />
         <module name="travel-users" />
         <module name="travel-comment" />
-        <module name="user-service" />
         <module name="base-dashboard" />
         <module name="travel-product" />
         <module name="travel-client-zuul" />

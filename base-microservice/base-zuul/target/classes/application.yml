@@ -45,11 +45,11 @@ zuul:
       path: /travel-proxy/**                   # 访问的路径
       serviceId: travel-product
       sensitiveHeaders:            # zuul是基于过滤器机制，它会自动过滤掉敏感头, 这里设置要过滤的敏感头集合为空
-    user: #piclib: #第一个路由服务
+    user:           #piclib: #第一个路由服务
       path: /travel-user-proxy/**                   # 访问的路径
       serviceId: travel-user
       sensitiveHeaders:
-    order: #piclib: #第一个路由服务
+    order:          #piclib: #第一个路由服务
       path: /travel-order-proxy/**                   # 访问的路径
       serviceId: travel-order
       sensitiveHeaders:
