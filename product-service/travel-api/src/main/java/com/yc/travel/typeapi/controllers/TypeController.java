@@ -55,30 +55,30 @@ public class TypeController {
     }
 
 
-    @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                TypeDomain typeDomain  = new TypeDomain();
-
-                if (CommonUtils.isNotNull(page)) {
-                    typeDomain.setPage(page);
-                }
-                if (CommonUtils.isNotNull(pageSize)) {
-                    typeDomain.setPageSize(pageSize);
-                }
-                PageDomain<TypeDomain> pageDomain = typeService.listByPage(typeDomain);
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("code", 1);
-                map.put("data", pageDomain);
-
-
-                return new Gson().toJson(map);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        });
-    }
+//    @RequestMapping(value = "/findAll", method = RequestMethod.GET)
+//    public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
+//        return CompletableFuture.supplyAsync(() -> {
+//            try {
+//                TypeDomain typeDomain  = new TypeDomain();
+//
+//                if (CommonUtils.isNotNull(page)) {
+//                    typeDomain.setPage(page);
+//                }
+//                if (CommonUtils.isNotNull(pageSize)) {
+//                    typeDomain.setPageSize(pageSize);
+//                }
+//                PageDomain<TypeDomain> pageDomain = typeService.listByPage(typeDomain);
+//
+//                Map<String, Object> map = new HashMap<>();
+//                map.put("code", 1);
+//                map.put("data", pageDomain);
+//
+//
+//                return new Gson().toJson(map);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        });
+//    }
 }
