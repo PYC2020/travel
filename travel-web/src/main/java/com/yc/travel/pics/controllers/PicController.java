@@ -87,10 +87,14 @@ public class PicController {
         });
     }
 
-
-    @RequestMapping(value = "/{id}")
-    public CompletableFuture<String> findById(@PathVariable Integer id) {
-        return travelPicsFuture.findById(id);
+    /**
+     * 实现根据pid查询图片
+     * @param pid
+     * @return List
+     */
+    @RequestMapping(value = "/pics/{pid}",method = RequestMethod.GET)
+    public CompletableFuture<String> findById(@PathVariable Integer pid) {
+        return travelPicsFuture.findById(pid);
     }
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)

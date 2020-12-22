@@ -5,6 +5,7 @@ import com.yc.travel.pics.service.TravelPicsRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -15,9 +16,9 @@ public class TravelPicsFuture {
     private TravelPicsRestService travelRestService;
 
     @Async
-    public CompletableFuture<String> findById(Integer id) {
+    public CompletableFuture<String> findById(@PathVariable Integer pid) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelRestService.findById(id);
+            return travelRestService.findById(pid);
         });
     }
 

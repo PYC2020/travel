@@ -6,6 +6,7 @@ import com.yc.pics.domain.PicsDomain;
 import com.yc.travel.pics.client.TravelPicsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,14 +20,14 @@ public class TravelPicsRestService {
 
 
     @HystrixCommand(fallbackMethod = "findByIdFallback")
-    public String findById(Integer id) {
-        return travelClient.findById(id);
+    public String findById(@PathVariable Integer pid) {
+        return travelClient.findById(pid);
     }
 
-    private String findByIdFallback(Integer id) {
+    private String findByIdFallback(Integer pid) {
         Map map = new HashMap();
         map.put("code", "-1");
-        map.put("msg", "服务异常");
+        map.put("msg", "查询图片服务异常");
         return new Gson().toJson(map);
     }
 

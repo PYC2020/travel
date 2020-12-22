@@ -21,5 +21,5 @@ public interface PicsService {
 
     public void delete(Integer id);
 
-    public PicsDomain findOne(Integer id);
+    public List findOne(Integer pid);
 }

@@ -89,10 +89,13 @@ public class PicsServiceImpl implements PicsService {
 
     @Transactional(readOnly = true)
     @Override
-    public PicsDomain findOne(Integer id) {
-        pics p = this.pm.selectByPrimaryKey(id);
-        PicsDomain picsDomain = new PicsDomain(p.getPid(),p.getPicid(),p.getPicpath());
-        return picsDomain;
+    public List findOne(Integer pid) {
+
+        Example example = new Example(pics.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("pid",pid);
+        List<pics> p=  this.pm.selectByExample(example);
+        return  p;
     }
 
     /*pics p = new pics();
