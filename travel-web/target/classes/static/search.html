@@ -118,11 +118,11 @@
 				this.kd==keyword;
 				if(tno==''){
 					axios({
-						url:'product.action?op=findVague',
-    					method:'post',
-    					params:{keyword:keyword,page:this.page,limit:this.limit}
+						url:'travel/product/'+keyword,
+    					method:'get',
+    					//params:{page:this.page,limit:this.limit}
 					}).then(result=>{
-						this.products=result.data;
+						this.products=result.data.data;
 					});
 				}else{
 					axios({
@@ -139,11 +139,11 @@
 				find:function(){
 					if(this.kd!=null){
 						axios({
-	    					url:'product.action?op=findVague',
-	    					method:'post',
-	    					params:{keyword:this.kd}
+	    					url:'travel/product/'+this.kd,
+	    					method:'get',
+	    					//params:{keyword:}
 	    				}).then(result=>{
-	    					if(result.data=='暂无此商品!'){
+	    					if(result.data.data.length==0){
 	    						alert('暂无此商品!');
 	    						return;
 	    					}else{
@@ -195,7 +195,7 @@
 								this.page--;
 								return;
 	    					}else{
-	    						this.products=result.data;	    					
+	    						this.products=result.data;
 	    					}
 	    				});
 					}else{

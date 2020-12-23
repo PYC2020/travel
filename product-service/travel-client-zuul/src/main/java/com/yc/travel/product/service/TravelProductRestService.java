@@ -7,7 +7,6 @@ import com.yc.product.domain.ProductDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +36,6 @@ public class TravelProductRestService {
     //根据pname查询相关产品
     @HystrixCommand(fallbackMethod = "findBypnameFallback")
     public String findBypname(@PathVariable String pname) {
-        System.out.println("TravelProductRestService   pname"+pname);
         return travelproductClient.findBypname(pname);
     }
 

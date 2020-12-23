@@ -268,11 +268,10 @@
 				find:function(){
 					if(this.keyword!=null){
 						axios({
-	    					url:'product.action?op=findVague',
+							url:'travel/product/'+this.keyword,
 	    					method:'get',
-	    					params:{keyword:this.keyword}
 	    				}).then(result=>{
-	    					if(result.data=='暂无此商品!'){
+	    					if(result.data.data.length==0){
 	    						alert('暂无此商品!');
 	    						return;
 	    					}else{
@@ -288,7 +287,6 @@
 					]).then(axios.spread((fn1,fn2
 						//,fn3,fn4,fn5,fn6,fn7
 				)=>{
-						console.info(fn2.data.data)
 					this.pic=fn1.data.data[0].picpath;
 					this.pics=fn1.data.data;
 					 this.product=fn2.data.data;
@@ -319,21 +317,25 @@
 		}
 		
 		//查询评论
+		//TODO
 		function findComment(){
 			return axios.get("comment.action?op=find&pid="+pid);
 		}
 		
 		//查询评论数
+		//TODO
 		function comTotal(){
 			return axios.get("comment.action?op=total&pid="+pid);
 		}
 		
 		//查询满意度
+		//TODO
 		function comSatisfy(){
 			return axios.get("comment.action?op=satisfy&pid="+pid);
 		}
 		
 		//历史出行人数
+		//TODO
 		function tripNum(){
 			return axios.get("orders.action?op=tripNum&pid="+pid);
 		}
