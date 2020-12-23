@@ -20,7 +20,7 @@
 				<a href="index1.html" id="index">首页</a>
 			</div>
 			<div class="search_div">
-				<input type="text" placeholder="搜素商品" class="input_text" id="search_input" v-model="keyword">
+				<input type="text" placeholder="搜索商品" class="input_text" id="search_input" v-model="keyword">
 				<input type="button" value="搜索" class="input_btn" id="search_btn" @click="find()">
 			</div>
 			<div id="show_good">
@@ -283,16 +283,15 @@
 				}
 			},
 			mounted:function(){
-				axios.all([findPics()
-					// ,findProduct(),findComment(),comTotal(),comSatisfy(),tripNum(),checkLogin()
-					]).then(axios.spread((fn1
-						//,fn2,fn3,fn4,fn5,fn6,fn7
+				axios.all([findPics(),findProduct()
+					// ,findComment(),comTotal(),comSatisfy(),tripNum(),checkLogin()
+					]).then(axios.spread((fn1,fn2
+						//,fn3,fn4,fn5,fn6,fn7
 				)=>{
-					console.info(fn1.data.data)
-					console.info(fn1.data.data[0].picpath)
+						console.info(fn2.data.data)
 					this.pic=fn1.data.data[0].picpath;
 					this.pics=fn1.data.data;
-					// this.product=fn2.data[0];
+					 this.product=fn2.data.data;
 					// this.comments=fn3.data;
 					// this.comtotal=fn4.data;
 					// this.satisfy=fn5.data;
@@ -316,7 +315,7 @@
 		
 		//查询产品信息
 		function findProduct(){
-			return axios.get("product.action?op=findById&pid="+pid);
+			return axios.get("travel/product/pid/"+pid);
 		}
 		
 		//查询评论

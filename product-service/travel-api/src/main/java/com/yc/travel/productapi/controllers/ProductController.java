@@ -25,7 +25,22 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-
+    //根据pid查询
+    @RequestMapping(value = "/pid/{pid}")
+    public CompletableFuture<String> findByPid(@PathVariable Integer pid) {
+        //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
+        return CompletableFuture.supplyAsync(() -> {
+//            ProductDomain productDomain = new ProductDomain();
+//            productDomain.setPname(pid);
+            ProductDomain p = productService.findbyPid(pid);
+            //协议
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            map.put("data", p);
+            return new Gson().toJson(map);
+        });
+    }
+    //根据pname进行查询
     @RequestMapping(value = "/{pname}")
     public CompletableFuture<String> findById(@PathVariable String pname) {
         //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.

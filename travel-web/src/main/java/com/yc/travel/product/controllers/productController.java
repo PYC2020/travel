@@ -28,7 +28,11 @@ public class productController {
     }
     @RequestMapping(value = "/{pname}", method = RequestMethod.GET)
     public CompletableFuture<String> findById(@PathVariable String pname) {
-        return travelProductFuture.findById(pname);
+        return travelProductFuture.findBypname(pname);
+    }
+    @RequestMapping(value = "/pid/{pid}", method = RequestMethod.GET)
+    public CompletableFuture<String> findByPid(@PathVariable Integer pid) {
+        return travelProductFuture.findBypid(pid);
     }
 
 }

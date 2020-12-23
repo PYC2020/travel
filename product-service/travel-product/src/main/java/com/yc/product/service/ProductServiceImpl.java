@@ -103,7 +103,19 @@ public class ProductServiceImpl implements ProductService {
         return list;
     }
 
-
+    /**
+     * 根据商品id查询
+     * @param
+     * @return
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public ProductDomain findbyPid(Integer pid){
+        product p=this.pm.selectByPrimaryKey(pid);
+        ProductDomain productDomain=new ProductDomain(p.getPid(),p.getPname(),
+                p.getTno(),p.getPrice(),p.getIntro(),p.getBalance(),p.getCompany(),p.getPic());
+        return productDomain;
+    }
     @Override
     public void delete(Integer id) {
         this.pm.deleteByPrimaryKey(id);

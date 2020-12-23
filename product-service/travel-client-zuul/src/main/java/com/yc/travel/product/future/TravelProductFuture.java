@@ -15,12 +15,21 @@ import java.util.concurrent.CompletableFuture;
 public class TravelProductFuture {
     @Autowired
     private TravelProductRestService travelRestService;
+    //根据pid查询相关产品
+    @Async
+    public CompletableFuture<String> findBypid(@PathVariable Integer pid) {
+        return CompletableFuture.supplyAsync(() -> {
+            return travelRestService.findBypid(pid);
+        });
+    }
+
+
+
     //根据pname查询相关产品
     @Async
-    public CompletableFuture<String> findById(@PathVariable String pname) {
+    public CompletableFuture<String> findBypname(@PathVariable String pname) {
         return CompletableFuture.supplyAsync(() -> {
-
-            return travelRestService.findById(pname);
+            return travelRestService.findBypname(pname);
         });
     }
 
