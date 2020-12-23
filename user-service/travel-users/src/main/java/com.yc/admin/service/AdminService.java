@@ -19,6 +19,6 @@ public interface AdminService {
 
     public void delete(Integer id);
 
-    public AdminDomain findOne(Integer id);
+    public List findOne(AdminDomain adminDomain);
 
 }

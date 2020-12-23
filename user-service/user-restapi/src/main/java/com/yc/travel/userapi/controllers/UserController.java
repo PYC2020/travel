@@ -29,19 +29,7 @@ public class UserController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping(value = "/{id}")
-    public CompletableFuture<String> findById(@PathVariable Integer id) {
-        //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
-        return CompletableFuture.supplyAsync(() -> {
-            AdminDomain admin = adminService.findOne(id);
-            //协议
-            Map<String, Object> map = new HashMap<>();
-            map.put("code", 1);
-            map.put("data", admin);
-            System.out.println("daol");
-            return new Gson().toJson(map);
-        });
-    }
+
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
         return CompletableFuture.supplyAsync(() -> {
@@ -53,6 +41,22 @@ public class UserController {
                 map.put("code", 1);
                 map.put("data", list);
                 return new Gson().toJson(map);
+        });
+    }
+
+    @RequestMapping(value = "/{uname}/{pwd}")
+    public CompletableFuture<String> findByName(@PathVariable String uname,@PathVariable String pwd) {
+        //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
+        return CompletableFuture.supplyAsync(() -> {
+            AdminDomain adminDomain = new AdminDomain();
+            adminDomain.setUname(uname);
+            adminDomain.setPwd(pwd);
+            List a = adminService.findOne(adminDomain);
+            //协议
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            map.put("data", a);
+            return new Gson().toJson(map);
         });
     }
 }

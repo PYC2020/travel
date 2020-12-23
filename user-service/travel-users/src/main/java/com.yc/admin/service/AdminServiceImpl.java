@@ -2,6 +2,7 @@ package com.yc.admin.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yc.admin.MD5Utils;
 import com.yc.admin.dao.Impl.adminMapper;
 import com.yc.admin.domain.AdminDomain;
 import com.yc.admin.domain.PageDomain;
@@ -13,6 +14,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -85,9 +87,14 @@ public class AdminServiceImpl implements AdminService {
 
     @Transactional(readOnly = true)
     @Override
-    public AdminDomain findOne(Integer id) {
-        admin a = this.am.selectByPrimaryKey(id);
-        AdminDomain adminDomain= new AdminDomain(a.getUid(), a.getUname(), a.getPwd(),a.getTel());
-        return adminDomain;
+    public List findOne(AdminDomain adminDomain) {
+        admin a  = new admin();
+        //mybatis的逆向工程中会生成实例及实例对应的example，example用于添加条件，相当where后面的部分
+        Example example = new Example(admin.class);
+        example.createCriteria().andLike("uname", adminDomain.getUname());
+        adminDomain.setPwd(MD5Utils.stringToMD5(adminDomain.getPwd()));
+        example.createCriteria().andLike("pwd", adminDomain.getPwd());
+        List<admin>list=  am.selectByExample(example);
+        return list;
     }
 }

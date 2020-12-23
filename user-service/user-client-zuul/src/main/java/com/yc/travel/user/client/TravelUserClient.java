@@ -5,10 +5,7 @@ import com.yc.admin.domain.AdminDomain;
 import com.yc.travel.user.config.FeignClientConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "BASE-ZUUL-GATEWAY",
         configuration = FeignClientConfig.class
@@ -16,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface TravelUserClient {
 
     //访问的路径value要修改成zuul指定的服务路由路径
-    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/{id}")
-    String findById(@RequestParam("id") Integer id);
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/user/{uname}/{pwd}")
+    String findByName(@PathVariable String uname,@PathVariable String pwd);
 
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,

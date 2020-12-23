@@ -13,7 +13,6 @@ public interface ProductService {
 
     public void save(ProductDomain productDomain);
 
-
     public void delete(Integer id);
 
     public List findOne(ProductDomain productDomain);
