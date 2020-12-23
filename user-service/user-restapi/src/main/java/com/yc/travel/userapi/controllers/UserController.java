@@ -8,10 +8,7 @@ import com.yc.admin.service.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -57,6 +54,24 @@ public class UserController {
             map.put("code", 1);
             map.put("data", a);
             return new Gson().toJson(map);
+        });
+    }
+
+    @RequestMapping(value = "/save/{uname}/{pwd}/{tel}",method = RequestMethod.GET)
+    public CompletableFuture<String> save(@PathVariable String uname,@PathVariable String pwd,
+                                                    @PathVariable String tel) throws Exception {
+        return CompletableFuture.supplyAsync(() -> {
+            AdminDomain adminDomain = new AdminDomain();
+            adminDomain.setUname(uname);
+            adminDomain.setPwd(pwd);
+            adminDomain.setTel(tel);
+            adminService.save(adminDomain);
+            logger.info("新增->ID=" + adminDomain.getUid());
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            map.put("data", adminDomain);
+            return new Gson().toJson(map);
+
         });
     }
 }

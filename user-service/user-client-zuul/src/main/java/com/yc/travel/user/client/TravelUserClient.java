@@ -16,6 +16,9 @@ public interface TravelUserClient {
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/user/{uname}/{pwd}")
     String findByName(@PathVariable String uname,@PathVariable String pwd);
 
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/user/save/{uname}/{pwd}/{tel}")
+    String save(@PathVariable String uname,@PathVariable String pwd,@PathVariable String tel);
+
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

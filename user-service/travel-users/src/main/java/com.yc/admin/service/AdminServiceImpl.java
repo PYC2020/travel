@@ -71,12 +71,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void save(AdminDomain adminDomain) {
         admin a = new admin();
-        a.setUid(adminDomain.getUid());
         a.setUname(adminDomain.getUname());
+        adminDomain.setPwd(MD5Utils.stringToMD5(adminDomain.getPwd()));
+        a.setPwd(adminDomain.getPwd());
+        a.setTel(adminDomain.getTel());
         this.am.insert(a);
-        // 在这里  mybatis完成了两步操作: 1. insert   2. select 到最新的id后，存到pic中
-        //pic中的id已经获取到
-        //关键:
         adminDomain.setUid(a.getUid());
     }
 
