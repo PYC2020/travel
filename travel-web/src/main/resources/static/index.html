@@ -101,8 +101,8 @@
 				find:function(){
 					if(this.keyword!=null){
 						axios({
-	    					url:'travel/product/'+this.keyword,
-	    					method:'get',
+	    					url:'travel/product/findBy?pid=0&tno=0&pname='+this.keyword,
+	    					method:'post',
 	    					//params:{pname:}
 	    				}).then(result=>{
 	    					console.info(result.data)

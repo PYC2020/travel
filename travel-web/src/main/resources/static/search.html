@@ -21,7 +21,7 @@
 					<input type="button" value="搜索" class="input_btn" id="search_btn" @click="find()">
 					<a href="cart.html" id="cart">我的订单</a>
 					<a href="user.html" id="user">用户中心</a>
-					<a href="index1.html" id="index">首页</a>
+					<a href="index.html" id="index">首页</a>
 				</div>
 			</div>
 	
@@ -116,21 +116,21 @@
 			},
 			mounted:function(){
 				this.kd==keyword;
-				if(tno==''){
+				if(tno==0){
 					axios({
-						url:'travel/product/'+keyword,
-    					method:'get',
+						url:'travel/product/findBy?pid=0&tno=0&pname='+keyword,
+    					method:'post',
     					//params:{page:this.page,limit:this.limit}
 					}).then(result=>{
 						this.products=result.data.data;
 					});
 				}else{
 					axios({
-						url:'product.action?op=findById',
+						url:'travel/product/findBy?pid=0&pname=&tno='+tno,
 						method:'post',
-						params:{tno:tno}
+						//params:{tno:tno}
 					}).then(result=>{
-						this.products=result.data;
+						this.products=result.data.data;
 						this.flag=false;
 					})
 				}
@@ -139,8 +139,8 @@
 				find:function(){
 					if(this.kd!=null){
 						axios({
-	    					url:'travel/product/'+this.kd,
-	    					method:'get',
+	    					url:'travel/product/findBy?pid=0&tno=0&pname='+this.kd,
+	    					method:'post',
 	    					//params:{keyword:}
 	    				}).then(result=>{
 	    					if(result.data.data.length==0){

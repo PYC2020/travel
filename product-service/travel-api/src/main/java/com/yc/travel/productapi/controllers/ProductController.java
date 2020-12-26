@@ -22,39 +22,36 @@ import java.util.concurrent.CompletableFuture;
 public class ProductController {
 
     private static Logger logger = LoggerFactory.getLogger(ProductController.class);
-
+    //根据 pname,pid,tno查询
     @Autowired
     private ProductService productService;
-    //根据pid查询
-    @RequestMapping(value = "/pid/{pid}")
-    public CompletableFuture<String> findByPid(@PathVariable Integer pid) {
+    @RequestMapping(value = "/findBy")
+    public CompletableFuture<String> findBy(@RequestParam("pname") String pname,
+                                            @RequestParam("pid")Integer pid,
+                                            @RequestParam("tno")Integer tno) {
         //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
         return CompletableFuture.supplyAsync(() -> {
-//            ProductDomain productDomain = new ProductDomain();
-//            productDomain.setPname(pid);
-            ProductDomain p = productService.findbyPid(pid);
-            //协议
-            Map<String, Object> map = new HashMap<>();
-            map.put("code", 1);
-            map.put("data", p);
-            return new Gson().toJson(map);
+
+            try {
+                ProductDomain productDomain = new ProductDomain();
+                productDomain.setPname(pname);
+                productDomain.setPid(pid);
+                productDomain.setTno(tno);
+                 List list= productService.findBy(productDomain);
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("code", 1);
+                map.put("data", list);
+
+
+                return new Gson().toJson(map);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
         });
     }
-    //根据pname进行查询
-    @RequestMapping(value = "/{pname}")
-    public CompletableFuture<String> findById(@PathVariable String pname) {
-        //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
-        return CompletableFuture.supplyAsync(() -> {
-            ProductDomain productDomain = new ProductDomain();
-            productDomain.setPname(pname);
-            List p = productService.findOne(productDomain);
-            //协议
-            Map<String, Object> map = new HashMap<>();
-            map.put("code", 1);
-            map.put("data", p);
-            return new Gson().toJson(map);
-        });
-    }
+
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
         return CompletableFuture.supplyAsync(() -> {

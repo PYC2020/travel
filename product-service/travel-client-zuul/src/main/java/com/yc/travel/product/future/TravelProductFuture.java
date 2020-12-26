@@ -15,25 +15,12 @@ import java.util.concurrent.CompletableFuture;
 public class TravelProductFuture {
     @Autowired
     private TravelProductRestService travelRestService;
-    //根据pid查询相关产品
     @Async
-    public CompletableFuture<String> findBypid(@PathVariable Integer pid) {
+    public CompletableFuture<String> findBy(String pname,Integer pid,Integer tno) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelRestService.findBypid(pid);
+            return travelRestService.findBy(pname,pid,tno);
         });
     }
-
-
-
-    //根据pname查询相关产品
-    @Async
-    public CompletableFuture<String> findBypname(@PathVariable String pname) {
-        return CompletableFuture.supplyAsync(() -> {
-            return travelRestService.findBypname(pname);
-        });
-    }
-
-
     @Async
     public CompletableFuture<String> findPage(Integer page, Integer pageSize) {
         return CompletableFuture.supplyAsync(() -> {

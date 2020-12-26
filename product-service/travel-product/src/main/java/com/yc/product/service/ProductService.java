@@ -11,11 +11,12 @@ public interface ProductService {
 
     public PageDomain<ProductDomain> listByPage(ProductDomain productDomain);
 
+    public List findBy(ProductDomain productDomain);
+
     public void save(ProductDomain productDomain);
 
     public void delete(Integer id);
 
-    public List findOne(ProductDomain productDomain);
 
-    public  ProductDomain findbyPid(Integer pid);
+
 }

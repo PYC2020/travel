@@ -87,35 +87,35 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * 按地址模糊查询产品
+     * 根据pid Tno,pname查询
      * @param productDomain
      * @return
      */
-    //todo
+
+
     @Transactional(readOnly = true)
     @Override
-    public List findOne(ProductDomain productDomain ) {
+    public List findBy(ProductDomain productDomain)
+    {
         product p = new product();
-        //mybatis的逆向工程中会生成实例及实例对应的example，example用于添加条件，相当where后面的部分
         Example example = new Example(product.class);
-        example.createCriteria().andLike("pname", "%"+productDomain.getPname()+"%");
+        Example.Criteria criteria = example.createCriteria();
+        System.out.println(productDomain.getPname()!=null);
+        if(productDomain.getPname()!=null&&productDomain.getPname().length()>0){
+            criteria.andLike("pname", "%"+productDomain.getPname()+"%");
+        }if(productDomain.getPid()>0){
+            criteria.andEqualTo("pid", +productDomain.getPid());
+        }if(productDomain.getTno()>0){
+            criteria.andEqualTo("tno", +productDomain.getTno());
+        }
+        System.out.println("后"+productDomain);
         List<product>list=  pm.selectByExample(example);
         return list;
     }
 
-    /**
-     * 根据商品id查询
-     * @param
-     * @return
-     */
-    @Transactional(readOnly = true)
-    @Override
-    public ProductDomain findbyPid(Integer pid){
-        product p=this.pm.selectByPrimaryKey(pid);
-        ProductDomain productDomain=new ProductDomain(p.getPid(),p.getPname(),
-                p.getTno(),p.getPrice(),p.getIntro(),p.getBalance(),p.getCompany(),p.getPic());
-        return productDomain;
-    }
+
+
+
     @Override
     public void delete(Integer id) {
         this.pm.deleteByPrimaryKey(id);

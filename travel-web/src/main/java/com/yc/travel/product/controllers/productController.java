@@ -26,13 +26,17 @@ public class productController {
     public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
         return travelProductFuture.findPage(page, pageSize);
     }
-    @RequestMapping(value = "/{pname}", method = RequestMethod.GET)
-    public CompletableFuture<String> findById(@PathVariable String pname) {
-        return travelProductFuture.findBypname(pname);
-    }
-    @RequestMapping(value = "/pid/{pid}", method = RequestMethod.GET)
-    public CompletableFuture<String> findByPid(@PathVariable Integer pid) {
-        return travelProductFuture.findBypid(pid);
+
+    /**
+     * 前端中pid,tno不使用需要为0
+     * @param pname
+     * @param pid
+     * @param tno
+     * @return
+     */
+    @RequestMapping(value = "/findBy", method = RequestMethod.POST)
+    public CompletableFuture<String> findBy( String pname,Integer pid,Integer tno) {
+        return travelProductFuture.findBy(pname,pid,tno);
     }
 
 }

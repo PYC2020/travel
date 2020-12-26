@@ -50,12 +50,13 @@ public class TestService {
     public void testDelete() {
         productService.delete(16);
     }
+
     @Test
-    public void findByPname(){
-        ProductDomain productDomain = new ProductDomain(16, "北", 3,77,"",77,
+    public void findBy(){
+        ProductDomain productDomain = new ProductDomain(0, null,5 ,77,"",77,
                 "","");
 
-        logger.info("新增的产品编号:" + productService.findOne(productDomain));
+        logger.info("selectBy:" + productService.findBy(productDomain));
     }
 
 

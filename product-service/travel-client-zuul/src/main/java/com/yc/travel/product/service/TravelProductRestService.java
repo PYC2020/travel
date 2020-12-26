@@ -16,33 +16,16 @@ public class TravelProductRestService {
     @Autowired
     private TravelProductClient travelproductClient;
 
-    //根据pname查询相关产品
-    @HystrixCommand(fallbackMethod = "findByIdFallback")
-    public String findBypid(@PathVariable Integer pid) {
-        return travelproductClient.findByPid(pid);
+    //findBy(),String pname,Integer pid,Integer tno pname,pid,tno
+    @HystrixCommand(fallbackMethod = "findByFallback")
+    public String findBy(String pname,Integer pid,Integer tno) {
+        return travelproductClient.findBy(pname,pid,tno);
     }
 
-    private String findByIdFallback(Integer pid) {
+    private String findByFallback(String pname,Integer pid,Integer tno) {
         Map map = new HashMap();
         map.put("code", "-1");
-        map.put("msg", "查询产品信息异常");
-        return new Gson().toJson(map);
-    }
-
-
-
-
-
-    //根据pname查询相关产品
-    @HystrixCommand(fallbackMethod = "findBypnameFallback")
-    public String findBypname(@PathVariable String pname) {
-        return travelproductClient.findBypname(pname);
-    }
-
-    private String findBypnameFallback(String pname) {
-        Map map = new HashMap();
-        map.put("code", "-1");
-        map.put("msg", "查询产品信息异常");
+        map.put("msg", "查询产品信息异常test1");
         return new Gson().toJson(map);
     }
 
@@ -54,7 +37,7 @@ public class TravelProductRestService {
     private String findAllFallback(Integer page, Integer pageSize) {
         Map map = new HashMap();
         map.put("code", "-1");
-        map.put("msg", "查询产品信息异常");
+        map.put("msg", "查询产品信息异常test5");
         return new Gson().toJson(map);
     }
 
