@@ -90,9 +90,10 @@ public class AdminServiceImpl implements AdminService {
         admin a  = new admin();
         //mybatis的逆向工程中会生成实例及实例对应的example，example用于添加条件，相当where后面的部分
         Example example = new Example(admin.class);
-        example.createCriteria().andLike("uname", adminDomain.getUname());
+        Example.Criteria criteria = example.createCriteria();
         adminDomain.setPwd(MD5Utils.stringToMD5(adminDomain.getPwd()));
-        example.createCriteria().andLike("pwd", adminDomain.getPwd());
+        criteria.andEqualTo("uname", adminDomain.getUname());
+        criteria.andEqualTo("pwd", adminDomain.getPwd());
         List<admin>list=  am.selectByExample(example);
         return list;
     }

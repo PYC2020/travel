@@ -34,12 +34,10 @@ public class TravelUserFuture {
 
 
     @Async
-    public CompletableFuture<String> create(@PathVariable(value = "uname") String uname,
-                                                @PathVariable(value = "pwd") String pwd,
-                                                @PathVariable(value = "tel") String tel) {
+    public CompletableFuture<String> create(@PathVariable AdminDomain adminDomain) {
         return CompletableFuture.supplyAsync(() -> {
             System.out.println("userController2成功");
-            return travelUserRestService.create(uname, pwd, tel);
+            return travelUserRestService.create(adminDomain);
         });
     }
 

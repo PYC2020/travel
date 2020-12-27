@@ -1,5 +1,6 @@
 package com.yc.travel.user.controllers;
 
+import com.yc.admin.domain.AdminDomain;
 import com.yc.travel.user.future.TravelUserFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +26,12 @@ public class userController {
     }
 
 
-    @RequestMapping(value = "/create/{uname}/{pwd}/{tel}", method = RequestMethod.POST)
-    public CompletableFuture<String> create(@PathVariable(value = "uname") String uname,
-                                                @PathVariable(value = "pwd") String pwd,
-                                            @PathVariable(value = "tel") String tel) {
+    @RequestMapping(value = "/create", method = {RequestMethod.POST,RequestMethod.GET})
+    public CompletableFuture<String> create(@PathVariable AdminDomain adminDomain) throws Exception  {
 
         System.out.println("userController1成功");
 
-        return travelUserFuture.create(uname, pwd, tel);
+        return travelUserFuture.create(adminDomain);
     }
 }
 

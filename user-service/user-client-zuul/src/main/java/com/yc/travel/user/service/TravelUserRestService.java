@@ -44,11 +44,9 @@ public class TravelUserRestService {
 
 
     @HystrixCommand(fallbackMethod = "createFallback")
-    public String create(@PathVariable(value = "uname") String uname,
-                             @PathVariable(value = "pwd") String pwd ,
-                             @PathVariable(value = "tel") String tel){
+    public String create(@PathVariable AdminDomain adminDomain){
         System.out.println("userController3成功");
-        return travelUserClient.create(uname, pwd, tel);
+        return travelUserClient.create(adminDomain);
     }
 
     private String createFallback( String uname,String pwd,String tel) {

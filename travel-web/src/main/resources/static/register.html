@@ -106,7 +106,7 @@
 						url:'travel/user/create/'+this.uname+'/'+this.pwd+'/'+this.tel,
 						method:'post',
 					}).then(result=>{
-						if(result.data.data>0){
+						if(result.data!=null){
 							alert('注册成功');
 							location.href="login.html";
 						}else if(result.data==0){
@@ -114,8 +114,9 @@
 							location.href="register.html";
 						}else{
 							alert('注册失败');
-							console.info(result.data.data);
+							console.info(result.data);
 							console.info(this.uname+'/'+this.pwd+'/'+this.tel);
+							location.href="login.html";
 						}
 					});
 				}

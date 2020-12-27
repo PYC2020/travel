@@ -15,19 +15,14 @@ public interface TravelUserClient {
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/login/{uname}/{pwd}")
     String findByName(@PathVariable(value = "uname") String uname,@PathVariable(value = "pwd") String pwd);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-user-proxy/travel/user/save/{uname}/{pwd}/{tel}")
-    String create(@PathVariable(value = "uname") String uname,@PathVariable(value = "pwd") String pwd,
-                        @PathVariable(value = "tel") String tel);
+    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-user-proxy/travel/user/save")
+    String create(@RequestBody AdminDomain adminDomain);
 
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String findAll(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize);
 
-   @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-user-proxy/travel",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String create(@RequestBody AdminDomain adminDomain);
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/travel-api/travel-user-proxy/travel/user/{id}")
     String delete(@RequestParam("id") Integer id);

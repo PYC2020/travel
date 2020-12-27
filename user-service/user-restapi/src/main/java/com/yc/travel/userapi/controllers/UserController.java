@@ -56,14 +56,9 @@ public class UserController {
         });
     }
 
-    @RequestMapping(value = "/save/{uname}/{pwd}/{tel}",method = RequestMethod.GET)
-    public CompletableFuture<String> save(@PathVariable String uname,@PathVariable String pwd,
-                                                    @PathVariable String tel) throws Exception {
+    @RequestMapping(value = "/save",method = {RequestMethod.GET,RequestMethod.POST})
+    public CompletableFuture<String> save(@PathVariable AdminDomain adminDomain) throws Exception {
         return CompletableFuture.supplyAsync(() -> {
-            AdminDomain adminDomain = new AdminDomain();
-            adminDomain.setUname(uname);
-            adminDomain.setPwd(pwd);
-            adminDomain.setTel(tel);
             adminService.save(adminDomain);
             logger.info("新增->ID=" + adminDomain.getUid());
             Map<String, Object> map = new HashMap<>();
