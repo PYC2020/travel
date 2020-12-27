@@ -48,7 +48,7 @@ spring:
           brokers: 101.37.202.175
 
   application:
-    name: base--config
+    name: base-config
 
 eureka:
   client:

@@ -1,6 +1,5 @@
 package com.yc.travel.userapi.controllers;
 
-
 import com.google.gson.Gson;
 
 import com.yc.admin.domain.AdminDomain;
@@ -41,7 +40,7 @@ public class UserController {
         });
     }
 
-    @RequestMapping(value = "/{uname}/{pwd}")
+    @RequestMapping(value = "/login/{uname}/{pwd}")
     public CompletableFuture<String> findByName(@PathVariable String uname,@PathVariable String pwd) {
         //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
         return CompletableFuture.supplyAsync(() -> {

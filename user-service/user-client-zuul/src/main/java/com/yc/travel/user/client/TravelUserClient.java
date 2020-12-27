@@ -1,23 +1,23 @@
 package com.yc.travel.user.client;
 
-
 import com.yc.admin.domain.AdminDomain;
-import com.yc.travel.user.config.FeignClientConfig;
+import com.yc.travel.user.config.FeignUserClientConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "BASE-ZUUL-GATEWAY",
-        configuration = FeignClientConfig.class
+        configuration = FeignUserClientConfig.class
 )
 public interface TravelUserClient {
 
     //访问的路径value要修改成zuul指定的服务路由路径
-    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/user/{uname}/{pwd}")
-    String findByName(@PathVariable String uname,@PathVariable String pwd);
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/login/{uname}/{pwd}")
+    String findByName(@PathVariable(value = "uname") String uname,@PathVariable(value = "pwd") String pwd);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/user/save/{uname}/{pwd}/{tel}")
-    String save(@PathVariable String uname,@PathVariable String pwd,@PathVariable String tel);
+    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-user-proxy/travel/user/save/{uname}/{pwd}/{tel}")
+    String create(@PathVariable(value = "uname") String uname,@PathVariable(value = "pwd") String pwd,
+                        @PathVariable(value = "tel") String tel);
 
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,

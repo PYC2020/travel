@@ -86,8 +86,12 @@
 			},
 			methods:{
 				reg:function(){
-					if(this.uname=='' && this.pwd==''){
-						alert('用户名或密码不能为空');
+					if(this.uname=="" ){
+						alert("用户名不能为空!");
+						return;
+					}
+					if(this.pwd==""){
+						alert("密码不能为空!");
 						return;
 					}
 					if(this.pwd!=this.rpwd){
@@ -99,11 +103,10 @@
 						return;
 					}
 					axios({
-						url:'user.action',
+						url:'travel/user/create/'+this.uname+'/'+this.pwd+'/'+this.tel,
 						method:'post',
-						params:{op:'register',uname:this.uname,pwd:this.pwd,tel:this.tel}
 					}).then(result=>{
-						if(result.data>0){
+						if(result.data.data>0){
 							alert('注册成功');
 							location.href="login.html";
 						}else if(result.data==0){
@@ -111,6 +114,8 @@
 							location.href="register.html";
 						}else{
 							alert('注册失败');
+							console.info(result.data.data);
+							console.info(this.uname+'/'+this.pwd+'/'+this.tel);
 						}
 					});
 				}

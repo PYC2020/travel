@@ -6,6 +6,7 @@ import com.yc.travel.user.service.TravelUserRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,26 +17,29 @@ public class TravelUserFuture {
     private TravelUserRestService travelUserRestService;
 
     @Async
-    public CompletableFuture<String> findById(Integer id) {
+    public CompletableFuture<String> findByName(@PathVariable(value = "uname") String uname,
+                                                @PathVariable(value = "pwd") String pwd) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelUserRestService.findById(id);
+            return travelUserRestService.findByName(uname, pwd);
         });
     }
 
 
     @Async
-    public CompletableFuture<String> findPage(Integer page, Integer pageSize
-    ) {
+    public CompletableFuture<String> findPage(Integer page, Integer pageSize) {
         return CompletableFuture.supplyAsync(() -> {
             return travelUserRestService.findAll(page, pageSize);
         });
     }
 
-    @Async
-    public CompletableFuture<String> create(AdminDomain adminDomain) {
 
+    @Async
+    public CompletableFuture<String> create(@PathVariable(value = "uname") String uname,
+                                                @PathVariable(value = "pwd") String pwd,
+                                                @PathVariable(value = "tel") String tel) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelUserRestService.create(adminDomain);
+            System.out.println("userController2成功");
+            return travelUserRestService.create(uname, pwd, tel);
         });
     }
 

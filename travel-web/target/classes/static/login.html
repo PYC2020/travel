@@ -35,10 +35,10 @@
 							<li>
 								<input type="password" name="pwd" class="pwd_input" v-model="pwd" placeholder="请输入您的密码">
 							</li>
-							<li>
+							<!--<li>
 								<input type="text" name="yzm" class="yzm_input" v-model="valcode" placeholder="请输入您的验证码">
 								<img src="verifyCodeServlet" class="code" onclick="change()" id="img">
-							</li>
+							</li>-->
 							<li>
 								<div class="more_input ">
 									<input type="checkbox" name="check" id="check" >
@@ -67,19 +67,26 @@
 			},
 			methods:{
 				login:function(){
+					if(this.uname=="" ){
+						alert("用户名不能为空!");
+						return;
+					}
+					if(this.pwd==""){
+						alert("密码不能为空!");
+						return;
+					}
 					axios({
-						url:'user.action',
-						method:'post',
-						params:{op:'login',uname:this.uname,pwd:this.pwd,valcode:this.valcode}
+						url:'travel/user/login/'+this.uname+'/'+this.pwd,
+						method:'get',
+						//params:{op:'login',uname:this.uname,pwd:this.pwd,valcode:this.valcode}
 					}).then(result=>{
-						if(this.uname=="" || this.pwd==""){
-							alert("用户名或密码不能为空!");
-							return;
-						}
-						if(result.data=="登录成功!"){
+						if(result.data.data.length>0){
+							alert("登陆成功!");
 							location.href="index.html";
 						}else{
-							alert(result.data);
+							console.info(result.data.data.length);
+							console.info(result.data);
+
 						}
 					});
 				}
