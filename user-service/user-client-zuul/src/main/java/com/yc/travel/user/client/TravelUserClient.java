@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public interface TravelUserClient {
 
     //访问的路径value要修改成zuul指定的服务路由路径
-    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/login/{uname}/{pwd}")
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/login/")
     String findByName(@PathVariable(value = "uname") String uname,@PathVariable(value = "pwd") String pwd);
 
     @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-user-proxy/travel/user/save")

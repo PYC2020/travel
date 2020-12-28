@@ -25,7 +25,18 @@ public class OrderController {
     //@Resource
     @Autowired
     private OrderService orderService;
-
+    @RequestMapping(value = "/findByPid/{pid}")
+    public CompletableFuture<String> findByPid(@PathVariable Integer pid) {
+        //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
+        return CompletableFuture.supplyAsync(() -> {
+            List order = orderService.findBypid(pid);
+            //协议
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            map.put("data", order);
+            return new Gson().toJson(map);
+        });
+    }
 
     @RequestMapping(value = "/{id}")
     public CompletableFuture<String> findById(@PathVariable Integer id) {
@@ -36,7 +47,6 @@ public class OrderController {
             Map<String, Object> map = new HashMap<>();
             map.put("code", 1);
             map.put("data", order);
-            System.out.println("daol");
             return new Gson().toJson(map);
         });
     }

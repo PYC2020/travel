@@ -105,12 +105,12 @@
 	    					method:'post',
 	    					//params:{pname:}
 	    				}).then(result=>{
-	    					console.info(result.data)
-	    					if(result.data=='暂无此商品!'){
+	    					//console.info(result.data)
+	    					if(result.data.data.length==0){
 	    						alert('暂无此商品!');
 	    						return;
 	    					}else{
-	    						///location.href='search.html#keyword='+this.keyword;
+	    						location.href='search.html#keyword='+this.keyword;
 	    					}
 	    				});
 					}

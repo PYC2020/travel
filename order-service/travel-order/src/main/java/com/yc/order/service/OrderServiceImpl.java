@@ -97,4 +97,22 @@ public class OrderServiceImpl implements OrderService{
                 o.getEdate(),o.getNum());
         return orderDomain;
     }
+    //public OrderDomain findNum(Integer id);
+    @Transactional(readOnly = true)
+    @Override
+    public List findBypid(Integer pid) {
+        orders o = new orders();
+        Example example=new Example(orders.class);
+        Example.Criteria criteria=example.createCriteria();
+        Example.Criteria criteria2=example.createCriteria();
+        criteria.andEqualTo("pid",pid);
+        criteria.andEqualTo("status",1);
+        criteria2.andEqualTo("pid",pid);
+        criteria2.andEqualTo("status",2);
+        example.or(criteria2);
+
+        List ordersList=om.selectByExample(example);
+
+        return ordersList;
+    }
 }

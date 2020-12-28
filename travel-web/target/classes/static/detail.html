@@ -227,11 +227,11 @@
 			},
 			methods:{
 				addcart:function(){
-					if(this.onlogin==false){
-						alert('请先登录!');
-						location.href="login.html";
-						return;
-					}
+					// if(this.onlogin==false){
+					// 	alert('请先登录!');
+					// 	location.href="login.html";
+					// 	return;
+					// }
 					if(this.sdate=='' || this.edate==''){
 						alert('请填写出行时期和回程日期!');
 						return;
@@ -282,10 +282,25 @@
 				}
 			},
 			mounted:function(){
-				axios.all([findPics(),findProduct()
-					// ,findComment(),comTotal(),comSatisfy(),tripNum(),checkLogin()
+				//历史出行人数
+				axios.get("travel/order/findByPid/"+pid)
+						.then(response => {
+							console.log(response.data.data)
+							var temp=0;
+							for (let i = 0; i < response.data.data.length; i++) {
+								temp+=response.data.data[i].num;
+							}
+							this.tripnum=temp;
+						}, error => {
+							console.log('错误', error.message)
+						})
+				axios.all([findPics(),findProduct(),
+					// ,findComment(),comTotal(),comSatisfy(),
+
+					// ,checkLogin()
 					]).then(axios.spread((fn1,fn2
-						//,fn3,fn4,fn5,fn6,fn7
+						//,fn3,fn4,fn5
+										  // ,fn7
 				)=>{
 					this.pic=fn1.data.data[0].picpath;
 					this.pics=fn1.data.data;
@@ -293,10 +308,10 @@
 					// this.comments=fn3.data;
 					// this.comtotal=fn4.data;
 					// this.satisfy=fn5.data;
-					// this.tripnum=fn6.data;
 					// if(fn7.data.user){
 					// 	this.onlogin=true;
 					// }
+					//console.info(this.tripnum)
 				}));
 			}
 		});
@@ -332,12 +347,6 @@
 		//TODO
 		function comSatisfy(){
 			return axios.get("comment.action?op=satisfy&pid="+pid);
-		}
-		
-		//历史出行人数
-		//TODO
-		function tripNum(){
-			return axios.get("orders.action?op=tripNum&pid="+pid);
 		}
 		</script>
 </html>

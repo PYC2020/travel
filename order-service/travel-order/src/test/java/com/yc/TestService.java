@@ -30,6 +30,11 @@ public class TestService {
         List<OrderDomain> list = orderService.list();
         System.out.println(list);
     }
-
+    @Test
+    public void testList1() {
+        logger.info("调用orderService.list");
+        List<OrderDomain> list = orderService.findBypid(5);
+        System.out.println(list);
+    }
 
 }

@@ -97,4 +97,22 @@ public class AdminServiceImpl implements AdminService {
         List<admin>list=  am.selectByExample(example);
         return list;
     }
+    //login
+    @Transactional(readOnly = true)
+    @Override
+    public AdminDomain login(AdminDomain adminDomain) {
+        AdminDomain ad=new AdminDomain();
+        Example example = new Example(admin.class);
+        Example.Criteria criteria = example.createCriteria();
+        adminDomain.setPwd(MD5Utils.stringToMD5(adminDomain.getPwd()));
+        criteria.andEqualTo("uname", adminDomain.getUname());
+        criteria.andEqualTo("pwd", adminDomain.getPwd());
+        List<admin>list=  am.selectByExample(example);
+        for (admin a : list) {
+            ad = new AdminDomain(a.getUid(), a.getUname(), a.getPwd(),a.getTel());
+        }
+        if(list!=null){
+        }
+        return ad;
+    }
 }

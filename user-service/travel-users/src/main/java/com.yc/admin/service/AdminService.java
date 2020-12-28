@@ -20,5 +20,7 @@ public interface AdminService {
     public void delete(Integer id);
 
     public List findOne(AdminDomain adminDomain);
+    //session登陆
+    public AdminDomain login(AdminDomain adminDomain);
 
 }

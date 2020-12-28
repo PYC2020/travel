@@ -26,7 +26,15 @@ public class TestService {
     @Test
     public void testList() {
         logger.info("调用adminService.list");
-        List<AdminDomain> list = adminService.list();
+        AdminDomain adminDomain=new AdminDomain(0,"a","a","1232132");
+        List<AdminDomain> list = adminService.findOne(adminDomain);
+        System.out.println(list);
+    }
+    @Test
+    public void testList1() {
+        logger.info("调用adminService.list");
+        AdminDomain adminDomain=new AdminDomain(0,"a","a","1232132");
+        AdminDomain list= adminService.login(adminDomain);
         System.out.println(list);
     }
 
