@@ -7,6 +7,7 @@ import com.yc.travel.user.client.TravelUserClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +18,7 @@ public class TravelUserRestService {
     private TravelUserClient travelUserClient;
 
    @HystrixCommand(fallbackMethod = "findByNameFallback")
-    public String findByName(@PathVariable(value = "uname") String uname,
-                             @PathVariable(value = "pwd") String pwd ){
+    public String findByName( String uname,String pwd ){
         return travelUserClient.findByName(uname,pwd);
     }
 

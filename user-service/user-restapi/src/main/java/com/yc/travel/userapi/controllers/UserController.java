@@ -4,22 +4,17 @@ import com.google.gson.Gson;
 
 import com.yc.admin.domain.AdminDomain;
 import com.yc.admin.service.AdminService;
-import com.yc.admin.util.Msg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("travel/user")
@@ -47,7 +42,7 @@ public class UserController {
         });
     }
 
-    @RequestMapping(value = "/login/{uname}/{pwd}")
+   /* @RequestMapping(value = "/login/{uname}/{pwd}")
     public CompletableFuture<String> findByName(@PathVariable String uname,@PathVariable String pwd) {
         //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
         return CompletableFuture.supplyAsync(() -> {
@@ -61,7 +56,7 @@ public class UserController {
             map.put("data", a);
             return new Gson().toJson(map);
         });
-    }
+    }*/
     //登录已经加入session
     @RequestMapping(value = "/login")
     public CompletableFuture<String> login(HttpServletRequest request,@RequestParam("uname")  String uname, @RequestParam("pwd")  String pwd) {

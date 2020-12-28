@@ -17,8 +17,7 @@ public class TravelUserFuture {
     private TravelUserRestService travelUserRestService;
 
     @Async
-    public CompletableFuture<String> findByName(@PathVariable(value = "uname") String uname,
-                                                @PathVariable(value = "pwd") String pwd) {
+    public CompletableFuture<String> findByName( String uname, String pwd) {
         return CompletableFuture.supplyAsync(() -> {
             return travelUserRestService.findByName(uname, pwd);
         });

@@ -18,9 +18,8 @@ public class userController {
     @Autowired
     private TravelUserFuture travelUserFuture;
 
-    @RequestMapping(value = "/login/{uname}/{pwd}", method = RequestMethod.GET)
-    public CompletableFuture<String> findByName(@PathVariable(value = "uname") String uname,
-                                           @PathVariable(value = "pwd") String pwd) {
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public CompletableFuture<String> findByName(String uname,String pwd) {
 
         return travelUserFuture.findByName(uname, pwd);
     }

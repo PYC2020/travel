@@ -6,14 +6,20 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @FeignClient(name = "BASE-ZUUL-GATEWAY",
         configuration = FeignUserClientConfig.class
 )
 public interface TravelUserClient {
 
     //访问的路径value要修改成zuul指定的服务路由路径
-    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/login/")
-    String findByName(@PathVariable(value = "uname") String uname,@PathVariable(value = "pwd") String pwd);
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/login")
+    String findByName(@RequestParam("uname") String uname,@PathVariable( "pwd") String pwd);
+
+    @RequestMapping(value = "/travel-api/travel-user-proxy/session/getsession")
+    String getSesseion(HttpServletRequest request);
+
 
     @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-user-proxy/travel/user/save")
     String create(@RequestBody AdminDomain adminDomain);

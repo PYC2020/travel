@@ -20,6 +20,10 @@ spring.devtools.livereload.enabled: false
 spring:
   main:
     allow-bean-definition-overriding: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000
 
 #fdfs相关配置
 fdfs:
