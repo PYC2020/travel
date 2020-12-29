@@ -15,7 +15,7 @@ public interface TravelUserClient {
 
     //访问的路径value要修改成zuul指定的服务路由路径
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/login")
-    String findByName(@RequestParam("uname") String uname,@PathVariable( "pwd") String pwd);
+    String findByName(@RequestParam("uname") String uname,@RequestParam("pwd") String pwd);
 
     @RequestMapping(value = "/travel-api/travel-user-proxy/session/getsession")
     String getSesseion(HttpServletRequest request);
