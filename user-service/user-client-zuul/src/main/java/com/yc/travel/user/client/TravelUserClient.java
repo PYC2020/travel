@@ -17,7 +17,7 @@ public interface TravelUserClient {
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/login")
     String findByName(@RequestParam("uname") String uname,@RequestParam("pwd") String pwd);
 
-    @RequestMapping(value = "/travel-api/travel-user-proxy/session/getsession")
+    @RequestMapping(method = RequestMethod.GET,value = "/travel-api/travel-user-proxy/session/getsession")
     String getSesseion(HttpServletRequest request);
 
 

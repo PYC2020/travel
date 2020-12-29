@@ -22,9 +22,9 @@ public class TravelProductFuture {
         });
     }
     @Async
-    public CompletableFuture<String> findPage(Integer page, Integer pageSize) {
+    public CompletableFuture<String> findPage(Integer page, Integer limit) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelRestService.findAll(page, pageSize);
+            return travelRestService.findAll(page, limit);
         });
     }
 

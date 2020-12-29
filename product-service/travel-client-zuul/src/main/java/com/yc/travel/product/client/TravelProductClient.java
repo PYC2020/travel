@@ -18,8 +18,7 @@ public interface TravelProductClient {
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/product/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String findAll(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize
-                  );
+    String findAll(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit);
 
     @RequestMapping(method = RequestMethod.POST, value = "/travel-api/ttravel-proxy/travel",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,

@@ -25,7 +25,7 @@ public class TravelUserFuture {
     }
 
     @Async
-    public CompletableFuture<String> getsession( HttpServletRequest request) {
+    public CompletableFuture<String> getsession(HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
             return travelUserRestService.getsession(request);
         });

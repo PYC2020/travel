@@ -44,21 +44,18 @@ public class ProductServiceImpl implements ProductService {
         //mybatis的逆向工程中会生成实例及实例对应的example，example用于添加条件，相当where后面的部分
         Example example = new Example(product.class);   //条件
         //分页条件设置
-        PageHelper.startPage(productDomain.getPage(), productDomain.getPageSize());
+        PageHelper.startPage(productDomain.getPage(), productDomain.getLimit());
         //排序条件
-
-
-        example.setOrderByClause("tno asc,pid desc");
+        example.setOrderByClause("pid asc");
         //  Criteria: 查询的规则
         Example.Criteria c = example.createCriteria();
         // PageInfo: 分页的结果   总记录数，第几页，每页多少条条，上一页，下一页， 总共多少页.
         PageInfo<product> pageInfo = new PageInfo<product>(pm.selectByExample(example));
 
-
         PageDomain<ProductDomain> pageDomain = new PageDomain<ProductDomain>();
         pageDomain.setTotal(pageInfo.getTotal());
         pageDomain.setPage(pageInfo.getPageNum());
-        pageDomain.setPageSize(productDomain.getPageSize());
+        pageDomain.setLimit(productDomain.getLimit());
         //List<Pic> list = picMapper.selectByExample(example);
         List<ProductDomain> r = new ArrayList<ProductDomain>();
         //从pageInfo中取记录数

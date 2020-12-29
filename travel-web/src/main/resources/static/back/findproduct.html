@@ -21,13 +21,13 @@ $(function(){
   var table = layui.table;
   tab=table.render({
     elem: '#product',
-    url:'../product.action?op=findPage',
+    url:'../travel/product/findAll',
    	parseData:function(res){
    		return{
    			"code":0,
    			"msg":"",
    			"count":1000,
-   			"data":res
+   			"data":res.data
    		}
    	},
     cols: [[
@@ -39,7 +39,7 @@ $(function(){
       {field:'balance', title: '库存', sort: true,edit:'text'},
       {field:'company', title: '旅游公司名', sort: true},
       {field:'pic', title: '图片', sort: true,templet: function(res){
-    	  return ''+'<img src="../../.." width="50" height="50">'+res.pic+'';
+    	  return '<img src='+res.pic+' width="50" height="50">';
       }}
     ]],
     page: true,

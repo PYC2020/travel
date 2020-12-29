@@ -39,12 +39,11 @@ public class TravelOrderRestService {
     }
 
     @HystrixCommand(fallbackMethod = "findAllFallback")
-    public String findAll(Integer page, Integer pageSize
-    ) {
-        return travelOrderClient.findAll(page, pageSize);
+    public String findAll(Integer page, Integer limit) {
+        return travelOrderClient.findAll(page, limit);
     }
 
-    private String findAllFallback(Integer page, Integer pageSize) {
+    private String findAllFallback(Integer page, Integer limit) {
         Map map = new HashMap();
         map.put("code", "-1");
         map.put("msg", "服务异常");

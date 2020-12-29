@@ -34,11 +34,7 @@ public class UserController {
 
                 AdminDomain  adminDomain = new AdminDomain();
                 List<AdminDomain> list= adminService.list();
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("code", 1);
-                map.put("data", list);
-                return new Gson().toJson(map);
+                return new Gson().toJson(list);
         });
     }
 

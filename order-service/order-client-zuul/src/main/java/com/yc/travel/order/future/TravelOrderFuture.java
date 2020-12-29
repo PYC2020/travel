@@ -30,10 +30,9 @@ public class TravelOrderFuture {
 
 
     @Async
-    public CompletableFuture<String> findPage(Integer page, Integer pageSize
-    ) {
+    public CompletableFuture<String> findPage(Integer page, Integer limit) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelOrderRestService.findAll(page, pageSize);
+            return travelOrderRestService.findAll(page, limit);
         });
     }
 

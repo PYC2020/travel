@@ -44,9 +44,8 @@ public class TravelUserRestService {
     }
 
 
-    //@HystrixCommand(fallbackMethod = "createFallback")
+    @HystrixCommand(fallbackMethod = "createFallback")
     public String create(String uname, String pwd,String tel){
-        System.out.println("3");
         return travelUserClient.create(uname, pwd, tel);
     }
 
@@ -69,7 +68,15 @@ public class TravelUserRestService {
         return new Gson().toJson(map);
     }
 
+    //@HystrixCommand(fallbackMethod = "getsessionFallback")
     public String getsession(HttpServletRequest request){
         return travelUserClient.getSesseion(request);
+    }
+
+    private String getsessionFallback(HttpServletRequest request) {
+        Map map = new HashMap();
+        map.put("code", "-1");
+        map.put("msg", "服务异常，查询不到session");
+        return new Gson().toJson(map);
     }
 }

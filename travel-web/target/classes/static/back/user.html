@@ -20,9 +20,9 @@ layui.use('table', function(){
   var table = layui.table;
   
   table.render({
-    elem: '#user'
-    ,url:'../user.action?op=findAll'
-   	,parseData:function(res){
+    elem: '#user',
+    url:'../travel/user/findAll',
+    parseData:function(res){
      	return{
       		"code":0,
       		"msg":"",
@@ -31,12 +31,12 @@ layui.use('table', function(){
        	}
     }
     ,cols: [[
-      {field:'uid', title: '编号', sort: true}
-      ,{field:'uname', title: '名称', sort: true}
-      ,{field:'pwd', title: '密码', sort: true,templet: function(res){
+      {field:'uid', title: '编号', sort: true},
+      {field:'uname', title: '名称', sort: true},
+      {field:'pwd', title: '密码', sort: true,templet: function(res){
     	  return '************';
-      }}
-      ,{field:'tel', title: '电话', sort: true}
+      }},
+      {field:'tel', title: '电话', sort: true}
     ]]
     ,page: true
   });

@@ -41,15 +41,11 @@ public class OrderServiceImpl implements OrderService{
     public PageDomain<OrderDomain> listByPage(OrderDomain orderDomain) {
         Example example = new Example(orders.class);   //条件
         //分页条件设置
-        PageHelper.startPage(orderDomain.getPage(), orderDomain.getPageSize());
+        PageHelper.startPage(orderDomain.getPage(), orderDomain.getLimit());
         //排序条件
-        example.setOrderByClause("oid desc");
+        example.setOrderByClause("oid asc");
         //  Criteria: 查询的规则
         Example.Criteria c = example.createCriteria();
-//        if (CommonUtils.isNotNull(picDomain.getPicpath())) {
-//            //条件创建    where 1=1 and description like '%xx%';
-//            c.andLike("picpath", "%" + picDomain.getPicpath() + "%");
-//        }
         // PageInfo: 分页的结果   总记录数，第几页，每页多少条条，上一页，下一页， 总共多少页.
         PageInfo<orders> pageInfo = new PageInfo<orders>(om.selectByExample(example));
 
@@ -57,7 +53,7 @@ public class OrderServiceImpl implements OrderService{
         PageDomain<OrderDomain> pageDomain = new PageDomain<OrderDomain>();
         pageDomain.setTotal(pageInfo.getTotal());
         pageDomain.setPage(pageInfo.getPageNum());
-        pageDomain.setPageSize(orderDomain.getPageSize());
+        pageDomain.setLimit(orderDomain.getLimit());
         //List<Pic> list = picMapper.selectByExample(example);
         List<OrderDomain> r = new ArrayList<OrderDomain>();
         //从pageInfo中取记录数

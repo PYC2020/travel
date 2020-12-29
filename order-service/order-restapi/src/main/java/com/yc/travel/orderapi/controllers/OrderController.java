@@ -3,7 +3,9 @@ package com.yc.travel.orderapi.controllers;
 
 import com.google.gson.Gson;
 import com.yc.order.domain.OrderDomain;
+import com.yc.order.domain.PageDomain;
 import com.yc.order.service.OrderService;
+import com.yc.order.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,15 +53,22 @@ public class OrderController {
         });
     }
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
+    public CompletableFuture<String> findAll(Integer page, Integer limit) {
         return CompletableFuture.supplyAsync(() -> {
-            OrderDomain orderDomain = new OrderDomain();
-            List<OrderDomain> list= orderService.list();
-
-            Map<String, Object> map = new HashMap<>();
-            map.put("code", 1);
-            map.put("data", list);
-            return new Gson().toJson(map);
+            try {
+                OrderDomain orderDomain=new OrderDomain();
+                if (CommonUtils.isNotNull(page)) {
+                    orderDomain.setPage(page);
+                }
+                if (CommonUtils.isNotNull(limit)) {
+                    orderDomain.setLimit(limit);
+                }
+                PageDomain<OrderDomain> pageDomain = orderService.listByPage(orderDomain);
+                return new Gson().toJson(pageDomain);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
         });
     }
 }

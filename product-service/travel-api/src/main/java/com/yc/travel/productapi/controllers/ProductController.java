@@ -2,7 +2,6 @@ package com.yc.travel.productapi.controllers;
 
 
 import com.google.gson.Gson;
-import com.yc.pics.domain.PicsDomain;
 import com.yc.product.domain.PageDomain;
 import com.yc.product.domain.ProductDomain;
 import com.yc.product.service.ProductService;
@@ -53,25 +52,18 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
+    public CompletableFuture<String> findAll(Integer page, Integer limit) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 ProductDomain productDomain = new ProductDomain();
-
                 if (CommonUtils.isNotNull(page)) {
                     productDomain.setPage(page);
                 }
-                if (CommonUtils.isNotNull(pageSize)) {
-                    productDomain.setPageSize(pageSize);
+                if (CommonUtils.isNotNull(limit)) {
+                    productDomain.setLimit(limit);
                 }
                 PageDomain<ProductDomain> pageDomain = productService.listByPage(productDomain);
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("code", 1);
-                map.put("data", pageDomain);
-
-
-                return new Gson().toJson(map);
+                return new Gson().toJson(pageDomain);
             } catch (Exception e) {
                 e.printStackTrace();
             }

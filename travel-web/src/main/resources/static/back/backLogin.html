@@ -29,7 +29,7 @@
 					<form >
 						<ul>
 							<li>
-								用户名:<input type="text" name="uname" class="name_input"  v-model="aname" placeholder="请输入您的用户名">
+								用户名:<input type="text" name="uname" class="name_input"  v-model="uname" placeholder="请输入您的用户名">
 							</li>
 							<li>
 								密&nbsp;&nbsp;&nbsp;&nbsp;码:<input type="password" name="pwd" class="pwd_input" v-model="pwd" placeholder="请输入您的密码">
@@ -49,17 +49,17 @@
 		var vm=new Vue({
 			el:"#login",
 			data:{
-				aname:'',
+				uname:'',
 				pwd:''
 			},
 			methods:{
 				login:function(){
 					axios({
-						url:'../admin.action',
-						method:'post',
-						params:{op:'login',aname:this.aname,pwd:this.pwd}
+						url:'../travel/user/login?uname='+this.uname+'&pwd='+this.pwd,
+						method:'get',
+						//params:{op:'login',aname:this.aname,pwd:this.pwd}
 					}).then(result=>{
-						if(result.data>0){
+						if(result.data!=null){
 							location.href="index.html";
 						}else{
 							alert('用户名或密码错误!');

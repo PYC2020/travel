@@ -22,9 +22,10 @@ public class productController {
     private String pathHead;
     @Autowired
     private TravelProductFuture travelProductFuture;
+
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    public CompletableFuture<String> findAll(Integer page, Integer pageSize) {
-        return travelProductFuture.findPage(page, pageSize);
+    public CompletableFuture<String> findAll(Integer page, Integer limit) {
+        return travelProductFuture.findPage(page, limit);
     }
 
     /**
