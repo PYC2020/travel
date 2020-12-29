@@ -22,7 +22,7 @@ public interface TravelUserClient {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-user-proxy/travel/user/save")
-    String create(@RequestBody AdminDomain adminDomain);
+    String create(@RequestParam("uname") String uname,@RequestParam("pwd") String pwd,@RequestParam("tel") String tel);
 
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-user-proxy/travel/user/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,

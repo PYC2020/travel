@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.CompletableFuture;
 
 @Component
@@ -23,6 +24,13 @@ public class TravelUserFuture {
         });
     }
 
+    @Async
+    public CompletableFuture<String> getsession( HttpServletRequest request) {
+        return CompletableFuture.supplyAsync(() -> {
+            return travelUserRestService.getsession(request);
+        });
+    }
+
 
     @Async
     public CompletableFuture<String> findPage(Integer page, Integer pageSize) {
@@ -33,10 +41,10 @@ public class TravelUserFuture {
 
 
     @Async
-    public CompletableFuture<String> create(@PathVariable AdminDomain adminDomain) {
+    public CompletableFuture<String> create(String uname, String pwd,String tel) {
         return CompletableFuture.supplyAsync(() -> {
-            System.out.println("userController2成功");
-            return travelUserRestService.create(adminDomain);
+            System.out.println("2");
+            return travelUserRestService.create(uname, pwd, tel);
         });
     }
 

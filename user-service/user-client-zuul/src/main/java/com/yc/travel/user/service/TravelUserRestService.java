@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,14 +44,13 @@ public class TravelUserRestService {
     }
 
 
-    @HystrixCommand(fallbackMethod = "createFallback")
-    public String create(@PathVariable AdminDomain adminDomain){
-        System.out.println("userController3成功");
-        return travelUserClient.create(adminDomain);
+    //@HystrixCommand(fallbackMethod = "createFallback")
+    public String create(String uname, String pwd,String tel){
+        System.out.println("3");
+        return travelUserClient.create(uname, pwd, tel);
     }
 
     private String createFallback( String uname,String pwd,String tel) {
-        System.out.println("travelUserClient   create失败");
         Map map = new HashMap();
         map.put("code", "-1");
         map.put("msg", "服务异常，无法添加" + uname);
@@ -67,5 +67,9 @@ public class TravelUserRestService {
         map.put("code", "-1");
         map.put("msg", "服务异常，无法删除" + id);
         return new Gson().toJson(map);
+    }
+
+    public String getsession(HttpServletRequest request){
+        return travelUserClient.getSesseion(request);
     }
 }

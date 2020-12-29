@@ -103,7 +103,7 @@
 						return;
 					}
 					axios({
-						url:'travel/user/create/'+this.uname+'/'+this.pwd+'/'+this.tel,
+						url:'travel/user/create?uname='+this.uname+'&pwd='+this.pwd+'&tel='+this.tel,
 						method:'post',
 					}).then(result=>{
 						if(result.data!=null){

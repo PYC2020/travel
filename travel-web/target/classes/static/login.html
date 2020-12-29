@@ -76,11 +76,11 @@
 						return;
 					}
 					axios({
-						url:'travel/user/login/'+this.uname+'/'+this.pwd,
+						url:'travel/user/login?uname='+this.uname+'&pwd='+this.pwd,
 						method:'get',
 						//params:{op:'login',uname:this.uname,pwd:this.pwd,valcode:this.valcode}
 					}).then(result=>{
-						if(result.data.data.length>0){
+						if(result.data.data!=null){
 							alert("登陆成功!");
 							location.href="index.html";
 						}else{

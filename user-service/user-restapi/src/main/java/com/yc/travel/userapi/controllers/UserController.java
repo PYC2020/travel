@@ -67,8 +67,6 @@ public class UserController {
             AdminDomain a = adminService.login(adminDomain);
             Map<String, Object> map = new HashMap<>();
             HttpSession session = request.getSession();
-            System.out.println(a);
-            System.out.println(a==null);
             if(a.getUid()!=null){
                 session.setAttribute("user",a);
                 map.put("code", 1);
@@ -81,8 +79,14 @@ public class UserController {
         });
     }
     @RequestMapping(value = "/save",method = {RequestMethod.GET,RequestMethod.POST})
-    public CompletableFuture<String> save(@PathVariable AdminDomain adminDomain) throws Exception {
+    public CompletableFuture<String> save(@RequestParam("uname")  String uname,
+                                          @RequestParam("pwd")  String pwd,
+                                          @RequestParam("tel")  String tel) throws Exception {
         return CompletableFuture.supplyAsync(() -> {
+            AdminDomain adminDomain = new AdminDomain();
+            adminDomain.setUname(uname);
+            adminDomain.setPwd(pwd);
+            adminDomain.setTel(tel);
             adminService.save(adminDomain);
             logger.info("新增->ID=" + adminDomain.getUid());
             Map<String, Object> map = new HashMap<>();

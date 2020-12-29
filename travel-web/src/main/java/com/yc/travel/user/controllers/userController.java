@@ -26,11 +26,9 @@ public class userController {
 
 
     @RequestMapping(value = "/create", method = {RequestMethod.POST,RequestMethod.GET})
-    public CompletableFuture<String> create(@PathVariable AdminDomain adminDomain) throws Exception  {
-
-        System.out.println("userController1成功");
-
-        return travelUserFuture.create(adminDomain);
+    public CompletableFuture<String> create(String uname,String pwd,String tel) throws Exception  {
+        System.out.println("1");
+        return travelUserFuture.create(uname, pwd, tel);
     }
 }
 
