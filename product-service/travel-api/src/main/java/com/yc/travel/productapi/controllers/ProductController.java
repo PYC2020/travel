@@ -70,16 +70,40 @@ public class ProductController {
             return null;
         });
     }
-    @RequestMapping(method = RequestMethod.POST)
-    public CompletableFuture<String> save(@RequestBody ProductDomain productDomain) throws Exception {
+
+    @RequestMapping(value = "/save",method = {RequestMethod.GET,RequestMethod.POST})
+    public CompletableFuture<String> save(@RequestParam("pname")  String pname,@RequestParam("tno")  Integer tno,
+                                          @RequestParam("price")  Integer price,@RequestParam("intro")  String intro,
+                                          @RequestParam("balance")  Integer balance,@RequestParam("company")  String company,
+                                          @RequestParam("pic")  String pic) throws Exception {
         return CompletableFuture.supplyAsync(() -> {
-            productService.save(productDomain);
-            logger.info("新增->ID=" + productDomain.getPid());
+            ProductDomain product =  new ProductDomain();
+            product.setPname(pname);
+            product.setTno(tno);
+            product.setPrice(price);
+            product.setIntro(intro);
+            product.setBalance(balance);
+            product.setCompany(company);
+            product.setPic(pic);
+            productService.save(product);
+            logger.info("新增->名字=" + product.getPname());
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            map.put("data", product);
+            return new Gson().toJson(map);
+
+        });
+    }
+
+    @RequestMapping(value = "/{id}")
+    public CompletableFuture<String> findById(@PathVariable Integer id) {
+        //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
+        return CompletableFuture.supplyAsync(() -> {
+            ProductDomain productDomain = productService.findOne(id);
             Map<String, Object> map = new HashMap<>();
             map.put("code", 1);
             map.put("data", productDomain);
             return new Gson().toJson(map);
-
         });
     }
 

@@ -43,7 +43,6 @@ public class TravelUserFuture {
     @Async
     public CompletableFuture<String> create(String uname, String pwd,String tel) {
         return CompletableFuture.supplyAsync(() -> {
-            System.out.println("2");
             return travelUserRestService.create(uname, pwd, tel);
         });
     }

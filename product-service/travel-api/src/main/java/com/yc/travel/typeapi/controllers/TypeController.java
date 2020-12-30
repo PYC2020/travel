@@ -39,6 +39,7 @@ public class TypeController {
             map.put("code", 1);
             map.put("data", type);
             return new Gson().toJson(map);
+
         });
     }
     @RequestMapping(value = "/findAll")

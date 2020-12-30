@@ -40,4 +40,15 @@ public class productController {
         return travelProductFuture.findBy(pname,pid,tno);
     }
 
+    @RequestMapping(value = "/{id}")
+    public CompletableFuture<String> findById(@PathVariable Integer id) {
+        return travelProductFuture.findById(id);
+    }
+
+    @RequestMapping(value = "/create", method = {RequestMethod.POST,RequestMethod.GET})
+    public CompletableFuture<String> create(String pname,Integer tno,Integer price,String intro,Integer balance,
+                                            String company, String pic) throws Exception  {
+        return travelProductFuture.create(pname, tno, price, intro, balance, company, pic);
+    }
+
 }

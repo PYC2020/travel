@@ -74,14 +74,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void save(ProductDomain productDomain) {
         product p = new product();
-        p.setPid(productDomain.getPid());
         p.setPname(productDomain.getPname());
+        p.setTno(productDomain.getTno());
+        p.setPrice(productDomain.getPrice());
+        p.setIntro(productDomain.getIntro());
+        p.setBalance(productDomain.getBalance());
+        p.setCompany(productDomain.getCompany());
+        p.setPic(productDomain.getPic());
         this.pm.insert(p);
         // 在这里  mybatis完成了两步操作: 1. insert   2. select 到最新的id后，存到pic中
         //pic中的id已经获取到
         //关键:
         productDomain.setPid(p.getPid());
     }
+
+
 
     /**
      * 根据pid Tno,pname查询
@@ -117,4 +124,15 @@ public class ProductServiceImpl implements ProductService {
     public void delete(Integer id) {
         this.pm.deleteByPrimaryKey(id);
     }
+
+
+    @Transactional(readOnly = true)
+    @Override
+    public ProductDomain findOne(Integer id) {
+        product p = this.pm.selectByPrimaryKey(id);
+        ProductDomain productDomain = new ProductDomain(p.getPid(),p.getPname(),
+                p.getTno(),p.getPrice(),p.getIntro(),p.getBalance(),p.getCompany(),p.getPic());
+        return productDomain;
+    }
+
 }

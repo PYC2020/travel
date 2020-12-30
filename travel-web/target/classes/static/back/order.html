@@ -20,14 +20,14 @@ layui.use('table', function(){
   var table = layui.table;
   
   table.render({
-    elem: '#orders'
-    ,url:'../orders.action?op=findVO'
-    ,parseData:function(res){
+    elem: '#orders',
+    url:'../travel/order/findAll',
+    parseData:function(res){
        	return{
        		"code":0,
        		"msg":"",
        		"count":1000,
-       		"data":res
+       		"data":res.data
        	}
     }
     ,cols: [[

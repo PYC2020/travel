@@ -17,7 +17,7 @@ public class typeController {
     private static Logger logger = LoggerFactory.getLogger(PicController.class.getName());
     @Autowired
     private  TravelTypeFuture travelTypeFuture;
-    @RequestMapping(value = "/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/findAll", method = {RequestMethod.POST,RequestMethod.GET})
     public CompletableFuture<String> list() {
         return travelTypeFuture.findAll();
     }

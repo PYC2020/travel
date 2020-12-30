@@ -15,15 +15,19 @@ public interface TravelProductClient {
     @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-proxy/travel/product/findBy")
     String findBy( @RequestParam("pname") String pname,@RequestParam("pid")Integer pid,@RequestParam("tno")Integer tno);
 
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/product/{id}")
+    String findById(@RequestParam("id") Integer id);
+
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-proxy/travel/product/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String findAll(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/ttravel-proxy/travel",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String create(@RequestBody ProductDomain productDomain);
+    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-proxy/travel/product/save")
+    String create(@RequestParam("pname")  String pname,@RequestParam("tno")  Integer tno,
+                  @RequestParam("price")  Integer price,@RequestParam("intro")  String intro,
+                  @RequestParam("balance")  Integer balance,@RequestParam("company")  String company,
+                  @RequestParam("pic")  String pic);
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/travel-api/travel-proxy/travel/product/{id}")
     String delete(@RequestParam("id") Integer id);

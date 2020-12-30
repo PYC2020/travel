@@ -29,9 +29,16 @@ public class TravelProductFuture {
     }
 
     @Async
-    public CompletableFuture<String> create(ProductDomain productDomain) {
+    public CompletableFuture<String> findById(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelRestService.create(productDomain);
+            return travelRestService.findById(id);
+        });
+    }
+
+    @Async
+    public CompletableFuture<String> create(String pname,Integer tno,Integer price,String intro,Integer balance,String company, String pic) {
+        return CompletableFuture.supplyAsync(() -> {
+            return travelRestService.create(pname, tno, price, intro, balance, company, pic);
         });
     }
 

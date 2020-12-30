@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品</title>
+</head>
+<body>
+    <div id="add">
+        <div>
+            <label>地 点：</label>
+            <input type="text" class="form-control " v-model="pname" placeholder="请输入地点...">
+        </div><br>
+        <div>
+            <label>商品类型：</label>
+            <select v-model="tno">
+                <option>  -请选择商品类型-  </option>
+                <option>欧美大国</option>
+                <option>澳非探秘</option>
+                <option>日本</option>
+                <option>东南亚风情</option>
+                <option>国内精选</option>
+            </select>
+        </div><br>
+        <div>
+            <label>价 格：</label>
+            <input type="text" class="form-control " v-model="price" placeholder="请输入价格...">
+        </div><br>
+        <div>
+            <label>介 绍：</label>
+            <input type="text" class="form-control " v-model="intro" placeholder="请输入商品介绍...">
+        </div><br>
+        <div>
+            <label>库 存：</label>
+            <input type="text" class="form-control " v-model="balance" placeholder="请输入库存...">
+        </div><br>
+        <div>
+            <label>旅行社：</label>
+            <input type="text" class="form-control " v-model="company" placeholder="请输入旅行社...">
+        </div><br>
+        <div>
+            <label>图 片：</label>
+            <td><input type="file" name="pictureFile"/></td>
+        </div><br>
+        <input type="button" value="添加"  class="input_submit" @click="add">
+    </div>
+    <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/axios.js"></script>
+    <script type="text/javascript">
+        var vm=new Vue({
+            el:"#add",
+            data:{
+                pname:'',
+                tno:'',
+                price:'',
+                intro:'',
+                balance:'',
+                company:'',
+            },
+            methods:{
+                add:function(){
+                    if(this.pname=="" ){
+                        alert("用户名不能为空!");
+                        return;
+                    }
+                    if(this.tno=="欧美大国" ){
+                        this.tno=1;
+                    }
+                    if(this.tno=="澳非探秘" ){
+                        this.tno=2;
+                    }
+                    if(this.tno=="日本" ){
+                        this.tno=3;
+                    }
+                    if(this.tno=="东南亚风情" ){
+                        this.tno=4;
+                    }
+                    if(this.tno=="国内精选" ){
+                        this.tno=5;
+                    }
+                    if(this.tno=="-请选择商品类型-" ){
+                        this.tno=0;
+                    }
+                    axios({
+                        url:'../travel/product/create?pname='+this.pname+'&tno='+this.tno+'&price='+this.price+'&balance='+this.balance+
+                            '&company='+this.company+'&intro='+this.intro+'&pic=',
+                        method:'post',
+                    }).then(result=>{
+                        console.info(this.pname+this.tno+this.price+this.balance+this.company+this.intro)
+                        if(result.data!=null){
+                            alert('添加成功');
+                        }else{
+                            alert('添加失败');
+                            console.info(result.data);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
