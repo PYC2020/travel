@@ -33,7 +33,7 @@ layui.use('table', function(){
     ,cols: [[
       {field:'oid', title: '编号', sort: true}
       ,{field:'uid', title: '用户id', sort: true}
-      ,{field:'pname', title: '产品名', sort: true}
+      //,{field:'pname', title: '产品名', sort: true}
       ,{field:'odate', title: '下单日期', sort: true}
       ,{field:'status', title: '订单状态', sort: true,templet:function(res){
     	  if(res.status==0){
@@ -46,11 +46,13 @@ layui.use('table', function(){
       }}
       ,{field:'sdate', title: '开始日期', sort: true}
       ,{field:'edate', title: '回程日期', sort: true}
-      ,{field:'num', title: '人数', sort: true}
-      ,{field:'company', title: '公司', sort: true}
-      ,{field:'total', title: '总价', sort: true,templet: function(res){
-    	  return res.price*res.num;
-      }}
+      ,{field:'num', title: '人数', sort: true
+      //,{field:'company', title: '公司', sort: true}
+      //,{field:'total', title: '总价', sort: true
+      // ,templet: function(res){
+    	//   return res.price*res.num;
+      // }
+    }
     ]]
     ,page: true
   });

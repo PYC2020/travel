@@ -92,14 +92,14 @@
 	    			keyword:''
 				},
 				mounted:function(){
-					axios.get('user.action?op=check').then(result=>{
-						if(result.data.user){
-							this.onlogin=true;
-						}else{
-							alert('请先登录!');
-							location.href="login.html";
-						}
-					});
+					// axios.get('user.action?op=check').then(result=>{
+					// 	if(result.data.user){
+					// 		this.onlogin=true;
+					// 	}else{
+					// 		alert('请先登录!');
+					// 		location.href="login.html";
+					// 	}
+					// });
 					axios.get("orders.action?op=findOrders",{params:{}}).then(result=>{
 	    				this.orders=result.data;
 	    				//购物车中每行数据进行循环

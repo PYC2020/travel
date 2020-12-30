@@ -13,7 +13,6 @@
         <div>
             <label>商品类型：</label>
             <select v-model="tno">
-                <option>  -请选择商品类型-  </option>
                 <option>欧美大国</option>
                 <option>澳非探秘</option>
                 <option>日本</option>
@@ -39,7 +38,7 @@
         </div><br>
         <div>
             <label>图 片：</label>
-            <td><input type="file" name="pictureFile"/></td>
+            <td><input type="file" name="pictureFile" v-model="pictureFile"/></td>
         </div><br>
         <input type="button" value="添加"  class="input_submit" @click="add">
     </div>
@@ -56,6 +55,7 @@
                 intro:'',
                 balance:'',
                 company:'',
+                pictureFile:'',
             },
             methods:{
                 add:function(){
@@ -78,12 +78,9 @@
                     if(this.tno=="国内精选" ){
                         this.tno=5;
                     }
-                    if(this.tno=="-请选择商品类型-" ){
-                        this.tno=0;
-                    }
                     axios({
                         url:'../travel/product/create?pname='+this.pname+'&tno='+this.tno+'&price='+this.price+'&balance='+this.balance+
-                            '&company='+this.company+'&intro='+this.intro+'&pic=',
+                            '&company='+this.company+'&intro='+this.intro+'&pic='+this.pictureFile,
                         method:'post',
                     }).then(result=>{
                         console.info(this.pname+this.tno+this.price+this.balance+this.company+this.intro)

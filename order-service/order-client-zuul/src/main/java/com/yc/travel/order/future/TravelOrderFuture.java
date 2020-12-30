@@ -23,8 +23,19 @@ public class TravelOrderFuture {
     @Async
     public CompletableFuture<String> findByPid(Integer pid) {
         return CompletableFuture.supplyAsync(() -> {
-            System.out.println("pid"+pid);
             return travelOrderRestService.findByPid(pid);
+        });
+    }
+    @Async
+    public CompletableFuture<String> find() {
+        return CompletableFuture.supplyAsync(() -> {
+            return travelOrderRestService.find();
+        });
+    }
+    @Async
+    public CompletableFuture<String> findByUid(Integer uid) {
+        return CompletableFuture.supplyAsync(() -> {
+            return travelOrderRestService.findByUid(uid);
         });
     }
 

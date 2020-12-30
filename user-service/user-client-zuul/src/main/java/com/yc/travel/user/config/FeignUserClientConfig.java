@@ -19,4 +19,6 @@ public class FeignUserClientConfig {
         return Logger.Level.FULL;
     }
 
+
+
 }

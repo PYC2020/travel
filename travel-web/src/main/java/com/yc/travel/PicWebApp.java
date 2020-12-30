@@ -16,9 +16,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableZuulProxy
 @EnableHystrix
-@EnableFeignClients(basePackages = "com.yc.travel")//TravelPicsClient
-//@EnableFeignClients(clients= TravelPicsClient.class)
-
+@EnableFeignClients(basePackages = "com.yc.travel")
+//@EnableRedisHttpSession//增加redissession缓存支持
 @EnableCircuitBreaker   //启用断路器
 @SpringCloudApplication
 public class PicWebApp {

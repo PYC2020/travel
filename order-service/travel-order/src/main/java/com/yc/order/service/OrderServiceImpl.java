@@ -7,7 +7,6 @@ import com.yc.order.domain.OrderDomain;
 import com.yc.order.domain.PageDomain;
 import  com.yc.order.entity.orders;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
@@ -21,8 +20,29 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired(required = false)//手动设置false，bean不存在时注入不会失败
     private orderMapper om;
-
-
+    //public List findByren
+    @Override
+    public List count(){
+        List list=new ArrayList();
+        list.add(findByren(1));
+        list.add(findByren(2));
+        list.add(findByren(5));
+        list.add(findByren(6));
+        list.add(findByren(7));
+        list.add(findByren(11));
+        return list;
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public int findByren(Integer pid) {
+        orders o = new orders();
+        Example example=new Example(orders.class);
+        Example.Criteria criteria=example.createCriteria();
+        criteria.andNotEqualTo("status",0);
+        criteria.andEqualTo("pid",pid);
+        int ordersList= om.selectCountByExample(example);
+        return ordersList;
+    }
     @Transactional(readOnly = true)//在将事务设置成只读后，相当于将数据库设置成只读数据库，此时若要进行写的操作，会出现错误
     @Override
     public List<OrderDomain> list(){
@@ -106,9 +126,17 @@ public class OrderServiceImpl implements OrderService{
         criteria2.andEqualTo("pid",pid);
         criteria2.andEqualTo("status",2);
         example.or(criteria2);
-
         List ordersList=om.selectByExample(example);
-
+        return ordersList;
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public List findByUid(Integer uid) {
+        orders o = new orders();
+        Example example=new Example(orders.class);
+        Example.Criteria criteria=example.createCriteria();
+        criteria.andEqualTo("uid",uid);
+        List ordersList=om.selectByExample(example);
         return ordersList;
     }
 }

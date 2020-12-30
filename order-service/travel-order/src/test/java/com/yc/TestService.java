@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -33,8 +34,9 @@ public class TestService {
     @Test
     public void testList1() {
         logger.info("调用orderService.list");
-        List<OrderDomain> list = orderService.findBypid(5);
-        System.out.println(list);
+
+        System.out.println(orderService.count());
     }
+
 
 }

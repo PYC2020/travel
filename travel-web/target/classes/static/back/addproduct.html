@@ -55,12 +55,12 @@ function add(){
 	var balance=$('#balance').val();
 	var company=$('#company').val();
 	var intro=$('#intro').val();
-	var pic=$('#pic').val();
+	var pictureFile=$('#pictureFile').val();
 	$.ajaxFileUpload({
 		url:'../travel/product/create?pname='+pname+'&tno=5&price='+price+'&balance='
-		+balance+'&company='+company+'&intro='+intro+'&pic='+pic,
+		+balance+'&company='+company+'&intro='+intro+'&pictureFile='+pictureFile,
 		secureuri:false,
-		fileElementId:'pic',
+		fileElementId:'pictureFile',
 		dataType:'json',
 		//data:{tno:tno,pname:pname,price:price,balance:balance,company:company,intro:intro},
 		success:function(data){

@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 //无参构造函数
 @NoArgsConstructor
+
 public class admin {
     @Id  // JPA注解,指定此属性为表中的主键
     @GeneratedValue(strategy = GenerationType.IDENTITY)//主键由数据库自动生成

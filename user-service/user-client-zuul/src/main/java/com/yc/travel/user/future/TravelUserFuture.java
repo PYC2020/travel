@@ -2,6 +2,7 @@ package com.yc.travel.user.future;
 
 
 import com.yc.admin.domain.AdminDomain;
+import com.yc.travel.user.client.TravelUserClient;
 import com.yc.travel.user.service.TravelUserRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -16,7 +17,8 @@ public class TravelUserFuture {
 
     @Autowired
     private TravelUserRestService travelUserRestService;
-
+    @Autowired
+    private TravelUserClient travelUserClient;
     @Async
     public CompletableFuture<String> findByName( String uname, String pwd) {
         return CompletableFuture.supplyAsync(() -> {
@@ -27,7 +29,8 @@ public class TravelUserFuture {
     @Async
     public CompletableFuture<String> getsession(HttpServletRequest request) {
         return CompletableFuture.supplyAsync(() -> {
-            return travelUserRestService.getsession(request);
+            return travelUserClient.getSesseion(request);
+            //return travelUserRestService.getsession(request);
         });
     }
 

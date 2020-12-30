@@ -27,12 +27,22 @@ public class OrderController {
     //@Resource
     @Autowired
     private OrderService orderService;
-    @RequestMapping(value = "/findByPid/{pid}")
+    @RequestMapping(value = "/findByPid/{pid}",method = RequestMethod.POST)
     public CompletableFuture<String> findByPid(@PathVariable Integer pid) {
         //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
         return CompletableFuture.supplyAsync(() -> {
             List order = orderService.findBypid(pid);
             //协议
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            map.put("data", order);
+            return new Gson().toJson(map);
+        });
+    }
+    @RequestMapping(value = "/findByUid/{uid}",method = RequestMethod.POST)
+    public CompletableFuture<String> findByUid(@PathVariable Integer uid) {
+        return CompletableFuture.supplyAsync(() -> {
+            List order = orderService.findByUid(uid);
             Map<String, Object> map = new HashMap<>();
             map.put("code", 1);
             map.put("data", order);
@@ -69,6 +79,18 @@ public class OrderController {
                 e.printStackTrace();
             }
             return null;
+        });
+    }
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    public CompletableFuture<String> find(Integer page, Integer limit) {
+        return CompletableFuture.supplyAsync(() -> {
+
+            List list = orderService.count();
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            map.put("data", list);
+            return new Gson().toJson(map);
+
         });
     }
 }

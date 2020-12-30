@@ -18,7 +18,9 @@ public class TravelUserRestService {
     @Autowired
     private TravelUserClient travelUserClient;
 
-   @HystrixCommand(fallbackMethod = "findByNameFallback")
+
+
+    @HystrixCommand(fallbackMethod = "findByNameFallback")
     public String findByName( String uname,String pwd ){
         return travelUserClient.findByName(uname,pwd);
     }
@@ -69,9 +71,9 @@ public class TravelUserRestService {
     }
 
     //@HystrixCommand(fallbackMethod = "getsessionFallback")
-    public String getsession(HttpServletRequest request){
-        return travelUserClient.getSesseion(request);
-    }
+//    public String getsession(HttpServletRequest request){
+//        return travelUserClient.getSesseion(request);
+//    }
 
     private String getsessionFallback(HttpServletRequest request) {
         Map map = new HashMap();

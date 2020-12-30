@@ -7,12 +7,19 @@ spring:
   cloud:
     loadbalancer.retry.enabled: true
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+
 ribbon.ConnectTimeout: 250
 ribbon.ReadTimeout: 1000
 ribbon.OkToRetryOnAllOperations: true
 ribbon.MaxAutoRetriesNextServer: 2
 ribbon.MaxAutoRetries: 1
 
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
 ---
 #spring devtools 更改类程序文件不使用热部署自动重启
 spring.devtools.restart.enabled: false
@@ -24,6 +31,12 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 10000
+
+
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+
 
 #fdfs相关配置
 fdfs:

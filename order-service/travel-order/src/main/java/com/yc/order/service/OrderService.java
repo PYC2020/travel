@@ -19,5 +19,11 @@ public interface OrderService {
 
     //根据pid查订单
     public List findBypid(Integer pid);
+    //根据uid查订单
+    public List findByUid(Integer id);
+    //查后台下单人数
+    public int findByren(Integer pid);
+    public List count();
+
 
 }

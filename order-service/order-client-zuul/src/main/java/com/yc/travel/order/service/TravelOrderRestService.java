@@ -14,10 +14,30 @@ import java.util.Map;
 public class TravelOrderRestService {
     @Autowired
     private TravelOrderClient travelOrderClient;
-    //@HystrixCommand(fallbackMethod = "findByPidFallback")
+
+
+    @HystrixCommand(fallbackMethod = "findFallback")
+    public String find() {
+        return travelOrderClient.find();
+    }
+    private String findFallback() {
+        Map map = new HashMap();
+        map.put("code", "-1");
+        map.put("msg", "服务异常");
+        return new Gson().toJson(map);
+    }
+    @HystrixCommand(fallbackMethod = "findByPidFallback")
     public String findByPid(Integer pid) {
-        System.out.println("pid"+pid);
         return travelOrderClient.findByPid(pid);
+    }
+    @HystrixCommand(fallbackMethod = "findByUidFallback")
+    public String findByUid(Integer uid) {
+        return travelOrderClient.findByUid(uid);
+    }private String findByUidFallback(Integer uid) {
+        Map map = new HashMap();
+        map.put("code", "-1");
+        map.put("msg", "服务异常");
+        return new Gson().toJson(map);
     }
 
     private String findByPidFallback(Integer pid) {

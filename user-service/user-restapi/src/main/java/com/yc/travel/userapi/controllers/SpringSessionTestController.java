@@ -21,12 +21,15 @@ public class SpringSessionTestController {
         try {
             HttpSession session = request.getSession();
             AdminDomain value = (AdminDomain) session.getAttribute("user");
+            String temp= String.valueOf(value.getUid());
             map.put("user", value);
-            return new Gson().toJson(map);
+            //return new Gson().toJson(map);
+            return temp;
         }catch (Exception e){
             map.put("user", "没有UserSession");
             e.printStackTrace();
-            return new Gson().toJson(map);
+            //return new Gson().toJson(map);
+            return "没有UserSession";
         }
     }
     //设置session失效

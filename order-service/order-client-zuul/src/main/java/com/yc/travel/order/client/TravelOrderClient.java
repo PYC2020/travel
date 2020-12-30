@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.*;
         configuration = OrderFeignClientConfig.class
 )
 public interface TravelOrderClient {
-    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-order-proxy/travel/order/findByPid/{pid}")
+    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-order-proxy/travel/order/findByUid/{uid}")
+    String findByUid(@RequestParam("uid") Integer uid);
+    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-order-proxy/travel/order/findByPid/{pid}")
     String findByPid(@RequestParam("pid") Integer pid);
     //访问的路径value要修改成zuul指定的服务路由路径
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-order-proxy/travel/order/{id}")
     String findById(@RequestParam("id") Integer id);
-
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-order-proxy/travel/order/find")
+    String find();
     @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-order-proxy/travel/order/findAll",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -140,7 +140,7 @@
             	splitArea:{					//--网格区域
             		show:false,					//---是否显示，默认false
             	},           	
-                data: ["欧美大国","澳非探秘","日本","东南亚风情","国内精选"],//内容
+                data: ["北海道","新加坡","瑞士","澳洲","北京","湖南"],//内容
             },
 
             //----------------------  y轴  ------------------------
@@ -218,15 +218,16 @@
           			myChart.showLoading();
         	   		var counts=[];
                     $.ajax({
-                        type : "post",
+                        type : "get",
                         async : true, //异步请求
-                        url : "../orders.action?op=count",
+                        url : "../travel/order/find",
                         data : {},
                         dataType : "json",
                         success : function(result) {
+                        	console.info(result.data)
                             if(result){
-                            	for(var i=0;i<result.length;i++){
-                            		counts.push(result[i].count);
+                            	for(var i=0;i<result.data.length;i++){
+                            		counts.push(result.data[i]);
                             	}
                                 myChart.hideLoading();    //隐藏加载动画
                                 myChart.setOption({        //加载数据图表

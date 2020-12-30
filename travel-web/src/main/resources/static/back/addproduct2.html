@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品</title>
+</head>
+<body>
+<form action="../travel/product/create" method="post" enctype="multipart/form-data">
+    <div>
+        <label>地 点：</label>
+        <input type="text" class="form-control " name="pname" placeholder="请输入地点...">
+    </div><br>
+    <div>
+        <label>商品类型：</label>
+        <select name="tno">
+            <option value="1">欧美大国</option>
+            <option value="2">澳非探秘</option>
+            <option value="3">日本</option>
+            <option value="4">东南亚风情</option>
+            <option value="5">国内精选</option>
+        </select>
+    </div><br>
+    <div>
+        <label>价 格：</label>
+        <input type="text" class="form-control " name="price" placeholder="请输入价格...">
+    </div><br>
+    <div>
+        <label>介 绍：</label>
+        <input type="text" class="form-control " name="intro" placeholder="请输入商品介绍...">
+    </div><br>
+    <div>
+        <label>库 存：</label>
+        <input type="text" class="form-control " name="balance" placeholder="请输入库存...">
+    </div><br>
+    <div>
+        <label>旅行社：</label>
+        <input type="text" class="form-control " name="company" placeholder="请输入旅行社...">
+    </div><br>
+    <div>
+        <label>图 片：</label>
+        <td><input type="file" name="pictureFile" /></td>
+    </div>
+    <input type="submit" value="添加"  class="input_submit" >
+</form>
+<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript" src="../js/axios.js"></script>
+</body>
+</html>
