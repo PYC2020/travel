@@ -7,6 +7,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @FeignClient(name = "BASE-ZUUL-GATEWAY",
         configuration = OrderFeignClientConfig.class
 )
@@ -25,10 +27,9 @@ public interface TravelOrderClient {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String findAll(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-order-proxy/travel",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String create(@RequestBody OrderDomain orderDomain);
+    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-order-proxy/travel/user/save")
+    String create(@RequestParam("uid")  Integer uid,@RequestParam("pid")  Integer pid,@RequestParam("status")  Integer status,
+                  @RequestParam("sdate")  String sdate,@RequestParam("edate")  String edate,@RequestParam("num")  Integer num);
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/travel-api/travel-order-proxy/travel/order/{id}")
     String delete(@RequestParam("id") Integer id);

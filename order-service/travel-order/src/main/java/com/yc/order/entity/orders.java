@@ -18,9 +18,9 @@ public class orders {
     private Integer oid;
     private Integer uid;
     private Integer pid;
-    private Date odate;
+    private String odate;
     private Integer status;
-    private  Date sdate;
-    private  Date edate;
+    private  String sdate;
+    private  String edate;
     private Integer num;
 }

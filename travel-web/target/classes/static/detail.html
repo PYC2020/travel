@@ -59,7 +59,7 @@
 					</div>
 					<div id="sale">
 						<div id="up">
-							<span style="color: red; font-size: 30px; font-weight: 3px;" id="price">￥{{product.price}}</span>
+							<span style="color: #1a1010; font-size: 30px; font-weight: 3px;" id="price">￥{{product.price}}</span>
 							<span style="color: red; ">起/人</span>&nbsp;&nbsp;&nbsp;
 							<span style="color: darkgray;" id="qjsm">起价说明</span>
 							<div class="editable1">起价说明：往返机票，旅游期间车费，餐费，导游服务费，旅行社责任险。不含：景点门票。客服热线：4008-112-111</div>
@@ -202,17 +202,18 @@
 		</div>
 	</body>
 	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/vue.min.js"></script>
 	<script type="text/javascript" src="js/axios.js"></script>
 	<script type="text/javascript" src="js/qs.js"></script>
 	<script type="text/javascript" src="js/detail.js"></script>
+
 	<script type="text/javascript">
-		var hash=window.location.hash;
-		var pid=hash.replace('#','');
+		var pid = getUrlParams("pid");
+		var uid = getUrlParams("uid");
+
 		var app=new Vue({
 			el:'#detail',
 			data:{
-				onlogin:false,
 				pic:'',
 				pics:{},
 				product:{},
@@ -227,11 +228,11 @@
 			},
 			methods:{
 				addcart:function(){
-					// if(this.onlogin==false){
-					// 	alert('请先登录!');
-					// 	location.href="login.html";
-					// 	return;
-					// }
+					if(uid==""){
+					 	alert('请先登录!');
+						location.href="login.html";
+					 	return;
+					}
 					if(this.sdate=='' || this.edate==''){
 						alert('请填写出行时期和回程日期!');
 						return;
@@ -241,15 +242,17 @@
 						return;
 					}
 					axios({
-						url:'orders.action',
+						url:'travel/order/create?uid='+uid+'&pid='+pid+'&status=0&sdate='+this.sdate+'&edate='
+								+this.edate+'&num='+this.num,
 						method:'post',
-						params:{op:'add',pid:pid,sdate:this.sdate,edate:this.edate,num:this.num}
+						//params:{op:'add',pid:pid,sdate:this.sdate,edate:this.edate,num:this.num}
 					}).then(result=>{
 						if(result.data>0){
 							alert('添加成功!');
 							location.href="cart.html";
 						}else{
 							alert('添加 失败!');
+							console.info(this.uid+this.pid+this.odate+this.sdate+this.edate+this.num);
 						}
 					});
 				},
@@ -283,6 +286,8 @@
 			},
 			mounted:function(){
 				//历史出行人数
+				console.info(pid);
+				console.info(uid)
 				axios.get("travel/order/findByPid/"+pid)
 						.then(response => {
 							console.log(response.data.data)
@@ -320,6 +325,13 @@
     	function checkLogin(){
     		return axios.get('user.action?op=check');
     	}
+
+		function getUrlParams(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]);
+			return null;
+		}
 		
 		//查询图片
 		function findPics(){

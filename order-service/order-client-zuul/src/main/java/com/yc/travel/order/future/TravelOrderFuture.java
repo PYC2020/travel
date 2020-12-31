@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 
 @Component
@@ -48,10 +49,10 @@ public class TravelOrderFuture {
     }
 
     @Async
-    public CompletableFuture<String> create(OrderDomain orderDomain) {
+    public CompletableFuture<String> create(Integer uid,Integer pid,Integer status, String sdate, String edate, Integer num) {
 
         return CompletableFuture.supplyAsync(() -> {
-            return travelOrderRestService.create(orderDomain);
+            return travelOrderRestService.create(uid, pid, status, sdate, edate, num);
         });
     }
 

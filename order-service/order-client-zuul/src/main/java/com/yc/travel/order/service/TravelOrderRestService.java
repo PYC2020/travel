@@ -6,7 +6,9 @@ import com.yc.order.domain.OrderDomain;
 import com.yc.travel.order.client.TravelOrderClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +35,8 @@ public class TravelOrderRestService {
     @HystrixCommand(fallbackMethod = "findByUidFallback")
     public String findByUid(Integer uid) {
         return travelOrderClient.findByUid(uid);
-    }private String findByUidFallback(Integer uid) {
+    }
+    private String findByUidFallback(Integer uid) {
         Map map = new HashMap();
         map.put("code", "-1");
         map.put("msg", "服务异常");
@@ -70,17 +73,17 @@ public class TravelOrderRestService {
         return new Gson().toJson(map);
     }
 
-    @HystrixCommand(fallbackMethod = "createFallback")
-    public String create(OrderDomain orderDomain) {
+    //@HystrixCommand(fallbackMethod = "createFallback")
+    public String create(Integer uid,Integer pid,Integer status,String sdate,String edate,Integer num) {
 
-        return travelOrderClient.create(orderDomain);
+        return travelOrderClient.create(uid, pid, status, sdate, edate, num);
     }
 
-    private String createFallback(OrderDomain orderDomain) {
+    private String createFallback(Integer uid,Integer pid,Integer status,String sdate,String edate,Integer num) {
 
         Map map = new HashMap();
         map.put("code", "-1");
-        map.put("msg", "服务异常，无法添加" + orderDomain.getOid());
+        map.put("msg", "服务异常，无法添加");
         return new Gson().toJson(map);
     }
 

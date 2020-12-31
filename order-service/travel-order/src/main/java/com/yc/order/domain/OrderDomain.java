@@ -10,14 +10,14 @@ public class OrderDomain  extends PageDomain{
     private Integer oid;
     private Integer uid;
     private Integer pid;
-    private Date odate;
+    private String odate;
     private Integer status;
-    private  Date sdate;
-    private  Date edate;
+    private  String sdate;
+    private  String edate;
     private Integer num;
 
-    public OrderDomain(Integer oid,Integer uid,Integer pid,Date odate,
-                            Integer status,Date sdate,Date edate,Integer num){
+    public OrderDomain(Integer oid,Integer uid,Integer pid,String odate,
+                            Integer status,String sdate,String edate,Integer num){
         this.oid=oid;
         this.uid=uid;
         this.pid=pid;

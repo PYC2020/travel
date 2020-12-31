@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -91,8 +93,16 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void save(OrderDomain orderDomain) {
         orders o = new orders();
-        o.setOid(orderDomain.getOid());
+        Date now = new Date();
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+        String datestr =sdf.format(now);
+        o.setUid(orderDomain.getUid());
+        o.setPid(orderDomain.getPid());
         o.setOdate(orderDomain.getOdate());
+        o.setStatus(orderDomain.getStatus());
+        o.setSdate(orderDomain.getSdate());
+        o.setEdate(orderDomain.getEdate());
+        o.setNum(orderDomain.getNum());
         this.om.insert(o);
         // 在这里  mybatis完成了两步操作: 1. insert   2. select 到最新的id后，存到pic中
         //pic中的id已经获取到
@@ -136,6 +146,7 @@ public class OrderServiceImpl implements OrderService{
         Example example=new Example(orders.class);
         Example.Criteria criteria=example.createCriteria();
         criteria.andEqualTo("uid",uid);
+        criteria.andEqualTo("status",0);
         List ordersList=om.selectByExample(example);
         return ordersList;
     }

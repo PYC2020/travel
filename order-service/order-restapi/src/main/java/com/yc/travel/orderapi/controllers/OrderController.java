@@ -9,11 +9,9 @@ import com.yc.order.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +25,7 @@ public class OrderController {
     //@Resource
     @Autowired
     private OrderService orderService;
-    @RequestMapping(value = "/findByPid/{pid}",method = RequestMethod.POST)
+    @RequestMapping(value = "/findByPid/{pid}",method ={RequestMethod.GET, RequestMethod.POST})
     public CompletableFuture<String> findByPid(@PathVariable Integer pid) {
         //非阻塞式异步编程方法。因为在web ui的微服务对rest api的调用中将使用这种高并发的编程方法，所以为了保证与调用端保持同步，这里也使用这种方法.
         return CompletableFuture.supplyAsync(() -> {
@@ -39,7 +37,7 @@ public class OrderController {
             return new Gson().toJson(map);
         });
     }
-    @RequestMapping(value = "/findByUid/{uid}",method = RequestMethod.POST)
+    @RequestMapping(value = "/findByUid/{uid}",method ={RequestMethod.GET, RequestMethod.POST})
     public CompletableFuture<String> findByUid(@PathVariable Integer uid) {
         return CompletableFuture.supplyAsync(() -> {
             List order = orderService.findByUid(uid);
@@ -89,6 +87,31 @@ public class OrderController {
             Map<String, Object> map = new HashMap<>();
             map.put("code", 1);
             map.put("data", list);
+            return new Gson().toJson(map);
+
+        });
+    }
+
+    @RequestMapping(value = "/save",method = {RequestMethod.GET,RequestMethod.POST})
+    public CompletableFuture<String> save(@RequestParam("uid")  Integer uid,
+                                          @RequestParam("pid")  Integer pid,
+                                          @RequestParam("status")  Integer status,
+                                          @RequestParam("sdate")  String sdate,
+                                          @RequestParam("edate")  String edate,
+                                          @RequestParam("num")  Integer num) throws Exception {
+        return CompletableFuture.supplyAsync(() -> {
+            OrderDomain orderDomain = new OrderDomain();
+            orderDomain.setUid(uid);
+            orderDomain.setPid(pid);
+            orderDomain.setStatus(status);
+            orderDomain.setSdate(sdate);
+            orderDomain.setEdate(edate);
+            orderDomain.setNum(num);
+            orderService.save(orderDomain);
+            logger.info("新增->ID=" + orderDomain.getOid());
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            map.put("data", orderDomain);
             return new Gson().toJson(map);
 
         });

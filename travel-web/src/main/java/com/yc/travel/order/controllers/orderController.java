@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -37,9 +38,14 @@ public class orderController {
     public CompletableFuture<String> findByPid(@PathVariable Integer pid) {
         return travelOrderFuture.findByPid(pid);
     }
-    @RequestMapping(value = "/findByUid/{uid}", method = RequestMethod.POST)
+    @RequestMapping(value = "/findByUid/{uid}", method = RequestMethod.GET)
     public CompletableFuture<String> findByUid(@PathVariable Integer uid) {
         return travelOrderFuture.findByUid(uid);
+    }
+
+    @RequestMapping(value = "/create", method = {RequestMethod.GET,RequestMethod.POST})
+    public CompletableFuture<String> create(Integer uid,Integer pid,Integer status,String sdate,String edate,Integer num) throws Exception  {
+        return travelOrderFuture.create(uid, pid, status, sdate, edate, num);
     }
 
 }
