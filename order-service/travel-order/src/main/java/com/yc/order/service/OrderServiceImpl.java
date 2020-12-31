@@ -115,6 +115,14 @@ public class OrderServiceImpl implements OrderService{
         this.om.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public void update(Integer id) {
+        orders o  = new orders();
+        o.setOid(id);
+        o.setStatus(1);
+        this.om.updateByPrimaryKeySelective(o);
+    }
+
     @Transactional(readOnly = true)
     @Override
     public OrderDomain findOne(Integer id) {

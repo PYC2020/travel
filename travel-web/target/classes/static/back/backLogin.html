@@ -50,7 +50,8 @@
 			el:"#login",
 			data:{
 				uname:'',
-				pwd:''
+				pwd:'',
+				user: {}
 			},
 			methods:{
 				login:function(){
@@ -59,11 +60,15 @@
 						method:'get',
 						//params:{op:'login',aname:this.aname,pwd:this.pwd}
 					}).then(result=>{
-						if(result.data!=null){
-							location.href="index.html";
-						}else{
+						if (result.data.data=="没有查到"){
 							alert('用户名或密码错误!');
 							return;
+						}
+						if(result.data.data!=null){
+							alert("登陆成功!");
+							this.user = result.data.data;
+							console.info(this.user)
+							location.href="index.html#"+this.user.uid;
 						}
 					})
 				}

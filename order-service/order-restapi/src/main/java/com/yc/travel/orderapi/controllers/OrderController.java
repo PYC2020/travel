@@ -41,10 +41,7 @@ public class OrderController {
     public CompletableFuture<String> findByUid(@PathVariable Integer uid) {
         return CompletableFuture.supplyAsync(() -> {
             List order = orderService.findByUid(uid);
-            Map<String, Object> map = new HashMap<>();
-            map.put("code", 1);
-            map.put("data", order);
-            return new Gson().toJson(map);
+            return new Gson().toJson(order);
         });
     }
 
@@ -114,6 +111,28 @@ public class OrderController {
             map.put("data", orderDomain);
             return new Gson().toJson(map);
 
+        });
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public CompletableFuture<String> delete(@PathVariable Integer id) throws Exception {
+        return CompletableFuture.supplyAsync(() -> {
+            orderService.delete(id);
+            logger.info("删除->ID=" + id);
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            return new Gson().toJson(map);
+        });
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public CompletableFuture<String> update(@PathVariable Integer id) throws Exception {
+        return CompletableFuture.supplyAsync(() -> {
+            orderService.update(id);
+            logger.info("修改->ID=" + id);
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 1);
+            return new Gson().toJson(map);
         });
     }
 }

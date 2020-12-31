@@ -15,6 +15,8 @@ public interface OrderService {
 
     public void delete(Integer id);
 
+    public  void update(Integer id);
+
     public OrderDomain findOne(Integer id);
 
     //根据pid查订单

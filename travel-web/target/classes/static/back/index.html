@@ -202,23 +202,16 @@
 		<script type="text/javascript" src="js/vue.js"></script>
 		<script type="text/javascript" src="js/axios.js"></script>
 		<script type="text/javascript">
+			var hash=window.location.hash;
+			var uid=hash.replace('#','');
 			var app=new Vue({
 				el:"#admin",
-				data:{
-					aname:''
-				},
 				mounted:function(){
-					axios({
-						url:'../admin.action?op=check',
-						method:'post',
-						params:{}
-					}).then(result=>{
-						if(!result.data.admin){
-							location.href='backLogin.html';
-						}else{
-							this.aname=result.data.admin.aname;
-						}
-					})
+					if(uid==""){
+						alert('请先登录!');
+						location.href="backlogin.html";
+						return;
+					}
 				}
 			})
 		</script>

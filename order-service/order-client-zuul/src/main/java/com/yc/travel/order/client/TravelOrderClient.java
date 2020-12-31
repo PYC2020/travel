@@ -31,6 +31,9 @@ public interface TravelOrderClient {
     String create(@RequestParam("uid")  Integer uid,@RequestParam("pid")  Integer pid,@RequestParam("status")  Integer status,
                   @RequestParam("sdate")  String sdate,@RequestParam("edate")  String edate,@RequestParam("num")  Integer num);
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/travel-api/travel-order-proxy/travel/order/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-order-proxy/travel/order/delete/{id}")
     String delete(@RequestParam("id") Integer id);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/travel-api/travel-order-proxy/travel/order/update/{id}")
+    String update(@RequestParam("id") Integer id);
 }

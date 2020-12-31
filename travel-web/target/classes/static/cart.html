@@ -45,9 +45,9 @@
 				<div class="company_div" >{{o.company}}</div>
 					<ul>
 						<li class="col01"><input type="checkbox" checked name="option" :index="index" :id="o.oid"></li>
-						<li class="col02"><img :src="o.pic"></li>
-						<li class="col03"><span style="font-size:20px;">{{o.pname}}</span><p>{{o.intro}}</p></li>
-					    <li class="col04"><span>￥{{o.price}}/人</span></li>
+						<li class="col02"><img :src="product.pic"></li>
+						<li class="col03"><span style="font-size:20px;">{{product.pname}}</span><p>{{product.intro}}</p></li>
+					    <li class="col04"><span>￥{{product.price}}/人</span></li>
 					    <li class="col05">
 					    	<div class="num_add">
 								<label>人数&nbsp;&nbsp;&nbsp;</label>
@@ -56,7 +56,7 @@
 							<label>出行时间&nbsp;&nbsp;&nbsp;</label><input id="sdate" readonly="readonly" type="date" v-model="o.sdate"/><br>
 							<label>回程时间&nbsp;&nbsp;&nbsp;</label><input id="edate" readonly="readonly" type="date" v-model="o.edate"/>
 					    </li>
-					    <li class="col06"><span>￥{{o.price*o.num}}</span></li>
+					    <li class="col06"><span>￥{{product.price*o.num}}</span></li>
 					    <li class="col07"><a href="javascript:void(0);" @click="del(index,o.oid)">删除</a></li>
 					</ul>
 				</div>
@@ -64,7 +64,7 @@
 					<ul>
 						<li class="col01"><input type="checkbox" checked id="all" name="all"></li>
 						<li class="col02"><label for="all">全选</label></li>
-						<li class="col03">合计:<em id="totalPrices">&yen;{{totalPrice}}</em><br>共计<b id="totalNumbers"></b>{{totalCount}}人出行</li>
+						<li class="col03"><!--合计:<em id="totalPrices">&yen;{{totalPrice}}</em>--><br>共计<b id="totalNumbers"></b>{{totalCount}}人出行</li>
 						<li class="col04">
 							<a href="javascript:;" @click="pay()">去结算</a>
 						</li>
@@ -78,20 +78,21 @@
 		<script type="text/javascript" src="js/qs.js"></script>
 		<script type="text/javascript" src="js/detail.js"></script>
 		<script type="text/javascript">
-			var hash=window.location.hash;
-			var uid=hash.replace('#','');
+			var pid = getUrlParams("pid");
+			var uid = getUrlParams("uid");
 			var app=new Vue({
 				el:'#cart_div',
 				data:{
 					onlogin:false,
 					orders:{},
+					product:{},
 					totalCount:0,//商品总数
 	    			totalPrice:0,//总价格
 	    			nums:[],//每件商品对应数量  存储在数组
 	    			prices:[],//每个商品价格
 	    			status:[],//是否被选择,
 	    			oids:[],//存储结算的订单号
-	    			keyword:''
+	    			keyword:'',
 				},
 				mounted:function(){
 					if(uid==""){
@@ -102,6 +103,7 @@
 					axios.get("/travel/order/findByUid/"+uid,{params:{}}).then(result=>{
 	    				this.orders=result.data;
 	    				console.info(this.orders);
+						console.info(pid);
 	    				//购物车中每行数据进行循环
 	    				result.data.forEach((item,index)=>{
 	    					this.nums.push(item.num);//push  数组添加元素
@@ -115,14 +117,19 @@
 	    					bindInfo();//此处填第一次渲染完成后执行的代码
 	    				});
 	    			})
+					axios.get("/travel/product/"+pid,{params:{}}).then(res=>{
+						this.product=res.data.data;
+						console.info(this.product);
+
+					})
 	    			//对象中定义函数给updateCheck   调用updateCheck即可
 	    			window.updateCheck=this.checkInfo;
 				},
 				methods:{
 					del:function(index,oid){
 						if(confirm("您确定要删除吗?")){
-							axios.get("orders.action?op=delete&oid="+oid).then(result=>{
-								if(result.data>0){
+							axios.get("/travel/order/delete/"+oid).then(result=>{
+								if(result.data!=null){
 									this.$set(this.nums,index,0);
 	    							this.getTotal();
 	    							$("#g_"+index).remove();
@@ -156,9 +163,9 @@
 	    						that.oids.push(this.id);
 	    					}
 	    				});
-	    				$.get('orders.action?op=updatePay',{oids:this.oids},function(data){
+	    				$.get('/travel/order/update/'+this.oids,function(data){
 	    					alert('支付成功');
-	    					location.href='user.html';
+	    					//location.href='user.html';
 	    				},'json');
 	    				//location.href='index.jsp?'+this.totalPrice+'&'+this.oids;
 	    			},
@@ -185,6 +192,13 @@
 	    	function checkLogin(){
 	    		return axios.get('user.action?op=check');
 	    	}
+
+			function getUrlParams(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null) return unescape(r[2]);
+				return null;
+			}
 			
 			//查询未完成订单
 			function orders(){

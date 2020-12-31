@@ -48,4 +48,13 @@ public class orderController {
         return travelOrderFuture.create(uid, pid, status, sdate, edate, num);
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public CompletableFuture<String> delete(@PathVariable Integer id) throws Exception {
+        return travelOrderFuture.delete(id);
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public CompletableFuture<String> update(@PathVariable Integer id) throws Exception {
+        return travelOrderFuture.update(id);
+    }
 }

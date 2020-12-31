@@ -87,7 +87,7 @@ public class TravelOrderRestService {
         return new Gson().toJson(map);
     }
 
-    @HystrixCommand(fallbackMethod = "deleteFallback")
+    //@HystrixCommand(fallbackMethod = "deleteFallback")
     public String delete(Integer id) {
         return travelOrderClient.delete(id);
     }
@@ -98,4 +98,18 @@ public class TravelOrderRestService {
         map.put("msg", "服务异常，无法删除" + id);
         return new Gson().toJson(map);
     }
+
+    //@HystrixCommand(fallbackMethod = "updateFallback")
+    public String update(Integer id) {
+        return travelOrderClient.update(id);
+    }
+
+    private String updateFallback(Integer id) {
+        Map map = new HashMap();
+        map.put("code", "-1");
+        map.put("msg", "服务异常，无法修改" + id);
+        return new Gson().toJson(map);
+    }
+
+
 }

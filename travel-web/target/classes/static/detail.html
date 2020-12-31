@@ -249,7 +249,7 @@
 					}).then(result=>{
 						if(result.data>0){
 							alert('添加成功!');
-							location.href="cart.html";
+							location.href="cart.html?pid="+pid+"&uid="+uid;
 						}else{
 							alert('添加 失败!');
 							console.info(this.uid+this.pid+this.odate+this.sdate+this.edate+this.num);

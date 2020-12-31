@@ -63,4 +63,11 @@ public class TravelOrderFuture {
             return travelOrderRestService.delete(id);
         });
     }
+
+    @Async
+    public CompletableFuture<String> update(Integer id) {
+        return CompletableFuture.supplyAsync(() -> {
+            return travelOrderRestService.update(id);
+        });
+    }
 }
