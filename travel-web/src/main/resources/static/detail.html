@@ -244,10 +244,12 @@
 					axios({
 						url:'travel/order/create?uid='+uid+'&pid='+pid+'&status=0&sdate='+this.sdate+'&edate='
 								+this.edate+'&num='+this.num,
-						method:'post',
+						method:'get',
 						//params:{op:'add',pid:pid,sdate:this.sdate,edate:this.edate,num:this.num}
 					}).then(result=>{
-						if(result.data>0){
+						console.info(result.data.data)
+						console.info(result.data)
+						if(result.data.data!=null){
 							alert('添加成功!');
 							location.href="cart.html?pid="+pid+"&uid="+uid;
 						}else{

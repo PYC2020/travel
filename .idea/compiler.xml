@@ -11,7 +11,6 @@
         <module name="user-client-zuul" />
         <module name="travel-zuul" />
         <module name="travel-users" />
-        <module name="travel-comment" />
         <module name="base-dashboard" />
         <module name="travel-product" />
         <module name="travel-client-zuul" />
@@ -31,6 +30,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="a" target="1.8" />
+      <module name="travel-comment" target="1.8" />
       <module name="travel-config3" target="1.8" />
       <module name="travel-domain" target="1.8" />
       <module name="travel-zuul" target="1.8" />

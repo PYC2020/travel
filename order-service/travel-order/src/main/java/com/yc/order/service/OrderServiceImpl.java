@@ -98,7 +98,7 @@ public class OrderServiceImpl implements OrderService{
         String datestr =sdf.format(now);
         o.setUid(orderDomain.getUid());
         o.setPid(orderDomain.getPid());
-        o.setOdate(orderDomain.getOdate());
+        o.setOdate(datestr);
         o.setStatus(orderDomain.getStatus());
         o.setSdate(orderDomain.getSdate());
         o.setEdate(orderDomain.getEdate());

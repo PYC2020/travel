@@ -4,10 +4,7 @@ import com.yc.travel.order.future.TravelOrderFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
@@ -44,7 +41,8 @@ public class orderController {
     }
 
     @RequestMapping(value = "/create", method = {RequestMethod.GET,RequestMethod.POST})
-    public CompletableFuture<String> create(Integer uid,Integer pid,Integer status,String sdate,String edate,Integer num) throws Exception  {
+    public CompletableFuture<String> create(@RequestParam("uid")  Integer uid, @RequestParam("pid")  Integer pid, @RequestParam("status")  Integer status,
+                                            @RequestParam("sdate")  String sdate, @RequestParam("edate")  String edate, @RequestParam("num")  Integer num) throws Exception  {
         return travelOrderFuture.create(uid, pid, status, sdate, edate, num);
     }
 

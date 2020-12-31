@@ -27,7 +27,7 @@ public interface TravelOrderClient {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String findAll(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-order-proxy/travel/user/save")
+    @RequestMapping(method = RequestMethod.POST, value = "/travel-api/travel-order-proxy/travel/order/save")
     String create(@RequestParam("uid")  Integer uid,@RequestParam("pid")  Integer pid,@RequestParam("status")  Integer status,
                   @RequestParam("sdate")  String sdate,@RequestParam("edate")  String edate,@RequestParam("num")  Integer num);
 

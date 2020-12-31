@@ -13,6 +13,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/a/pom.xml" />
+        <option value="$PROJECT_DIR$/travel-comment/pom.xml" />
         <option value="$PROJECT_DIR$/travel-config3/pom.xml" />
         <option value="$PROJECT_DIR$/travel-domain/pom.xml" />
         <option value="$PROJECT_DIR$/untitled/pom.xml" />

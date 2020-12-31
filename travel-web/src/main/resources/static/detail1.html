@@ -208,8 +208,8 @@
 	<script type="text/javascript" src="js/detail.js"></script>
 
 	<script type="text/javascript">
-		var pid = getUrlParams("pid");
-		var uid = getUrlParams("uid");
+		var hash=window.location.hash;
+		var pid=hash.replace('#','');
 
 		var app=new Vue({
 			el:'#detail',
@@ -251,7 +251,7 @@
 						console.info(result.data)
 						if(result.data.data!=null){
 							alert('添加成功!');
-							location.href="cart.html?pid="+pid+"&uid="+uid;
+							//location.href="cart.html?pid="+pid+"&uid="+uid;
 						}else{
 							alert('添加 失败!');
 							console.info(this.uid+this.pid+this.odate+this.sdate+this.edate+this.num);

@@ -18,7 +18,7 @@ public class TravelOrderRestService {
     private TravelOrderClient travelOrderClient;
 
 
-    @HystrixCommand(fallbackMethod = "findFallback")
+    //@HystrixCommand(fallbackMethod = "findFallback")
     public String find() {
         return travelOrderClient.find();
     }
